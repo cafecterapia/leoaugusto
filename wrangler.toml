@@ -11,7 +11,7 @@ custom_domain = true
 [build]
 command = "npm run build"
 cwd = ""
-watch_dir = ""
+watch_dir = "src"
 
 [build.upload]
 format = "service-worker"
@@ -20,5 +20,8 @@ main = ""
 rules = [
   { type = "ESModule", globs = ["**/*.js"] },
   { type = "CompiledWasm", globs = ["**/*.wasm"] },
-  { type = "Text", globs = ["**/*.txt", "**/*.html"] }
+  { type = "Text", globs = ["**/*.txt", "**/*.html", "**/*.css"] }
 ]
+
+# Pages configuration for Cloudflare Pages
+pages_build_output_dir = "dist"

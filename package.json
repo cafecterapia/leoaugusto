@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:cf": "vite build && cp public/_redirects dist/ && cp public/_headers dist/",
     "preview": "vite preview",
+    "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +19,6 @@
     "vite": "^7.0.0"
   },
   "dependencies": {
-    "@studio-freight/lenis": "^1.0.42"
+    "lenis": "^1.1.13"
   }
 }

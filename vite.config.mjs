@@ -7,9 +7,15 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Output directory for build files
     assetsDir: 'assets', // Directory for generated assets
+    sourcemap: false, // Disable sourcemaps for production
+    minify: 'esbuild', // Use esbuild for minification
+    target: 'es2015', // Ensure compatibility
     rollupOptions: {
-      input: {
-        main: 'index.html'
+      input: './index.html', // Fix the input path
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     }
   },

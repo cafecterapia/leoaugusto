@@ -1,5 +1,5 @@
 // Import Lenis smooth scrolling library
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 
 // Initialize Lenis smooth scrolling
 const lenis = new Lenis({
@@ -239,7 +239,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 function downloadPDF() {
     const pdfContent = `
 LEONARDO AUGUSTO, R.J
-Advogado Militar
+Direito Militar
 
 Contato:
 📧 leonardo.augusto@diretorio.adv.br
@@ -281,7 +281,7 @@ function downloadVCard() {
 VERSION:3.0
 FN:Leonardo Augusto
 N:Augusto;Leonardo;;;
-TITLE:Advogado Militar
+TITLE:Direito Militar
 ORG:Diretório Advocacia
 EMAIL:leonardo.augusto@diretorio.adv.br
 TEL:+5521987654321
