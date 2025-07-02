@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/leoaugusto/', // GitHub Pages base path
+  base: '/', // Root path for Cloudflare Pages
   root: '.', // Set the root to current directory
   publicDir: 'public', // Directory to serve as plain static assets
   build: {
