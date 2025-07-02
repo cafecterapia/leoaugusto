@@ -80,7 +80,40 @@ function toggleMobileNav() {
     mobileNav.classList.toggle('active');
 }
 
-// Make functions globally accessible for onclick attributes
+// Event delegation for all interactive elements
+document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-action]');
+    if (!target) return;
+    
+    const action = target.getAttribute('data-action');
+    
+    switch (action) {
+        case 'toggle-mobile-nav':
+            toggleMobileNav();
+            break;
+        case 'download-pdf':
+            downloadPDF();
+            break;
+        case 'download-vcard':
+            downloadVCard();
+            break;
+        case 'toggle-experience':
+            toggleExperience();
+            break;
+        case 'toggle-credentials':
+            toggleCredentials();
+            break;
+    }
+});
+
+// Form submission handler
+document.addEventListener('submit', (e) => {
+    if (e.target.hasAttribute('data-action') && e.target.getAttribute('data-action') === 'submit-form') {
+        submitForm(e);
+    }
+});
+
+// Legacy support - keeping for backward compatibility but not needed
 window.toggleMobileNav = toggleMobileNav;
 
 // Close mobile menu when clicking on a link
@@ -303,9 +336,9 @@ END:VCARD`;
     showNotification('Contato baixado com sucesso!', 'success');
 }
 
-// Make download functions globally accessible
-window.downloadPDF = downloadPDF;
-window.downloadVCard = downloadVCard;
+// Legacy support - functions are now handled by event delegation
+// window.downloadPDF = downloadPDF;
+// window.downloadVCard = downloadVCard;
 
 // Contact form submission with FormSubmit.co AJAX
 function submitForm(event) {
@@ -384,8 +417,8 @@ function submitForm(event) {
     });
 }
 
-// Make submitForm globally accessible
-window.submitForm = submitForm;
+// Legacy support - form submission now handled by event delegation
+// window.submitForm = submitForm;
 
 // Notification system
 function showNotification(message, type = 'success') {
@@ -576,8 +609,8 @@ function toggleCredentials() {
     }
 }
 
-// Make toggleCredentials globally accessible
-window.toggleCredentials = toggleCredentials;
+// Legacy support - credentials toggle now handled by event delegation
+// window.toggleCredentials = toggleCredentials;
 
 // Experience Section Toggle
 function toggleExperience() {
@@ -618,5 +651,5 @@ function toggleExperience() {
     }
 }
 
-// Make toggleExperience globally accessible
-window.toggleExperience = toggleExperience;
+// Legacy support - experience toggle now handled by event delegation
+// window.toggleExperience = toggleExperience;

@@ -70,7 +70,7 @@
     <!-- Hero Banner Section -->
     <section class="hero-banner">
         <!-- Menu Button - Top Right Corner -->
-        <button class="hero-menu-btn" onclick="window.toggleMobileNav()" aria-label="Menu">
+        <button class="hero-menu-btn" data-action="toggle-mobile-nav" aria-label="Menu">
             MENU
         </button>
         
@@ -97,11 +97,11 @@
                 
                 <!-- Right-aligned action buttons -->
                 <div class="action-buttons-right">
-                    <button class="outline-btn" onclick="downloadPDF()">
+                    <button class="outline-btn" data-action="download-pdf">
                         <i class="fas fa-file-pdf"></i>
                         PDF
                     </button>
-                    <button class="outline-btn" onclick="downloadVCard()">
+                    <button class="outline-btn" data-action="download-vcard">
                         <i class="fas fa-address-card"></i>
                         VCARD
                     </button>
@@ -241,10 +241,10 @@
 
                 <!-- Expand/Collapse Controls -->
                 <div class="experience-controls">
-                    <button class="experience-btn" id="expandBtn" onclick="toggleExperience()">
+                    <button class="experience-btn" id="expandBtn" data-action="toggle-experience">
                         Ler mais +
                     </button>
-                    <button class="experience-btn" id="collapseBtn" onclick="toggleExperience()" style="display: none;">
+                    <button class="experience-btn" id="collapseBtn" data-action="toggle-experience" style="display: none;">
                         Ler menos -
                     </button>
                 </div>
@@ -257,7 +257,7 @@
     <section id="credenciais" class="credentials-section">
         <div class="credentials-bar">
             <h2 class="credentials-title">Credenciais</h2>
-            <button class="credentials-toggle" id="credentialsToggle" onclick="toggleCredentials()" aria-label="Expandir Credentials">
+            <button class="credentials-toggle" id="credentialsToggle" data-action="toggle-credentials" aria-label="Expandir Credentials">
                 <div class="credentials-icon">
                     <span class="credentials-plus">+</span>
                 </div>
@@ -366,7 +366,7 @@
                     </div>
                 </div>
 
-                <form class="contact-form" action="https://formsubmit.co/leonardo.augusto@diretorio.adv.br" method="POST" onsubmit="submitForm(event)">
+                <form class="contact-form" action="https://formsubmit.co/leonardo.augusto@diretorio.adv.br" method="POST" data-action="submit-form">
                     <input type="hidden" name="_subject" value="Nova mensagem do site - Leonardo Augusto Advocacia">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
