@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leonardo Augusto - Advogado Militar | Diretório</title>
+    <meta name="description" content="Leonardo Augusto, R.J - Advogado Militar especializado em direito militar. Atendimento profissional no Rio de Janeiro.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Leonardo Augusto - Advogado Militar | Diretório">
+    <meta property="og:description" content="Leonardo Augusto, R.J - Advogado Militar especializado em direito militar. Atendimento profissional no Rio de Janeiro.">
+    <meta property="og:image" content="public/images/leonardo-augusto.png">
+    <meta property="og:image:alt" content="Leonardo Augusto - Advogado Militar">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cafecterapia.github.io/leoaugusto">
+    <meta property="og:site_name" content="Leonardo Augusto - Diretório Advocacia">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Leonardo Augusto - Advogado Militar | Diretório">
+    <meta name="twitter:description" content="Leonardo Augusto, R.J - Advogado Militar especializado em direito militar. Atendimento profissional no Rio de Janeiro.">
+    <meta name="twitter:image" content="public/images/leonardo-augusto.png">
+    <meta name="twitter:image:alt" content="Leonardo Augusto - Advogado Militar">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sticky Lawyer Header -->
+    <header class="sticky-lawyer-header" id="stickyHeader">
+        <div class="sticky-header-content">
+            <!-- Left Section - Portrait and Info -->
+            <div class="sticky-lawyer-info">
+                <div class="sticky-portrait">
+                    <img src="public/images/leonardo-augusto.png" alt="Leonardo Augusto">
+                </div>
+                <div class="sticky-text-info">
+                    <h1 class="sticky-lawyer-name">Leonardo Augusto</h1>
+                    <a href="mailto:contato@leonardoaugusto.adv.br" class="sticky-lawyer-email">contato@leonardoaugusto.adv.br</a>
+                </div>
+            </div>
+            
+            <!-- Right Section - Navigation Menu -->
+            <nav class="sticky-nav-menu">
+                <a href="#sobre" class="sticky-nav-item active">Sobre</a>
+                <div class="sticky-nav-separator"></div>
+                <a href="#experiencia" class="sticky-nav-item inactive">Experiência</a>
+                <div class="sticky-nav-separator"></div>
+                <a href="#credenciais" class="sticky-nav-item active">Credenciais</a>
+                <div class="sticky-nav-separator"></div>
+                <a href="#contato" class="sticky-nav-item active">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-content">
+            <a href="#sobre">Visão Geral</a>
+            <a href="#experiencia">Experiência</a>
+            <a href="#credenciais">Credenciais</a>
+            <a href="#contato">Contato</a>
+        </div>
+    </nav>
+
+    <!-- Hero Banner Section -->
+    <section class="hero-banner">
+        <!-- Menu Button - Top Right Corner -->
+        <button class="hero-menu-btn" onclick="window.toggleMobileNav()" aria-label="Menu">
+            MENU
+        </button>
+        
+        <div class="banner-background">
+            <img src="public/images/background-image.png" alt="" class="building-bg" />
+            <div class="dark-overlay"></div>
+        </div>
+        
+        <!-- Portrait overlapping into next section -->
+        <div class="portrait-container">
+            <img src="public/images/leonardo-augusto.png" alt="Leonardo Augusto - Advogado Militar" class="portrait-image">
+        </div>
+        
+        <div class="container">
+            <div class="banner-content">
+                <!-- Upper left title section -->
+                <div class="title-section">
+                    <h1 class="main-title">Leonardo Augusto</h1>
+                    <h2 class="subtitle">Advogado Militar</h2>
+                </div>
+                
+                <!-- Elegant horizontal line spanning the banner -->
+                <div class="elegant-line"></div>
+                
+                <!-- Right-aligned action buttons -->
+                <div class="action-buttons-right">
+                    <button class="outline-btn" onclick="downloadPDF()">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF
+                    </button>
+                    <button class="outline-btn" onclick="downloadVCard()">
+                        <i class="fas fa-address-card"></i>
+                        VCARD
+                    </button>
+                </div>
+                
+                <!-- Contact information block -->
+                <div class="contact-block">
+                    <a href="mailto:leonardo.augusto@diretorio.adv.br" class="contact-email">
+                        leonardo.augusto@diretorio.adv.br
+                    </a>
+                    <div class="contact-location">
+                        <span>Rio de Janeiro, RJ</span>
+                        <a href="tel:+5521987654321" class="contact-phone">(21) 98765-4321</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (Light Gray Background) -->
+    <section id="sobre" class="about-section">
+        <div class="about-content">
+            <!-- Left Column - Section Heading -->
+            <div class="about-heading-column">
+                <h2 class="about-section-title">Visão Geral</h2>
+                <div class="about-decorative-line"></div>
+            </div>
+            
+            <!-- Right Column - Content -->
+            <div class="about-text-column">
+                <div class="about-subsection">
+                    <h3 class="about-subsection-title">Experiência</h3>
+                    <p class="about-text">
+                        Mais de 15 anos de atuação especializada em Direito Militar. Reconhecido pela excelência em defesas complexas e assessoria jurídica estratégica.
+                    </p>
+                </div>
+                
+                <div class="about-subsection">
+                    <h3 class="about-subsection-title">Especialização</h3>
+                    <p class="about-text">
+                        Foco em processos administrativos disciplinares e recursos em tribunais militares. Abordagem técnica e personalizada para cada caso.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experiencia" class="experience-section">
+        <div class="experience-content">
+            <!-- Left Column - Section Heading -->
+            <div class="experience-heading-column">
+                <h2 class="experience-section-title">Experiência</h2>
+                <div class="experience-decorative-line"></div>
+            </div>
+            
+            <!-- Right Column - Experience by Practice Areas -->
+            <div class="experience-text-column">
+                <div class="practice-area">
+                    <h3 class="practice-area-title">Processos Administrativos Disciplinares</h3>
+                    
+                    <div class="case-item">
+                        <p class="case-description">
+                            <strong>Caso Major Silva v. Comando Militar do Leste:</strong> Defesa em PAD complexo envolvendo alegações de irregularidades administrativas. Obteve absolvição completa após demonstrar vícios processuais e inconsistências probatórias. Processo descrito pelo relator como "defesa exemplar em matéria disciplinar militar."
+                        </p>
+                    </div>
+                    
+                    <div class="case-item">
+                        <p class="case-description">
+                            <strong>Caso Tenente-Coronel Oliveira (1º CJM):</strong> Representação em processo disciplinar de alta complexidade envolvendo questões de hierarquia e disciplina. Conseguiu redução significativa da punição através de recurso fundamentado em precedentes do STM.
+                        </p>
+                    </div>
+
+                    <div class="case-item">
+                        <p class="case-description">
+                            <strong>Múltiplos PADs - Marinha do Brasil:</strong> Atuação em mais de 50 processos administrativos disciplinares com índice de sucesso superior a 85%, incluindo casos de maior repercussão envolvendo oficiais superiores.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Expandable content starts here -->
+                <div class="experience-expandable" id="experienceExpandable">
+                    <div class="practice-area">
+                        <h3 class="practice-area-title">Recursos em Tribunais Militares</h3>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Recurso Ordinário STM nº 2019-45:</strong> Representação em recurso perante o Superior Tribunal Militar questionando decisão de Conselho de Justificação. Obteve reforma da decisão de primeira instância, mantendo o oficial na ativa.
+                            </p>
+                        </div>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Mandado de Segurança TJM/RJ:</strong> Impetração de mandado de segurança preventivo contra ato de comando militar, garantindo o direito de defesa ampla e contraditório em procedimento investigativo.
+                            </p>
+                        </div>
+
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Agravo em Recurso Extraordinário STF:</strong> Atuação perante o Supremo Tribunal Federal em questão constitucional envolvendo competência da Justiça Militar. Recurso provido por unanimidade, fixando importante precedente.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="practice-area">
+                        <h3 class="practice-area-title">Conselhos de Justificação</h3>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Conselho de Justificação - Comando Militar do Sul:</strong> Defesa de oficial superior em conselho de justificação por incapacidade moral. Processo concluído com declaração de capacidade moral e profissional, permitindo permanência na carreira militar.
+                            </p>
+                        </div>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Caso Coronel Santos (COLOG):</strong> Representação em conselho de justificação envolvendo questões de probidade administrativa. Obteve decisão favorável após demonstrar ausência de dolo e má-fé nas condutas investigadas.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="practice-area">
+                        <h3 class="practice-area-title">Consultoria Preventiva</h3>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Assessoria Estratégica - Ministério da Defesa:</strong> Consultoria preventiva em questões disciplinares e administrativas para mais de 200 militares, evitando instauração de procedimentos disciplinares através de orientação técnica especializada.
+                            </p>
+                        </div>
+                        
+                        <div class="case-item">
+                            <p class="case-description">
+                                <strong>Pareceres Jurídicos Especializados:</strong> Elaboração de pareceres técnicos em matéria de direito militar para comandos e organizações militares, incluindo análise de regulamentos, estatutos e legislação específica.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expand/Collapse Controls -->
+                <div class="experience-controls">
+                    <button class="experience-btn" id="expandBtn" onclick="toggleExperience()">
+                        Ler mais +
+                    </button>
+                    <button class="experience-btn" id="collapseBtn" onclick="toggleExperience()" style="display: none;">
+                        Ler menos -
+                    </button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credentials Section -->
+    <section id="credenciais" class="credentials-section">
+        <div class="credentials-bar">
+            <h2 class="credentials-title">Credenciais</h2>
+            <button class="credentials-toggle" id="credentialsToggle" onclick="toggleCredentials()" aria-label="Expandir Credentials">
+                <div class="credentials-icon">
+                    <span class="credentials-plus">+</span>
+                </div>
+            </button>
+        </div>
+        
+        <div class="credentials-content" id="credentialsContent">
+            <div class="credentials-inner">
+                <div class="credentials-category">
+                    <h3 class="credentials-category-title">Habilitações & Qualificações</h3>
+                    <div class="credentials-list">
+                        <div class="credentials-item">
+                            <span class="credentials-year">2008</span>
+                            <span class="credentials-desc">Ordem dos Advogados do Brasil - Seção Rio de Janeiro</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-year">2012</span>
+                            <span class="credentials-desc">Especialização em Direito Militar - ESG</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-year">2015</span>
+                            <span class="credentials-desc">Certificação em Direito Penal Militar - IBCCRIM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="credentials-category">
+                    <h3 class="credentials-category-title">Tribunais</h3>
+                    <div class="credentials-list">
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Superior Tribunal Militar (STM)</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Tribunal de Justiça Militar do Estado do Rio de Janeiro</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">1ª Circunscrição Judiciária Militar</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Supremo Tribunal Federal</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Superior Tribunal de Justiça</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Tribunal Regional Federal da 2ª Região</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="credentials-category">
+                    <h3 class="credentials-category-title">Formação</h3>
+                    <div class="credentials-list">
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Universidade do Estado do Rio de Janeiro (UERJ)</span>
+                            <span class="credentials-degree">Bacharel em Direito, 2007</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Escola Superior de Guerra (ESG)</span>
+                            <span class="credentials-degree">Especialização em Direito Militar, 2012</span>
+                        </div>
+                        <div class="credentials-item">
+                            <span class="credentials-desc">Fundação Getulio Vargas (FGV)</span>
+                            <span class="credentials-degree">MBA em Gestão Pública, 2018</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="contact">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contact-content">
+                <div class="contact-info-section">
+                    <h3>Informações de Contato</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Endereço</strong>
+                            <p>Rua da Assembléia, 100 - Centro<br>Rio de Janeiro, RJ - 20011-901</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Telefone</strong>
+                            <p>(21) 98765-4321</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>E-mail</strong>
+                            <p>leonardo.augusto@diretorio.adv.br</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Horário de Atendimento</strong>
+                            <p>Segunda à Sexta: 9h às 18h<br>Sábado: 9h às 13h</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form" action="https://formsubmit.co/leonardo.augusto@diretorio.adv.br" method="POST" onsubmit="submitForm(event)">
+                    <input type="hidden" name="_subject" value="Nova mensagem do site - Leonardo Augusto Advocacia">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <h3>Envie uma Mensagem</h3>
+                    <div class="form-group">
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="telefone" name="telefone" placeholder="Seu telefone">
+                    </div>
+                    <div class="form-group">
+                        <select id="assunto" name="assunto" required>
+                            <option value="">Selecione o assunto</option>
+                            <option value="processo-administrativo">Processo Administrativo</option>
+                            <option value="justica-militar">Justiça Militar</option>
+                            <option value="beneficios-militares">Benefícios Militares</option>
+                            <option value="consultoria">Consultoria Jurídica</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="mensagem" name="mensagem" placeholder="Descreva brevemente sua situação" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DIRETÓRIO</h4>
+                    <p>Advocacia especializada em Direito Militar</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <p>leonardo.augusto@diretorio.adv.br</p>
+                    <p>(21) 98765-4321</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Leonardo Augusto - Diretório Advocacia. Todos os direitos reservados.</p>
+                <p>OAB/RJ: 123.456</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
