@@ -1,3 +1,8 @@
-[build]
-command = "npm run build"
-pages_build_output_dir = "./dist"
+
+name = "leoaugusto"
+compatibility_date = "2024-01-01"
+
+# The section for Pages build configuration
+[pages_build]
+build_command = "npm run build"
+build_output_dir = "dist"
