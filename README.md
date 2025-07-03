@@ -46,6 +46,14 @@ npm run preview
    - **Build output directory**: `dist`
    - **Node.js version**: `18` ou superior
 
+⚠️ **IMPORTANTE**: O arquivo `wrangler.toml` está configurado corretamente para Pages. Se você ver o erro "wrangler.toml file was found but it does not appear to be valid", verifique se o arquivo contém:
+
+```toml
+[build]
+command = "npm run build"
+pages_build_output_dir = "./dist"
+```
+
 #### Método 2: Upload Manual
 ```bash
 # Build o projeto
@@ -63,7 +71,7 @@ npm install -g wrangler
 wrangler login
 
 # Deploy do projeto
-wrangler pages publish dist --project-name=leoaugusto
+wrangler pages deploy dist --project-name=leoaugusto
 ```
 
 ## 🔧 Configurações do Cloudflare Pages
@@ -163,6 +171,11 @@ As cores principais podem ser alteradas no arquivo `style.css`:
 
 ## 🐛 Troubleshooting
 
+### ⚠️ CLOUDFLARE PAGES BUILD FALHA
+- ✅ **SOLUÇÃO APLICADA**: Corrigido `wrangler.toml` para usar `pages_build_output_dir`
+- ✅ **Build command**: Configurado `npm run build` no wrangler.toml
+- ✅ **Output directory**: Configurado `./dist` como pages_build_output_dir
+
 ### JavaScript não funciona no Cloudflare Pages
 - ✅ **SOLUÇÃO APLICADA**: Removidos onclick attributes e implementado event delegation
 - ✅ **CSP Headers**: Content Security Policy foi ajustado para não bloquear JavaScript
@@ -181,21 +194,59 @@ As cores principais podem ser alteradas no arquivo `style.css`:
 
 ### ⚠️ Problemas Técnicos Identificados e Resolvidos
 
-1. **Content Security Policy (CSP)**: 
+1. **Cloudflare Pages Build Configuration**:
+   - ❌ Problema: `wrangler.toml` configurado para Workers, não Pages
+   - ✅ Solução: Configurado `pages_build_output_dir` no wrangler.toml
+
+2. **Content Security Policy (CSP)**: 
    - ❌ Problema: CSP bloqueava onclick attributes
    - ✅ Solução: Removido CSP e implementado event delegation
 
-2. **Inline JavaScript**:
+3. **Inline JavaScript**:
    - ❌ Problema: onclick="function()" não é considerado boa prática
    - ✅ Solução: Implementado event delegation com data-attributes
 
-3. **Asset Paths**:
+4. **Asset Paths**:
    - ❌ Problema: Paths com `public/` não funcionam após build
    - ✅ Solução: Paths relativos `/images/` processados pelo Vite
 
-4. **ES6 Modules**:
+5. **ES6 Modules**:
    - ❌ Problema: Import do Lenis deprecated
    - ✅ Solução: Atualizado para package atual `lenis`
+
+## ✅ Checklist de Deploy - Cloudflare Pages
+
+Antes de fazer o deploy, verifique se todos os itens estão corretos:
+
+### Arquivos de Configuração
+- [ ] `wrangler.toml` contém `pages_build_output_dir = "./dist"`
+- [ ] `package.json` tem script `"build": "vite build"`
+- [ ] `vite.config.mjs` está configurado corretamente
+- [ ] `public/_headers` existe (opcional, para headers personalizados)
+- [ ] `public/_redirects` existe (opcional, para redirects)
+
+### Build Local
+- [ ] `npm install` executado sem erros
+- [ ] `npm run build` gera pasta `dist/` corretamente
+- [ ] Pasta `dist/` contém:
+  - [ ] `index.html`
+  - [ ] `assets/` com JS e CSS minificados
+  - [ ] `images/` com todas as imagens
+  - [ ] `_headers` e `_redirects` (se existirem)
+
+### Cloudflare Pages Dashboard
+- [ ] Build command: `npm run build`
+- [ ] Build output directory: `dist`
+- [ ] Node.js version: 18+
+- [ ] Variáveis de ambiente (se necessárias)
+
+### Teste Pós-Deploy
+- [ ] Site carrega sem erros 404
+- [ ] JavaScript funciona (botões respondem)
+- [ ] Imagens carregam corretamente
+- [ ] Smooth scrolling funciona
+- [ ] Formulário de contato funciona
+- [ ] Menu mobile funciona
 
 ## 📞 Suporte
 
