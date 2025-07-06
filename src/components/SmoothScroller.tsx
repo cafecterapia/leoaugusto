@@ -37,7 +37,7 @@ export default function SmoothScroller() {
       requestAnimationFrame(raf);
 
       // Add passive wheel event listener to improve performance
-      const handleWheel = (e: WheelEvent) => {
+      const handleWheel = () => {
         // This helps reduce the main thread blocking
       };
       
