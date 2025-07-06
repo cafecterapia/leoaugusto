@@ -1,3 +1,5 @@
+"use client";
+
 export default function Footer() {
   return (
     <footer
@@ -10,13 +12,18 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6">
         {/* Top section with "De volta ao top" and "Privacy Policy" */}
         <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-2">
-            <span className="text-sm cursor-pointer">De volta ao top</span>
+          <button
+            className="flex items-center gap-2 hover:opacity-70 transition-opacity"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Scroll to top"
+          >
+            <span className="text-sm">De volta ao top</span>
             <svg
               className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -25,10 +32,10 @@ export default function Footer() {
                 d="M5 15l7-7 7 7"
               />
             </svg>
-          </div>
-          <div>
-            <span className="text-sm cursor-pointer">Privacy Policy</span>
-          </div>
+          </button>
+          <button className="text-sm hover:opacity-70 transition-opacity">
+            Privacy Policy
+          </button>
         </div>
 
         {/* Copyright at the bottom */}

@@ -31,11 +31,8 @@ export default function VerticalPhotoGrid() {
     const timer = setTimeout(() => {
       const photos = containerRef.current?.querySelectorAll("[data-photo]");
       if (!photos || photos.length === 0) {
-        console.warn("No photos found");
         return;
       }
-
-      console.log(`Found ${photos.length} photos`);
 
       photos.forEach((photo, index) => {
         const overlay = photo.querySelector(
@@ -43,10 +40,7 @@ export default function VerticalPhotoGrid() {
         ) as HTMLElement;
         const nextPhoto = photos[index + 1] as HTMLElement;
 
-        console.log(`Processing photo ${index}, overlay:`, overlay);
-
         if (!overlay) {
-          console.warn(`Overlay not found for photo ${index}`);
           return;
         }
 
