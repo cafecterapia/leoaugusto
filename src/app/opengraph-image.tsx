@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Leonardo Augusto - Professional Portfolio";
+export const alt = "Leonardo Augusto - Direito Militar";
 export const size = {
   width: 1200,
   height: 630,
@@ -27,90 +27,85 @@ export default async function Image() {
             height: "100%",
             width: "100%",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#ffffff",
-            padding: "60px",
+            position: "relative",
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           }}
         >
-          {/* Left side - Header photo */}
-          <div
+          {/* Background photo - full size */}
+          <img
+            src={imageUrl}
+            alt="Leonardo Augusto"
             style={{
-              display: "flex",
-              width: "400px",
-              height: "400px",
-              borderRadius: "20px",
-              overflow: "hidden",
-              boxShadow:
-                "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
             }}
-          >
-            <img
-              src={imageUrl}
-              alt="Leonardo Augusto"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-              }}
-            />
-          </div>
+          />
 
-          {/* Right side - Content */}
+          {/* Dark overlay for text readability */}
           <div
             style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.4)",
+            }}
+          />
+
+          {/* Text content overlay */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "60px",
+              left: "60px",
+              right: "60px",
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
-              justifyContent: "center",
-              flex: 1,
-              marginLeft: "80px",
+              zIndex: 10,
             }}
           >
             {/* Title */}
             <h1
               style={{
-                fontSize: "64px",
+                fontSize: "56px",
                 fontWeight: "bold",
-                color: "#1f2937",
+                color: "#ffffff",
                 marginBottom: "20px",
                 lineHeight: 1.1,
                 margin: "0 0 20px 0",
+                textShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
               }}
             >
-              Leonardo Augusto
+              Leonardo Augusto - Direito Militar
             </h1>
 
-            {/* Domain */}
+            {/* Subtitle */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "#f3f4f6",
+                backgroundColor: "rgba(255, 255, 255, 0.95)",
                 padding: "20px 30px",
                 borderRadius: "12px",
-                border: "2px solid #e5e7eb",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <div
-                style={{
-                  width: "12px",
-                  height: "12px",
-                  backgroundColor: "#10b981",
-                  borderRadius: "50%",
-                  marginRight: "16px",
-                }}
-              />
               <span
                 style={{
                   fontSize: "32px",
-                  color: "#374151",
+                  color: "#1f2937",
                   fontWeight: "600",
+                  lineHeight: 1.2,
                 }}
               >
-                leonardoaugusto.com
+                Advogado Especialista em Direito Militar
               </span>
             </div>
           </div>
