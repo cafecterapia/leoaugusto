@@ -5,13 +5,15 @@ import Image from "next/image";
 export default function HeroSection() {
   return (
     <section className="bg-primary-background relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]">
-      <Image
-        src="/images/header-photo.png"
-        alt="Header background"
-        fill
-        className="object-cover"
-        priority
-      />
+      <div className="relative w-full h-full">
+        <Image
+          src="/images/header-photo.png"
+          alt="Header background"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
 
       {/* Left-aligned text content - moved lower and bigger for mobile */}
       <div className="absolute inset-0 flex items-end pb-8 sm:pb-16 lg:pb-20">

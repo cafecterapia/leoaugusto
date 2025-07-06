@@ -1,16 +1,14 @@
 import { ImageResponse } from "next/og";
+import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
-export const alt = "Leonardo Augusto - Direito Militar";
-export const size = {
-  width: 1200,
-  height: 630,
-};
-export const contentType = "image/png";
-
-export default async function Image() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const title = searchParams.get("title") || "Leonardo Augusto";
+    const subtitle = searchParams.get("subtitle") || "Direito Militar";
+
     return new ImageResponse(
       (
         <div
@@ -21,7 +19,6 @@ export default async function Image() {
             position: "relative",
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            // Create a professional background with gradient
             background:
               "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
           }}
@@ -40,59 +37,60 @@ export default async function Image() {
             }}
           />
 
-          {/* Dark overlay for text readability */}
+          {/* Content container */}
           <div
             style={{
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.3)",
-            }}
-          />
-
-          {/* Text content overlay */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "60px",
-              left: "60px",
-              right: "60px",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "80px",
+              textAlign: "center",
+              position: "relative",
               zIndex: 10,
+              width: "100%",
+              height: "100%",
             }}
           >
             {/* Title */}
             <h1
               style={{
-                fontSize: "64px",
+                fontSize: title.length > 20 ? "56px" : "72px",
                 fontWeight: "bold",
                 color: "transparent",
                 marginBottom: "24px",
-                lineHeight: 1.1,
-                margin: "0 0 24px 0",
                 background: "linear-gradient(to right, #f8fafc, #e2e8f0)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
+                maxWidth: "1000px",
+                lineHeight: "1.1",
               }}
             >
-              Leonardo Augusto
+              {title}
             </h1>
 
             {/* Subtitle */}
+            <p
+              style={{
+                fontSize: subtitle.length > 30 ? "24px" : "32px",
+                color: "#94a3b8",
+                marginBottom: "40px",
+                fontWeight: "300",
+                maxWidth: "800px",
+              }}
+            >
+              {subtitle}
+            </p>
+
+            {/* Website badge */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                backgroundColor: "rgba(30, 41, 59, 0.95)",
-                padding: "24px 32px",
+                backgroundColor: "#1e293b",
+                padding: "16px 32px",
                 borderRadius: "12px",
-                border: "1px solid rgba(51, 65, 85, 0.5)",
-                boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+                border: "1px solid #334155",
               }}
             >
               <div
@@ -106,13 +104,12 @@ export default async function Image() {
               />
               <span
                 style={{
-                  fontSize: "36px",
+                  fontSize: "28px",
                   color: "#f1f5f9",
-                  fontWeight: "600",
-                  lineHeight: 1.2,
+                  fontWeight: "500",
                 }}
               >
-                Direito Militar
+                leonardoaugusto.com
               </span>
             </div>
           </div>
@@ -135,7 +132,7 @@ export default async function Image() {
             style={{
               position: "absolute",
               bottom: "40px",
-              right: "40px",
+              left: "40px",
               width: "80px",
               height: "80px",
               background: "linear-gradient(45deg, #10b981, #059669)",
@@ -146,7 +143,8 @@ export default async function Image() {
         </div>
       ),
       {
-        ...size,
+        width: 1200,
+        height: 630,
         headers: {
           "cache-control": "public, max-age=31536000, immutable",
         },
@@ -154,7 +152,8 @@ export default async function Image() {
     );
   } catch (error) {
     console.error("Failed to generate OpenGraph image:", error);
-    // Return a simple fallback image
+
+    // Return a simple fallback
     return new ImageResponse(
       (
         <div
@@ -164,19 +163,20 @@ export default async function Image() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#ffffff",
-            color: "#1f2937",
+            backgroundColor: "#0f172a",
+            color: "#f8fafc",
             fontSize: "48px",
             fontWeight: "bold",
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           }}
         >
-          Leonardo Augusto
+          Leonardo Augusto - Direito Militar
         </div>
       ),
       {
-        ...size,
+        width: 1200,
+        height: 630,
       }
     );
   }

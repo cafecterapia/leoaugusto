@@ -3,12 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
-import { Flip } from "gsap/Flip";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
 // Register GSAP plugins
-gsap.registerPlugin(Flip, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const photos = [
   { src: "/images/grid.png", alt: "Grid photo 1", text: "Palestras" },
@@ -44,39 +43,40 @@ export default function VerticalPhotoGrid() {
           return;
         }
 
-        // Set initial state - overlay covers the entire image
+        // Set initial state - overlay covers the entire image from top
         gsap.set(overlay, {
+          y: 0,
           height: "100%",
-          transformOrigin: "bottom",
         });
 
         // Create ScrollTrigger for revealing the image
         ScrollTrigger.create({
           trigger: photo,
-          start: "bottom bottom",
+          start: "bottom bottom", // When bottom of photo hits bottom of viewport
           end: nextPhoto
-            ? () => `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px`
+            ? () =>
+                `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
             : "bottom top",
           onEnter: () => {
-            // Reveal image by reducing overlay to bottom portion
+            // Slide overlay down automatically when trigger is hit
             gsap.to(overlay, {
-              height: "30%",
+              y: "70%",
               duration: 0.8,
               ease: "power2.out",
             });
           },
           onLeave: () => {
-            // Reset to covered state when scrolling past the next photo's middle
+            // Reset overlay when moving to next section
             gsap.to(overlay, {
-              height: "100%",
+              y: 0,
               duration: 0.8,
               ease: "power2.out",
             });
           },
           onEnterBack: () => {
-            // Reveal again when scrolling back up
+            // Keep revealed state when scrolling back
             gsap.to(overlay, {
-              height: "30%",
+              y: "70%",
               duration: 0.8,
               ease: "power2.out",
             });
@@ -84,14 +84,14 @@ export default function VerticalPhotoGrid() {
           onLeaveBack: () => {
             // Reset when scrolling back up past trigger
             gsap.to(overlay, {
-              height: "100%",
+              y: 0,
               duration: 0.8,
               ease: "power2.out",
             });
           },
         });
       });
-    }, 500);
+    }, 100);
 
     // Cleanup function
     return () => {
@@ -103,7 +103,7 @@ export default function VerticalPhotoGrid() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col gap-4 w-full max-w-xs mx-auto"
+      className="flex flex-col gap-8 w-full max-w-xs mx-auto"
     >
       {photos.map((photo, index) => (
         <motion.div
@@ -128,11 +128,11 @@ export default function VerticalPhotoGrid() {
           />
           {/* Overlay for GSAP control */}
           <div
-            className="absolute inset-0 bg-secondary/80 flex items-end justify-center pb-4"
+            className="absolute inset-0 bg-secondary/90 flex items-center justify-center"
             data-overlay={`overlay-${index}`}
           >
             <span
-              className="text-primary-foreground text-xl sm:text-2xl font-bold text-center z-10"
+              className="text-primary-foreground text-xl sm:text-2xl font-bold text-center z-10 px-4"
               data-text={`text-${index}`}
             >
               {photo.text}

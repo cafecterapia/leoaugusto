@@ -20,8 +20,8 @@ export function generateOpenGraphMetadata({
 }: OGConfig): Metadata {
   const url = `${baseUrl}${path}`;
   const ogImage = image || {
-    url: `${baseUrl}/opengraph-image`,
-    alt: "Leonardo Augusto - Professional Portfolio",
+    url: `${baseUrl}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description)}`,
+    alt: "Leonardo Augusto - Direito Militar",
   };
 
   return {
@@ -56,21 +56,21 @@ export function generateOpenGraphMetadata({
 
 // Pre-configured metadata for common pages
 export const homeMetadata = generateOpenGraphMetadata({
-  title: "Leonardo Augusto - Professional Portfolio",
+  title: "Leonardo Augusto - Direito Militar",
   description:
-    "A clean, professional portfolio showcasing creative work and smooth user experiences",
+    "Advogado especializado em Direito Militar, com foco em defesa de militares e civis. Conheça meu trabalho e como posso ajudar.",
 });
 
 export const aboutMetadata = generateOpenGraphMetadata({
   title: "About - Leonardo Augusto",
   description:
-    "Learn more about Leonardo Augusto's background, skills, and creative journey",
+    "Conheça mais sobre Leonardo Augusto, advogado especializado em Direito Militar.",
   path: "/about",
 });
 
 export const contactMetadata = generateOpenGraphMetadata({
   title: "Contact - Leonardo Augusto",
   description:
-    "Get in touch with Leonardo Augusto for collaboration opportunities and inquiries",
+    "Entre em contato com Leonardo Augusto para oportunidades de colaboração e consultas.",
   path: "/contact",
 });

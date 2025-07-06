@@ -19,20 +19,30 @@
 @layer base {
   :root {
     /* Primary colors */
-    --color-primary: #1e3a8a; /* Navy blue */
-    --color-primary-foreground: #ffffff; /* White text on primary */
+    --color-primary: #1e3a8a;
+    /* Navy blue */
+    --color-primary-foreground: #ffffff;
+    /* White text on primary */
 
     /* Secondary colors */
-    --color-secondary: #ffffff; /* White */
-    --color-secondary-foreground: #1e3a8a; /* Navy text on secondary */
+    --color-secondary: #ffffff;
+    /* White */
+    --color-secondary-foreground: #1e3a8a;
+    /* Navy text on secondary */
 
     /* Background colors */
-    --color-background: #ffffff; /* Main background */
-    --color-background-secondary: #f8f9fa; /* Secondary background */
+    --color-background: #ffffff;
+    /* Main background */
+    --color-background-secondary: #f8f9fa;
+    /* Secondary background */
+    --color-primary-background: #1e3a8a;
+    /* Primary background for compatibility */
 
     /* Foreground/text colors */
-    --color-foreground: #1e3a8a; /* Main text color */
-    --color-foreground-secondary: #6b7280; /* Secondary text color */
+    --color-foreground: #1e3a8a;
+    /* Main text color */
+    --color-foreground-secondary: #6b7280;
+    /* Secondary text color */
 
     /* Spacing values */
     --spacing-18: 4.5rem;
@@ -112,5 +122,17 @@
     body {
       line-height: 1.6;
     }
+  }
+}
+
+@layer utilities {
+  /* Custom background utilities */
+  .bg-primary-background {
+    background-color: var(--color-primary-background);
+  }
+
+  /* Font weight utilities */
+  .font-blck {
+    font-weight: 900;
   }
 }

@@ -30,7 +30,7 @@ export default function FullscreenMenu({
 
             {/* Animated hamburger to X */}
             <div
-              className="flex flex-col justify-center items-center w-6 h-6 cursor-pointer relative"
+              className="flex flex-col justify-center items-center w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 cursor-pointer relative"
               onClick={onClose}
             >
               {/* Top line - transforms to top part of X */}
@@ -38,10 +38,10 @@ export default function FullscreenMenu({
                 initial={false}
                 animate={{
                   rotate: isOpen ? 45 : 0,
-                  y: isOpen ? 2 : -2,
+                  y: isOpen ? 3 : -3,
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="absolute w-5 h-0.5 bg-white"
+                className="absolute w-6 h-0.5 sm:w-7 sm:h-0.5 lg:w-8 lg:h-1 bg-white"
               />
 
               {/* Bottom line - transforms to bottom part of X */}
@@ -49,10 +49,10 @@ export default function FullscreenMenu({
                 initial={false}
                 animate={{
                   rotate: isOpen ? -45 : 0,
-                  y: isOpen ? -2 : 2,
+                  y: isOpen ? -3 : 3,
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="absolute w-5 h-0.5 bg-white"
+                className="absolute w-6 h-0.5 sm:w-7 sm:h-0.5 lg:w-8 lg:h-1 bg-white"
               />
             </div>
           </div>

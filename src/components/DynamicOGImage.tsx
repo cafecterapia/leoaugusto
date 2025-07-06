@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Leonardo Augusto - Professional Portfolio";
+export const alt = "Leonardo Augusto - Direito Militar";
 export const size = {
   width: 1200,
   height: 630,
@@ -15,7 +15,7 @@ export default async function DynamicImage({
   params?: { title?: string; subtitle?: string };
 }) {
   const title = params.title || "Leonardo Augusto";
-  const subtitle = params.subtitle || "Professional Portfolio";
+  const subtitle = params.subtitle || "Direito Militar";
 
   return new ImageResponse(
     (
