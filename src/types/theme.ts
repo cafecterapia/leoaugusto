@@ -21,26 +21,26 @@ export interface ColorTheme {
 }
 
 // Extend the global CSS module declarations if needed
-declare module '*.module.css' {
+declare module "*.module.css" {
   const classes: { [key: string]: string };
 }
 
 // Color constants for programmatic use
 export const THEME_COLORS = {
   surface: {
-    primary: 'surface-primary',
-    secondary: 'surface-secondary',
-    accent: 'surface-accent',
+    primary: "surface-primary",
+    secondary: "surface-secondary",
+    accent: "surface-accent",
   },
   text: {
-    primary: 'text-primary',
-    secondary: 'text-secondary',
-    inverse: 'text-inverse',
+    primary: "text-primary",
+    secondary: "text-secondary",
+    inverse: "text-inverse",
   },
   background: {
-    primary: 'background-primary',
-    secondary: 'background-secondary',
-    dark: 'background-dark',
+    primary: "background-primary",
+    secondary: "background-secondary",
+    dark: "background-dark",
   },
 } as const;
 

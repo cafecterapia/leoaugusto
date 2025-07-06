@@ -4,9 +4,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
-    <section 
-      className="bg-primary-background relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]"
-    >
+    <section className="bg-primary-background relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]">
       <Image
         src="/images/header-photo.png"
         alt="Header background"
@@ -14,7 +12,7 @@ export default function HeroSection() {
         className="object-cover"
         priority
       />
-      
+
       {/* Left-aligned text content - moved lower and bigger for mobile */}
       <div className="absolute inset-0 flex items-end pb-8 sm:pb-16 lg:pb-20">
         <div className="w-full sm:w-3/4 lg:w-1/2 pl-4 sm:pl-6 lg:pl-12">
@@ -29,14 +27,14 @@ export default function HeroSection() {
               <h2 className="text-7xl sm:text-8xl lg:text-[8rem] xl:text-[10rem] 2xl:text-[12rem] font-black leading-none">
                 Direito Militar
               </h2>
-              
+
               {/* Down arrow - bigger and more prominent */}
-              <svg 
-                className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 flex-shrink-0 self-start sm:mt-4" 
-                fill="currentColor" 
+              <svg
+                className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 flex-shrink-0 self-start sm:mt-4"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
               </svg>
             </div>
           </div>

@@ -1,13 +1,16 @@
-'use client';
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from "framer-motion";
 
 interface FullscreenMenuProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps) {
+export default function FullscreenMenu({
+  isOpen,
+  onClose,
+}: FullscreenMenuProps) {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -26,7 +29,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
             </div>
 
             {/* Animated hamburger to X */}
-            <div 
+            <div
               className="flex flex-col justify-center items-center w-6 h-6 cursor-pointer relative"
               onClick={onClose}
             >
@@ -40,7 +43,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="absolute w-5 h-0.5 bg-white"
               />
-              
+
               {/* Bottom line - transforms to bottom part of X */}
               <motion.div
                 initial={false}
@@ -77,7 +80,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
                     Home
                   </a>
                 </motion.li>
-                
+
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -91,7 +94,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
                     About
                   </a>
                 </motion.li>
-                
+
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -105,7 +108,7 @@ export default function FullscreenMenu({ isOpen, onClose }: FullscreenMenuProps)
                     Work
                   </a>
                 </motion.li>
-                
+
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}

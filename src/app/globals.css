@@ -19,25 +19,25 @@
 @layer base {
   :root {
     /* Primary colors */
-    --color-primary: #1e3a8a;           /* Navy blue */
+    --color-primary: #1e3a8a; /* Navy blue */
     --color-primary-foreground: #ffffff; /* White text on primary */
-    
+
     /* Secondary colors */
-    --color-secondary: #ffffff;          /* White */
+    --color-secondary: #ffffff; /* White */
     --color-secondary-foreground: #1e3a8a; /* Navy text on secondary */
-    
+
     /* Background colors */
-    --color-background: #ffffff;         /* Main background */
+    --color-background: #ffffff; /* Main background */
     --color-background-secondary: #f8f9fa; /* Secondary background */
-    
+
     /* Foreground/text colors */
-    --color-foreground: #1e3a8a;        /* Main text color */
+    --color-foreground: #1e3a8a; /* Main text color */
     --color-foreground-secondary: #6b7280; /* Secondary text color */
-    
+
     /* Spacing values */
     --spacing-18: 4.5rem;
     --spacing-88: 22rem;
-    
+
     /* Border radius values */
     --border-radius-section: 1rem;
     --border-radius-section-sm: 2rem;
@@ -74,7 +74,7 @@
     html {
       scroll-behavior: auto;
     }
-    
+
     *,
     *::before,
     *::after {
@@ -88,7 +88,13 @@
   body {
     max-width: 100vw;
     overflow-x: hidden;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     background: var(--color-background);
     color: var(--color-foreground);
     line-height: 1.5;

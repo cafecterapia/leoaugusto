@@ -40,12 +40,12 @@ export default function SmoothScroller() {
       const handleWheel = () => {
         // This helps reduce the main thread blocking
       };
-      
-      window.addEventListener('wheel', handleWheel, { passive: true });
+
+      window.addEventListener("wheel", handleWheel, { passive: true });
 
       // Cleanup
       return () => {
-        window.removeEventListener('wheel', handleWheel);
+        window.removeEventListener("wheel", handleWheel);
         lenis.destroy();
       };
     }
