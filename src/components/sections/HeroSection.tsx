@@ -1,38 +1,59 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 export default function HeroSection() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
-    <section className="bg-primary-background relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]">
+    <section
+      className="relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]"
+      style={{
+        backgroundColor: "#ffffff",
+        backgroundImage: imageLoaded ? "none" : "url(/images/header-photo.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="relative w-full h-full">
         <Image
           src="/images/header-photo.png"
           alt="Header background"
           fill
-          className="object-cover"
+          className={`object-cover transition-opacity duration-0 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
           priority
+          quality={100}
+          sizes="100vw"
+          onLoad={() => setImageLoaded(true)}
+          placeholder="empty"
         />
       </div>
 
       {/* Left-aligned text content - moved lower and bigger for mobile */}
-      <div className="absolute inset-0 flex items-end pb-8 sm:pb-16 lg:pb-20">
-        <div className="w-full sm:w-3/4 lg:w-1/2 pl-4 sm:pl-6 lg:pl-12">
+      <div className="absolute inset-0 flex items-end pb-15 sm:pb-16 lg:pb-20">
+        <div className="w-full sm:w-3/4 lg:w-1/2 pl-6 sm:pl-8 lg:pl-12 pr-4 sm:pr-6">
           <div className="text-white">
-            <h3 className="text-6xl sm:text-8xl lg:text-5xl xl:text-7xl 2xl:text-8xl font-blck leading-none mb-2 sm:mb-3 lg:mb-4">
+            <h3 className="text-5xl sm:text-6xl lg:text-6xl xl:text-8xl 2xl:text-9xl font-black leading-none mb-4 sm:mb-6 lg:mb-8">
               ADVOGADO
             </h3>
-            <h1 className="text-7xl sm:text-8xl lg:text-[8rem] xl:text-[10rem] 2xl:text-[12rem] font-extralight leading-none mb-1 sm:mb-2 lg:mb-4">
-              Especialista em
+            <h1 className="text-5xl sm:text-6xl lg:text-[5rem] xl:text-[7rem] 2xl:text-[8rem] font-black leading-none mb-3 sm:mb-4 lg:mb-6">
+              MESTRE EM DIREITO
             </h1>
+            <h2 className="text-4xl sm:text-5xl lg:text-[4rem] xl:text-[5rem] 2xl:text-[6rem] font-light leading-none mb-3 sm:mb-4 lg:mb-6">
+              E <span className="font-black">ESPECIALISTA</span> EM
+            </h2>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 lg:gap-8">
-              <h2 className="text-7xl sm:text-8xl lg:text-[8rem] xl:text-[10rem] 2xl:text-[12rem] font-black leading-none">
-                Direito Militar
+              <h2 className="text-5xl sm:text-7xl lg:text-[7rem] xl:text-[9rem] 2xl:text-[11rem] font-black leading-none">
+                DIREITO MILITAR
               </h2>
 
-              {/* Down arrow - bigger and more prominent */}
+              {/* Down arrow - slightly smaller for better mobile fit */}
               <svg
-                className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 flex-shrink-0 self-start sm:mt-4"
+                className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 flex-shrink-0 self-start sm:mt-4"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >

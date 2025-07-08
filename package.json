@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
+    "dev:webpack": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,7 +15,8 @@
     "format:lint": "npm run format && npm run lint:fix",
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
-    "build:production": "npm run type-check && npm run lint && npm run build"
+    "build:production": "npm run type-check && npm run lint && npm run build",
+    "dev:profile": "next dev --turbo --profile"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",

@@ -9,6 +9,10 @@ export async function GET(request: NextRequest) {
     const title = searchParams.get("title") || "Leonardo Augusto";
     const subtitle = searchParams.get("subtitle") || "Direito Militar";
 
+    // Get the base URL for the image
+    const baseUrl = new URL(request.url).origin;
+    const headerPhotoUrl = `${baseUrl}/images/header-photo.png`;
+
     return new ImageResponse(
       (
         <div
@@ -19,11 +23,24 @@ export async function GET(request: NextRequest) {
             position: "relative",
             fontFamily:
               'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            background:
-              "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
           }}
         >
-          {/* Professional background pattern */}
+          {/* Background image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={headerPhotoUrl}
+            alt="Leonardo Augusto"
+            style={{
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+
+          {/* Dark overlay for better text readability */}
           <div
             style={{
               position: "absolute",
@@ -31,9 +48,7 @@ export async function GET(request: NextRequest) {
               left: "0",
               width: "100%",
               height: "100%",
-              backgroundImage:
-                "radial-gradient(circle at 25px 25px, rgba(148, 163, 184, 0.1) 2px, transparent 0), radial-gradient(circle at 75px 75px, rgba(148, 163, 184, 0.1) 2px, transparent 0)",
-              backgroundSize: "100px 100px",
+              background: "rgba(15, 23, 42, 0.7)",
             }}
           />
 
@@ -113,33 +128,6 @@ export async function GET(request: NextRequest) {
               </span>
             </div>
           </div>
-
-          {/* Decorative elements */}
-          <div
-            style={{
-              position: "absolute",
-              top: "40px",
-              right: "40px",
-              width: "120px",
-              height: "120px",
-              background: "linear-gradient(45deg, #3b82f6, #1d4ed8)",
-              borderRadius: "50%",
-              opacity: 0.15,
-            }}
-          />
-
-          <div
-            style={{
-              position: "absolute",
-              bottom: "40px",
-              left: "40px",
-              width: "80px",
-              height: "80px",
-              background: "linear-gradient(45deg, #10b981, #059669)",
-              borderRadius: "50%",
-              opacity: 0.15,
-            }}
-          />
         </div>
       ),
       {

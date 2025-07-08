@@ -4,24 +4,70 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import PalestrasFullscreen from "./fullscreen/PalestrasFullscreen";
+import AulasMentoriasFullscreen from "./fullscreen/AulasMentoriasFullscreen";
+import EmpreendimentosFullscreen from "./fullscreen/EmpreendimentosFullscreen";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 const photos = [
-  { src: "/images/grid.png", alt: "Grid photo 1", text: "Palestras" },
-  { src: "/images/grid-2.png", alt: "Grid photo 2", text: "Aulas" },
-  { src: "/images/grid-3.png", alt: "Grid photo 3", text: "Mentoria" },
+  {
+    src: "/images/Palestras-Grid.jpeg",
+    alt: "Grid photo 1",
+    text: "PALESTRAS",
+    position: "left",
+  },
+  {
+    src: "/images/Aulas-Grid.jpeg",
+    alt: "Grid photo 2",
+    text: "AULAS & MENTORIAS",
+    position: "right",
+  },
   {
     src: "/images/header-photo.png",
     alt: "Header photo",
-    text: "Empreendimentos",
+    text: "EMPREENDIMENTOS",
+    position: "left",
   },
 ];
 
 export default function VerticalPhotoGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [fullscreenState, setFullscreenState] = useState<{
+    isOpen: boolean;
+    type: "palestras" | "aulas" | "empreendimentos" | null;
+    imageSrc: string;
+    imageAlt: string;
+  }>({
+    isOpen: false,
+    type: null,
+    imageSrc: "",
+    imageAlt: "",
+  });
+
+  const handlePhotoClick = (
+    type: "palestras" | "aulas" | "empreendimentos",
+    imageSrc: string,
+    imageAlt: string
+  ) => {
+    setFullscreenState({
+      isOpen: true,
+      type,
+      imageSrc,
+      imageAlt,
+    });
+  };
+
+  const handleCloseFullscreen = () => {
+    setFullscreenState({
+      isOpen: false,
+      type: null,
+      imageSrc: "",
+      imageAlt: "",
+    });
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -33,13 +79,42 @@ export default function VerticalPhotoGrid() {
         return;
       }
 
+      // Helper function to reset a photo's overlay and text
+      const resetPhoto = (photoIndex: number) => {
+        const photo = photos[photoIndex];
+        if (!photo) return;
+
+        const overlay = photo.querySelector(
+          `[data-overlay="overlay-${photoIndex}"]`
+        ) as HTMLElement;
+        const text = photo.querySelector(
+          `[data-text="text-${photoIndex}"]`
+        ) as HTMLElement;
+
+        if (overlay && text) {
+          gsap.to(overlay, {
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          });
+          gsap.to(text, {
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          });
+        }
+      };
+
       photos.forEach((photo, index) => {
         const overlay = photo.querySelector(
           `[data-overlay="overlay-${index}"]`
         ) as HTMLElement;
+        const text = photo.querySelector(
+          `[data-text="text-${index}"]`
+        ) as HTMLElement;
         const nextPhoto = photos[index + 1] as HTMLElement;
 
-        if (!overlay) {
+        if (!overlay || !text) {
           return;
         }
 
@@ -47,6 +122,11 @@ export default function VerticalPhotoGrid() {
         gsap.set(overlay, {
           y: 0,
           height: "100%",
+        });
+
+        // Set initial text position (centered)
+        gsap.set(text, {
+          y: 0,
         });
 
         // Create ScrollTrigger for revealing the image
@@ -58,25 +138,50 @@ export default function VerticalPhotoGrid() {
                 `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
             : "bottom top",
           onEnter: () => {
-            // Slide overlay down automatically when trigger is hit
+            // Reset all previous photos when entering a new one
+            for (let i = 0; i < index; i++) {
+              resetPhoto(i);
+            }
+
+            // Slide overlay down and move text to top for current photo
             gsap.to(overlay, {
-              y: "70%",
+              y: "80%",
+              duration: 0.8,
+              ease: "power2.out",
+            });
+            gsap.to(text, {
+              y: "-450%", // Move text up relative to overlay
               duration: 0.8,
               ease: "power2.out",
             });
           },
           onLeave: () => {
-            // Reset overlay when moving to next section
+            // Reset overlay and text when moving to next section
             gsap.to(overlay, {
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+            });
+            gsap.to(text, {
               y: 0,
               duration: 0.8,
               ease: "power2.out",
             });
           },
           onEnterBack: () => {
-            // Keep revealed state when scrolling back
+            // Reset all following photos when scrolling back
+            for (let i = index + 1; i < photos.length; i++) {
+              resetPhoto(i);
+            }
+
+            // Reset current photo overlay and text when scrolling back up
             gsap.to(overlay, {
-              y: "70%",
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+            });
+            gsap.to(text, {
+              y: 0,
               duration: 0.8,
               ease: "power2.out",
             });
@@ -88,8 +193,32 @@ export default function VerticalPhotoGrid() {
               duration: 0.8,
               ease: "power2.out",
             });
+            gsap.to(text, {
+              y: 0,
+              duration: 0.8,
+              ease: "power2.out",
+            });
           },
         });
+      });
+
+      // Create a ScrollTrigger for the entire grid section to reset all photos when leaving
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        onLeave: () => {
+          // Reset all photos when leaving the grid section (scrolling down)
+          for (let i = 0; i < photos.length; i++) {
+            resetPhoto(i);
+          }
+        },
+        onLeaveBack: () => {
+          // Reset all photos when leaving the grid section (scrolling up)
+          for (let i = 0; i < photos.length; i++) {
+            resetPhoto(i);
+          }
+        },
       });
     }, 100);
 
@@ -101,45 +230,82 @@ export default function VerticalPhotoGrid() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="flex flex-col gap-8 w-full max-w-xs mx-auto"
-    >
-      {photos.map((photo, index) => (
-        <motion.div
-          key={photo.src}
-          data-photo={`photo-${index}`}
-          className="relative aspect-square overflow-hidden rounded-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            delay: index * 0.1,
-            ease: "easeOut",
-          }}
-          viewport={{ once: true, margin: "-10%" }}
-        >
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 320px, 384px"
-          />
-          {/* Overlay for GSAP control */}
-          <div
-            className="absolute inset-0 bg-secondary/90 flex items-center justify-center"
-            data-overlay={`overlay-${index}`}
+    <>
+      <div
+        ref={containerRef}
+        className="flex flex-col gap-19 w-full max-w-md sm:max-w-xl lg:max-w-4xl xl:max-w-4xl mx-auto px-2 sm:px-3 lg:px-4"
+      >
+        {photos.map((photo, index) => (
+          <motion.div
+            key={photo.src}
+            data-photo={`photo-${index}`}
+            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl cursor-pointer transform transition-transform duration-300 hover:scale-105 ${
+              photo.position === "left"
+                ? "self-start w-full sm:w-5/6 lg:w-4/5"
+                : "self-end w-full sm:w-5/6 lg:w-4/5"
+            }`}
+            onClick={() => {
+              const typeMap: Record<
+                string,
+                "palestras" | "aulas" | "empreendimentos"
+              > = {
+                "Conhecimento Compartilhado": "palestras",
+                "Formação Especializada": "aulas",
+                "Projetos Inovadores": "empreendimentos",
+              };
+              handlePhotoClick(typeMap[photo.text]!, photo.src, photo.alt);
+            }}
           >
-            <span
-              className="text-primary-foreground text-xl sm:text-2xl font-bold text-center z-10 px-4"
-              data-text={`text-${index}`}
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 95vw, (max-width: 768px) 80vw, (max-width: 1024px) 70vw, 60vw"
+            />
+            {/* Overlay for GSAP control */}
+            <div
+              className={`absolute inset-0 bg-secondary/90 flex items-center ${
+                photo.position === "left"
+                  ? "justify-start pl-6"
+                  : "justify-end pr-6"
+              }`}
+              data-overlay={`overlay-${index}`}
             >
-              {photo.text}
-            </span>
-          </div>
-        </motion.div>
-      ))}
-    </div>
+              <span
+                className="text-primary-foreground text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-center z-10 px-4 py-2 max-w-[80%] leading-tight"
+                data-text={`text-${index}`}
+              >
+                {photo.text}
+              </span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Fullscreen Components */}
+      <PalestrasFullscreen
+        isOpen={fullscreenState.isOpen && fullscreenState.type === "palestras"}
+        onClose={handleCloseFullscreen}
+        imageSrc={fullscreenState.imageSrc}
+        imageAlt={fullscreenState.imageAlt}
+      />
+
+      <AulasMentoriasFullscreen
+        isOpen={fullscreenState.isOpen && fullscreenState.type === "aulas"}
+        onClose={handleCloseFullscreen}
+        imageSrc={fullscreenState.imageSrc}
+        imageAlt={fullscreenState.imageAlt}
+      />
+
+      <EmpreendimentosFullscreen
+        isOpen={
+          fullscreenState.isOpen && fullscreenState.type === "empreendimentos"
+        }
+        onClose={handleCloseFullscreen}
+        imageSrc={fullscreenState.imageSrc}
+        imageAlt={fullscreenState.imageAlt}
+      />
+    </>
   );
 }

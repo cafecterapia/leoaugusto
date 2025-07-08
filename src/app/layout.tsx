@@ -22,6 +22,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   ...homeMetadata,
   metadataBase: new URL("https://leonardoaugusto.com"),
+  openGraph: {
+    ...homeMetadata.openGraph,
+    images: [
+      {
+        url: "/images/header-photo.png",
+        alt: "Leonardo Augusto - Advogado e Mestre em Direito especializado em Direito Militar",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  twitter: {
+    ...homeMetadata.twitter,
+    images: ["/images/header-photo.png"],
+  },
   other: {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
@@ -41,6 +56,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/images/header-photo.png"
+          fetchPriority="high"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning

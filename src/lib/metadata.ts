@@ -57,8 +57,7 @@ export function generateOpenGraphMetadata({
 // Pre-configured metadata for common pages
 export const homeMetadata = generateOpenGraphMetadata({
   title: "Leonardo Augusto - Direito Militar",
-  description:
-    "Advogado especializado em Direito Militar, com foco em defesa de militares e civis. Conheça meu trabalho e como posso ajudar.",
+  description: "Advogado especializado em Direito Militar",
 });
 
 export const aboutMetadata = generateOpenGraphMetadata({
@@ -69,7 +68,7 @@ export const aboutMetadata = generateOpenGraphMetadata({
 });
 
 export const contactMetadata = generateOpenGraphMetadata({
-  title: "Contact - Leonardo Augusto",
+  title: "Leonardo Augusto",
   description:
     "Entre em contato com Leonardo Augusto para oportunidades de colaboração e consultas.",
   path: "/contact",

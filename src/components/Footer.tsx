@@ -10,39 +10,42 @@ export default function Footer() {
       }}
     >
       <div className="max-w-6xl mx-auto px-6">
-        {/* Navigation and Social Links - Mobile First */}
-        <div className="flex flex-col space-y-8 mb-8 md:flex-row md:justify-between md:space-y-0">
+        {/* Navigation and Social Links */}
+        <div className="flex justify-start mb-8 gap-16 md:gap-24">
           {/* Navigation Column */}
           <div className="flex flex-col space-y-3">
             <h3 className="text-sm font-medium mb-2">Navegação</h3>
             <nav className="flex flex-col space-y-2">
               <a
-                href="#home"
-                className="text-sm hover:opacity-70 transition-opacity"
-              >
-                Início
-              </a>
-              <a
-                href="#about"
+                href="#sobre"
                 className="text-sm hover:opacity-70 transition-opacity"
               >
                 Sobre
               </a>
               <a
-                href="#work"
+                href="#servicos"
                 className="text-sm hover:opacity-70 transition-opacity"
               >
-                Trabalhos
+                Serviços
               </a>
               <a
-                href="#contact"
+                href="#palestras"
+                className="text-sm hover:opacity-70 transition-opacity"
+              >
+                Palestras
+              </a>
+              <a
+                href="#mentorias"
+                className="text-sm hover:opacity-70 transition-opacity"
+              >
+                Mentorias
+              </a>
+              <a
+                href="#contact-section"
                 className="text-sm hover:opacity-70 transition-opacity"
               >
                 Contato
               </a>
-              <button className="text-sm hover:opacity-70 transition-opacity text-left">
-                Privacy Policy
-              </button>
             </nav>
           </div>
 
@@ -59,15 +62,15 @@ export default function Footer() {
                 LinkedIn
               </a>
               <a
-                href="https://github.com/leoaugusto"
+                href="https://facebook.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm hover:opacity-70 transition-opacity"
               >
-                GitHub
+                Facebook
               </a>
               <a
-                href="https://instagram.com/leoaugusto"
+                href="https://instagram.com/augustoleonardo.prof"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm hover:opacity-70 transition-opacity"
@@ -112,6 +115,10 @@ export default function Footer() {
         {/* Copyright at the bottom */}
         <div className="text-center">
           <span className="text-sm">© 2025 Leonardo Augusto</span>
+          <span className="text-sm mx-2">•</span>
+          <button className="text-sm hover:opacity-70 transition-opacity">
+            Política de Privacidade
+          </button>
         </div>
       </div>
     </footer>

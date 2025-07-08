@@ -4,8 +4,21 @@ import VerticalPhotoGrid from "../VerticalPhotoGrid";
 
 export default function GridSection() {
   return (
-    <section className="min-h-screen bg-secondary-foreground text-secondary flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-20">
-      <h2 className="text-4xl md:text-6xl font-bold text-center mb-12">Grid</h2>
+    <section
+      id="palestras"
+      className="min-h-screen bg-secondary-foreground text-secondary flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-24 sm:py-28 lg:py-32"
+    >
+      <div className="text-center mb-12">
+        <div className="text-5xl md:text-4xl lg:text-5xl font-bold text-secondary space-y-2 md:space-y-4">
+          <div className="text-left md:text-left">OUTRAS</div>
+          <div className="text-center md:text-center ml-10 md:ml-16">
+            ÁREAS DE
+          </div>
+          <div className="text-center md:text-center mr-17 md:mr-16">
+            ATUAÇÃO
+          </div>
+        </div>
+      </div>
       <VerticalPhotoGrid />
     </section>
   );
