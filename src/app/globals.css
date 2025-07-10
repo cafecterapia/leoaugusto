@@ -126,6 +126,30 @@
 }
 
 @layer utilities {
+  /* Mobile-first viewport height solution */
+  .hero-height {
+    /* Mobile: use a conservative height to prevent cutoff */
+    height: calc(100vh - 60px);
+    min-height: 500px; /* Minimum usable height */
+  }
+  
+  /* Tablet and up: use full viewport height */
+  @media (min-width: 768px) {
+    .hero-height {
+      height: 100vh;
+      min-height: 600px;
+    }
+  }
+  
+  /* Large screens: allow dynamic viewport if supported */
+  @media (min-width: 1024px) {
+    .hero-height {
+      height: 100vh;
+      height: 100dvh;
+      min-height: 700px;
+    }
+  }
+
   /* Custom background utilities */
   .bg-primary-background {
     background-color: var(--color-primary-background);

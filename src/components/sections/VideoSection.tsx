@@ -4,7 +4,7 @@ import VimeoVideo from "@/components/VimeoVideo";
 
 export default function VideoSection() {
   return (
-    <section id="mentorias" className="relative h-screen overflow-hidden">
+    <section id="mentorias" className="relative hero-height overflow-hidden">
       {/* Background Video */}
       <div className="absolute inset-0 w-full h-full">
         <VimeoVideo
