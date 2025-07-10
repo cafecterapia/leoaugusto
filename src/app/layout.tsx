@@ -64,10 +64,7 @@ export default function RootLayout({
           fetchPriority="high"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
         <Header />
         {children}
         <Footer />

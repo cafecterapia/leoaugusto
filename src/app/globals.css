@@ -126,17 +126,27 @@
 }
 
 @layer utilities {
-  /* Mobile viewport height fix for hero section */
+  /* Mobile-first viewport height solution */
   .hero-height {
-    height: 100vh; /* Fallback for older browsers */
-    height: 100dvh; /* Dynamic viewport height for mobile - supported in modern browsers */
+    /* Mobile: use a conservative height to prevent cutoff */
+    height: calc(100vh - 60px);
+    min-height: 500px; /* Minimum usable height */
   }
-
-  /* Support for browsers that don't support dvh */
-  @supports not (height: 100dvh) {
+  
+  /* Tablet and up: use full viewport height */
+  @media (min-width: 768px) {
     .hero-height {
       height: 100vh;
-      height: calc(var(--vh, 1vh) * 100); /* Custom property fallback */
+      min-height: 600px;
+    }
+  }
+  
+  /* Large screens: allow dynamic viewport if supported */
+  @media (min-width: 1024px) {
+    .hero-height {
+      height: 100vh;
+      height: 100dvh;
+      min-height: 700px;
     }
   }
 
