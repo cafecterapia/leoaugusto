@@ -16,7 +16,8 @@
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
     "build:production": "npm run type-check && npm run lint && npm run build",
-    "dev:profile": "next dev --turbo --profile"
+    "dev:profile": "next dev --turbo --profile",
+    "prepare": "husky"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",
@@ -41,10 +42,21 @@
     "eslint-config-next": "15.3.4",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "webpack": "^5.99.9",
     "webpack-bundle-analyzer": "^4.10.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   }
 }
