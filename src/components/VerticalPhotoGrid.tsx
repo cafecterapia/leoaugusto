@@ -26,7 +26,7 @@ const photos = [
     position: "right",
   },
   {
-    src: "/images/header-photo.png",
+    src: "/images/hero-photo.png",
     alt: "Header photo",
     text: "EMPREENDIMENTOS",
     position: "left",
