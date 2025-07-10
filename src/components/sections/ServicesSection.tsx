@@ -35,7 +35,7 @@ export default function ServicesSection({
 
         {/* Contact Information */}
         <div className="mt-12 lg:mt-16 xl:mt-20 text-center">
-          <div className="bg-secondary/10 rounded-lg lg:rounded-xl xl:rounded-2xl p-6 lg:p-8 xl:p-10 @lg:p-8 @xl:p-10 @2xl:p-12 inline-block">
+          <div className="bg-gray-300 dark:bg-gray-900 rounded-lg lg:rounded-xl xl:rounded-2xl p-6 lg:p-8 xl:p-10 @lg:p-8 @xl:p-10 @2xl:p-12 inline-block">
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl @lg:text-base @xl:text-lg @2xl:text-xl">
               <span className="font-semibold">(21) 97126 2427</span> |{" "}
               <span className="mx-2">

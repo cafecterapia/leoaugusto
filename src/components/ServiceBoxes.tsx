@@ -101,7 +101,7 @@ export default function ServiceBoxes({
 
         return newServices;
       });
-    }, 5000); // Change every 5 seconds (slower)
+    }, 8000); // Change every 8 seconds (slower)
 
     return () => clearInterval(interval);
   }, [isClient, selectedIndices]);
@@ -134,9 +134,11 @@ export default function ServiceBoxes({
             key={index}
             className="group relative cursor-pointer"
             onClick={() => handleBoxClick(index)}
+            initial={{ scale: 1 }}
+            animate={{ scale: 1 }}
             whileHover={{ scale: 1.0 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.195, ease: "easeOut" }}
+            whileTap={{ scale: 0.995 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
           >
             {/* Square shaped box with aspect ratio - container stays stable */}
             <div className="aspect-square w-full">
@@ -159,7 +161,7 @@ export default function ServiceBoxes({
                         duration: 0.3,
                         ease: "easeInOut",
                       }}
-                      className="text-secondary-foreground text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium leading-relaxed absolute inset-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-300"
+                      className="text-secondary-foreground text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium leading-relaxed absolute inset-0 flex items-center justify-center"
                     >
                       {service}
                     </motion.p>
