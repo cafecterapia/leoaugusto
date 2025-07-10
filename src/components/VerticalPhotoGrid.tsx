@@ -79,6 +79,15 @@ export default function VerticalPhotoGrid() {
         return;
       }
 
+      // Function to calculate responsive text position
+      const calculateTextPosition = (overlay: HTMLElement) => {
+        const overlayHeight = overlay.offsetHeight;
+        // When overlay moves down by 80%, we want text at the top of the visible overlay area
+        // The overlay shows only the bottom 20%, so we move text up by 30% to position it
+        // at the top of that visible 20% area (from center to top of visible overlay)
+        return -(overlayHeight * 0.4);
+      };
+
       // Helper function to reset a photo's overlay and text
       const resetPhoto = (photoIndex: number) => {
         const photo = photos[photoIndex];
@@ -138,10 +147,14 @@ export default function VerticalPhotoGrid() {
                 `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
             : "bottom top",
           onEnter: () => {
+            console.log(`onEnter photo ${index}`);
             // Reset all previous photos when entering a new one
             for (let i = 0; i < index; i++) {
               resetPhoto(i);
             }
+
+            // Calculate responsive text positioning
+            const textPosition = calculateTextPosition(overlay);
 
             // Slide overlay down and move text to top for current photo
             gsap.to(overlay, {
@@ -150,7 +163,7 @@ export default function VerticalPhotoGrid() {
               ease: "power2.out",
             });
             gsap.to(text, {
-              y: "-450%", // Move text up relative to overlay
+              y: textPosition,
               duration: 0.8,
               ease: "power2.out",
             });
@@ -169,22 +182,27 @@ export default function VerticalPhotoGrid() {
             });
           },
           onEnterBack: () => {
-            // Reset all following photos when scrolling back
-            for (let i = index + 1; i < photos.length; i++) {
-              resetPhoto(i);
-            }
+            // Calculate responsive text positioning first
+            const textPosition = calculateTextPosition(overlay);
 
-            // Reset current photo overlay and text when scrolling back up
+            // Show overlay down and move text to top when scrolling back into view
             gsap.to(overlay, {
-              y: 0,
+              y: "80%",
               duration: 0.8,
               ease: "power2.out",
             });
             gsap.to(text, {
-              y: 0,
+              y: textPosition,
               duration: 0.8,
               ease: "power2.out",
             });
+
+            // Reset all following photos after a small delay to avoid conflicts
+            setTimeout(() => {
+              for (let i = index + 1; i < photos.length; i++) {
+                resetPhoto(i);
+              }
+            }, 50);
           },
           onLeaveBack: () => {
             // Reset when scrolling back up past trigger
@@ -222,9 +240,17 @@ export default function VerticalPhotoGrid() {
       });
     }, 100);
 
+    // Handle window resize to recalculate text positions
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("resize", handleResize);
+
     // Cleanup function
     return () => {
       clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -233,17 +259,21 @@ export default function VerticalPhotoGrid() {
     <>
       <div
         ref={containerRef}
-        className="flex flex-col gap-19 w-full max-w-md sm:max-w-xl lg:max-w-4xl xl:max-w-4xl mx-auto px-2 sm:px-3 lg:px-4"
+        className="flex flex-col gap-19 w-full max-w-md sm:max-w-xl lg:max-w-4xl xl:max-w-4xl mx-auto px-2 sm:px-3 lg:px-4 @container"
       >
         {photos.map((photo, index) => (
           <motion.div
             key={photo.src}
             data-photo={`photo-${index}`}
-            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl cursor-pointer transform transition-transform duration-300 hover:scale-105 ${
+            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl cursor-pointer ${
               photo.position === "left"
                 ? "self-start w-full sm:w-5/6 lg:w-4/5"
                 : "self-end w-full sm:w-5/6 lg:w-4/5"
             }`}
+            // Framer Motion animations for hover/tap
+            whileHover={{ scale: 1.005 }}
+            whileTap={{ scale: 0.995 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             onClick={() => {
               const typeMap: Record<
                 string,
@@ -265,7 +295,7 @@ export default function VerticalPhotoGrid() {
             />
             {/* Overlay for GSAP control */}
             <div
-              className={`absolute inset-0 bg-secondary/90 flex items-center ${
+              className={`absolute inset-0 bg-primary/90 flex items-center ${
                 photo.position === "left"
                   ? "justify-start pl-6"
                   : "justify-end pr-6"
@@ -273,7 +303,9 @@ export default function VerticalPhotoGrid() {
               data-overlay={`overlay-${index}`}
             >
               <span
-                className="text-primary-foreground text-xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-center z-10 px-4 py-2 max-w-[80%] leading-tight"
+                className="text-primary-foreground text-xl min-[23rem]:text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl
+                         @[25rem]:text-3xl @[35rem]:text-4xl @lg:text-3xl @xl:text-4xl @2xl:text-5xl
+                         font-bold text-center z-10 px-4 py-2 max-w-[80%] leading-tight"
                 data-text={`text-${index}`}
               >
                 {photo.text}

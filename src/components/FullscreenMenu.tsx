@@ -71,18 +71,18 @@ export default function FullscreenMenu({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 bg-secondary"
+          className="fixed inset-0 z-50 bg-black"
         >
           {/* Header matching the original header layout */}
-          <div className="absolute top-0 left-0 w-full px-6 py-4 flex justify-between items-center">
+          <div className="absolute top-0 left-0 w-full @container px-4 @sm:px-6 @lg:px-8 py-3 @sm:py-4 @lg:py-5 flex justify-between items-center">
             {/* Logo/Name - perfectly matching header position */}
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-wide">
+            <div className="text-xl @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl font-bold text-white tracking-wide">
               LEONARDO AUGUSTO
             </div>
 
             {/* Animated hamburger to X */}
             <div
-              className="flex flex-col justify-center items-center w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 cursor-pointer relative"
+              className="flex flex-col justify-center items-center w-6 h-6 @sm:w-8 @sm:h-8 @md:w-10 @md:h-10 @lg:w-12 @lg:h-12 cursor-pointer relative"
               onClick={onClose}
             >
               {/* Top line - transforms to top part of X */}
@@ -93,7 +93,7 @@ export default function FullscreenMenu({
                   y: isOpen ? 3 : -3,
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="absolute w-6 h-0.5 sm:w-7 sm:h-0.5 lg:w-8 lg:h-1 bg-white"
+                className="absolute w-4 h-0.5 mb-1 @sm:w-6 @sm:h-0.5 @sm:mb-1.5 @md:w-7 @md:h-0.5 @md:mb-2 @lg:w-8 @lg:h-1 @lg:mb-2 bg-white"
               />
 
               {/* Bottom line - transforms to bottom part of X */}
@@ -104,7 +104,7 @@ export default function FullscreenMenu({
                   y: isOpen ? -3 : 3,
                 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="absolute w-6 h-0.5 sm:w-7 sm:h-0.5 lg:w-8 lg:h-1 bg-white"
+                className="absolute w-4 h-0.5 @sm:w-6 @sm:h-0.5 @md:w-7 @md:h-0.5 @lg:w-8 @lg:h-1 bg-white"
               />
             </div>
           </div>

@@ -4,7 +4,7 @@ export default function AboutSection() {
   return (
     <section
       id="sobre"
-      className="min-h-fit bg-secondary-foreground text-secondary py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12"
+      className="min-h-fit bg--color-primary-background text--color-primary-foreground py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-12 isolate"
     >
       <div className="w-half">
         {/* Header line with "sobre" and "Leonardo Augusto" */}

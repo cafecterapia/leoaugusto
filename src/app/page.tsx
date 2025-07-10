@@ -1,34 +1,80 @@
 "use client";
 
 import { useState } from "react";
-import SmoothScroller from "@/components/SmoothScroller";
+import StickyContactButton from "@/components/StickyContactButton";
 import HeroSection from "@/components/sections/HeroSection";
 import TextSection from "@/components/sections/TextSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import GridSection from "@/components/sections/GridSection";
 import VideoSection from "@/components/sections/VideoSection";
 import ContactSection from "@/components/sections/ContactSection";
+import { services } from "@/lib/services";
+import { useLenis } from "@/components/LenisProvider";
 
 export default function Home() {
+  const { scrollTo } = useLenis();
   const [selectedServicesForContact, setSelectedServicesForContact] = useState<
     string[]
+  >([]);
+  const [selectedServiceIndices, setSelectedServiceIndices] = useState<
+    number[]
   >([]);
 
   const handleContactWithServices = (services: string[]) => {
     setSelectedServicesForContact(services);
   };
 
+  const handleServiceSelectionChange = (indices: number[]) => {
+    setSelectedServiceIndices(indices);
+  };
+
+  const handleContactClick = () => {
+    // Get the actual selected services using the services array
+    const selectedServices = selectedServiceIndices.map(
+      (index) => services[index] || `Service ${index + 1}`
+    );
+
+    // Call the callback with selected services first
+    handleContactWithServices(selectedServices);
+
+    // Clear selected indices to hide the button and unselect boxes
+    setSelectedServiceIndices([]);
+
+    // Small delay to ensure state updates, then scroll
+    setTimeout(() => {
+      const contactSection =
+        document.querySelector("#contact-section") ||
+        document.querySelector('section:has([id="contact-form"])') ||
+        document.querySelector('[id*="contact"]') ||
+        document.querySelector("section:last-of-type");
+
+      if (contactSection) {
+        scrollTo(contactSection as HTMLElement, { offset: 0, duration: 1.2 });
+      }
+    }, 100);
+  };
+
   return (
     <>
-      <SmoothScroller />
-      <div className="min-h-screen">
+      {/* Sticky Contact Button - sibling to main content, not inside sections */}
+      <StickyContactButton
+        selectedServices={selectedServiceIndices.map(
+          (index) => services[index] || `Service ${index + 1}`
+        )}
+        onContactClick={handleContactClick}
+      />
+
+      <main className="min-h-screen">
         <HeroSection />
         <TextSection />
-        <ServicesSection onContactWithServices={handleContactWithServices} />
+        <ServicesSection
+          selectedServiceIndices={selectedServiceIndices}
+          onServiceSelectionChange={handleServiceSelectionChange}
+        />
         <GridSection />
         <VideoSection />
         <ContactSection preSelectedServices={selectedServicesForContact} />
-      </div>
+      </main>
     </>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import ServiceBoxes from "@/components/ServiceBoxes";
 
 export default function ServicesSection() {
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   return (
-    <section className="min-h-fit bg-secondary-foreground text-secondary py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12">
+    <section className="min-h-fit bg--color-primary-background text--color-primary-foreground py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="w-full mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black leading-none">
@@ -14,11 +16,14 @@ export default function ServicesSection() {
             Advocacia militar especializada para defender seus direitos
           </p>
         </div>
-        <ServiceBoxes />
+        <ServiceBoxes
+          selectedIndices={selectedIndices}
+          onSelectionChange={setSelectedIndices}
+        />
 
         {/* Contact Information */}
         <div className="mt-12 text-center">
-          <div className="bg-secondary/10 rounded-lg p-6 inline-block">
+          <div className="bg--color-secondary/10 rounded-lg p-6 inline-block">
             <p className="text-sm sm:text-base">
               <span className="font-semibold">(21) 97126 2427</span> |{" "}
               <span className="mx-2">

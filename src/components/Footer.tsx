@@ -2,13 +2,7 @@
 
 export default function Footer() {
   return (
-    <footer
-      className="w-full py-16"
-      style={{
-        backgroundColor: "var(--color-background-secondary)",
-        color: "var(--color-secondary-foreground)",
-      }}
-    >
+    <footer className="w-full py-16 bg-black text-white isolate">
       <div className="max-w-6xl mx-auto px-6">
         {/* Navigation and Social Links */}
         <div className="flex justify-start mb-8 gap-16 md:gap-24">

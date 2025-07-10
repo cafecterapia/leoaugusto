@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 
     // Get the base URL for the image
     const baseUrl = new URL(request.url).origin;
-    const headerPhotoUrl = `${baseUrl}/images/header-photo.png`;
+    const headerPhotoUrl = `${baseUrl}/images/image.png`;
 
     return new ImageResponse(
       (

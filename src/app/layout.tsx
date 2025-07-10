@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { homeMetadata } from "@/lib/metadata";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import LenisProvider from "@/components/LenisProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,10 +21,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  ...homeMetadata,
+  title: "Leonardo Augusto - Direito Militar",
+  description: "Advogado e Mestre em Direito Especializado em Direito Militar",
   metadataBase: new URL("https://leonardoaugusto.com"),
   openGraph: {
-    ...homeMetadata.openGraph,
+    title: "Leonardo Augusto - Direito Militar",
+    description:
+      "Advogado e Mestre em Direito Especializado em Direito Militar",
+    url: "https://leonardoaugusto.com",
+    siteName: "Leonardo Augusto",
+    locale: "pt_BR",
+    type: "website",
     images: [
       {
         url: "/images/header-photo.png",
@@ -34,7 +42,9 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    ...homeMetadata.twitter,
+    card: "summary_large_image",
+    title: "Leonardo Augusto - Direito Militar",
+    description: "Advogado especializado em Direito Militar",
     images: ["/images/header-photo.png"],
   },
   other: {
@@ -68,9 +78,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <Header />
-        {children}
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LenisProvider>
+            <Header />
+            {children}
+            <Footer />
+          </LenisProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

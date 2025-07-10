@@ -256,7 +256,7 @@ export default function ContactForm({
   if (isSubmitted) {
     return (
       <div className="max-w-md mx-auto p-6 text-center">
-        <div className="text-green-600 mb-4">
+        <div className="text-green-600 dark:text-green-400 mb-4">
           <svg
             className="w-12 h-12 mx-auto mb-2"
             fill="none"
@@ -270,11 +270,13 @@ export default function ContactForm({
               d="M5 13l4 4L19 7"
             />
           </svg>
-          <h3 className="text-lg font-medium">Mensagem enviada!</h3>
-          <p className="text-sm text-gray-600 mt-1">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+            Mensagem enviada!
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
             Obrigado pelo contato. Retornaremos em breve.
           </p>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
             Sua mensagem foi recebida e está sendo processada.
           </p>
         </div>
@@ -286,7 +288,7 @@ export default function ContactForm({
             setSelectedSubjects([]);
             setEmailValidation({ isValid: false });
           }}
-          className="text-blue-700 hover:text-blue-800 text-sm underline"
+          className="text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm underline"
         >
           Enviar outra mensagem
         </button>
@@ -302,7 +304,7 @@ export default function ContactForm({
     >
       {/* Show error message if validation fails */}
       {submissionError && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded">
           {submissionError}
         </div>
       )}
@@ -325,7 +327,10 @@ export default function ContactForm({
       />
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+        >
           Nome
         </label>
         <input
@@ -336,13 +341,16 @@ export default function ContactForm({
           onChange={handleNameChange}
           onFocus={handleInputFocus}
           required
-          className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Seu nome completo"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+        >
           Email
         </label>
         <input
@@ -353,12 +361,12 @@ export default function ContactForm({
           onChange={handleEmailChange}
           onFocus={handleInputFocus}
           required
-          className={`w-full px-3 py-2 border focus:ring-2 focus:border-transparent outline-none transition-colors ${
+          className={`w-full px-3 py-2 border focus:ring-2 focus:border-transparent outline-none transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 ${
             emailValue && !emailValidation.isValid
-              ? "border-red-300 focus:ring-red-500"
+              ? "border-red-300 dark:border-red-600 focus:ring-red-500"
               : emailValue && emailValidation.isValid
-                ? "border-green-300 focus:ring-green-500"
-                : "border-gray-300 focus:ring-blue-500"
+                ? "border-green-300 dark:border-green-600 focus:ring-green-500"
+                : "border-gray-300 dark:border-gray-600 focus:ring-blue-500"
           }`}
           placeholder="seu@email.com"
         />
@@ -366,10 +374,10 @@ export default function ContactForm({
           <p
             className={`text-xs mt-1 ${
               emailValidation.type === "error"
-                ? "text-red-600"
+                ? "text-red-600 dark:text-red-400"
                 : emailValidation.type === "success"
-                  ? "text-green-600"
-                  : "text-yellow-600"
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-yellow-600 dark:text-yellow-400"
             }`}
           >
             {emailValidation.message}
@@ -378,24 +386,28 @@ export default function ContactForm({
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium mb-1">
-          Telefone <span className="text-gray-400">(opcional)</span>
+        <label
+          htmlFor="phone"
+          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+        >
+          Telefone{" "}
+          <span className="text-gray-400 dark:text-gray-500">(opcional)</span>
         </label>
         <input
           type="tel"
           id="phone"
           name="phone"
           onFocus={handleInputFocus}
-          className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="(11) 99999-9999"
         />
       </div>
 
       <div className="relative">
-        <label className="block text-sm font-medium mb-2">
+        <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
           Assuntos <span className="text-red-500">*</span>
           {!areBasicFieldsValid && (
-            <span className="text-xs text-gray-500 ml-2">
+            <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
               (preencha nome e email válido primeiro)
             </span>
           )}
@@ -410,13 +422,15 @@ export default function ContactForm({
             disabled={!areBasicFieldsValid}
             className={`w-full px-3 py-2 border text-left outline-none transition-colors flex items-center justify-between ${
               areBasicFieldsValid
-                ? "border-gray-300 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400"
-                : "border-gray-200 bg-gray-100 cursor-not-allowed"
+                ? "border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 dark:hover:border-gray-500"
+                : "border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-700 cursor-not-allowed"
             }`}
           >
             <span
               className={`text-sm flex-1 truncate ${
-                areBasicFieldsValid ? "text-gray-700" : "text-gray-400"
+                areBasicFieldsValid
+                  ? "text-gray-700 dark:text-gray-300"
+                  : "text-gray-400 dark:text-gray-500"
               }`}
             >
               {!areBasicFieldsValid
@@ -430,8 +444,8 @@ export default function ContactForm({
             <svg
               className={`w-4 h-4 transition-transform ${
                 areBasicFieldsValid
-                  ? `text-gray-400 ${isDropdownOpen ? "rotate-180" : ""}`
-                  : "text-gray-300"
+                  ? `text-gray-400 dark:text-gray-500 ${isDropdownOpen ? "rotate-180" : ""}`
+                  : "text-gray-300 dark:text-gray-600"
               }`}
               fill="none"
               stroke="currentColor"
@@ -449,25 +463,28 @@ export default function ContactForm({
           {/* Dropdown menu */}
           {isDropdownOpen && areBasicFieldsValid && (
             <div
-              className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto overscroll-contain"
+              className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-lg max-h-60 overflow-y-auto overscroll-contain"
               onWheel={handleDropdownWheel}
               style={{
                 scrollbarWidth: "thin",
-                scrollbarColor: "#e5e7eb #f9fafb",
+                scrollbarColor: "rgb(156 163 175) rgb(249 250 251)",
               }}
             >
               {subjects.map((subject) => (
                 <label
                   key={subject}
-                  className="flex items-start gap-3 px-3 py-2 cursor-pointer hover:bg-gray-50 transition-colors"
+                  className="flex items-start gap-3 px-3 py-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                 >
                   <input
                     type="checkbox"
                     checked={selectedSubjects.includes(subject)}
                     onChange={() => handleSubjectToggle(subject)}
-                    className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    className="mt-1 w-4 h-4 rounded border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-0"
+                    style={{
+                      accentColor: "#2563eb", // Ensure consistent checkbox color across themes
+                    }}
                   />
-                  <span className="text-sm text-gray-700 flex-1">
+                  <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">
                     {subject}
                   </span>
                 </label>
@@ -477,12 +494,14 @@ export default function ContactForm({
         </div>
         {selectedSubjects.length > 0 && (
           <div className="mt-2">
-            <p className="text-xs text-gray-600 mb-1">Assuntos selecionados:</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">
+              Assuntos selecionados:
+            </p>
             <div className="flex flex-wrap gap-1">
               {selectedSubjects.map((subject) => (
                 <span
                   key={subject}
-                  className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                  className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs rounded-full"
                 >
                   {subject.length > 30
                     ? `${subject.substring(0, 30)}...`
@@ -490,7 +509,7 @@ export default function ContactForm({
                   <button
                     type="button"
                     onClick={() => handleSubjectToggle(subject)}
-                    className="hover:bg-blue-200 rounded-full p-0.5 transition-colors"
+                    className="hover:bg-blue-200 dark:hover:bg-blue-800/50 rounded-full p-0.5 transition-colors"
                   >
                     <svg
                       className="w-3 h-3"
@@ -512,7 +531,10 @@ export default function ContactForm({
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium mb-1">
+        <label
+          htmlFor="message"
+          className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300"
+        >
           Mensagem
         </label>
         <textarea
@@ -523,14 +545,14 @@ export default function ContactForm({
           value={messageValue}
           onChange={(e) => setMessageValue(e.target.value)}
           onFocus={handleInputFocus}
-          className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors resize-vertical"
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors resize-vertical placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Descreva sua necessidade ou dúvida..."
         />
       </div>
 
       {/* reCAPTCHA v3 runs invisibly in the background */}
       {recaptchaSiteKey && !recaptchaReady && (
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
           Carregando verificação de segurança...
         </div>
       )}
@@ -543,12 +565,12 @@ export default function ContactForm({
           selectedSubjects.length === 0 ||
           (!!recaptchaSiteKey && !recaptchaReady)
         }
-        className="w-full bg-secondary text-white py-2 px-4 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg---color-secondary text---color-secondary-foreground py-2 px-4 hover:opacity-90 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
       </button>
 
-      <p className="text-xs text-gray-500 text-center">
+      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
         Seus dados são protegidos e não serão compartilhados com terceiros.
         {recaptchaSiteKey && (
           <>
