@@ -126,6 +126,20 @@
 }
 
 @layer utilities {
+  /* Mobile viewport height fix for hero section */
+  .hero-height {
+    height: 100vh; /* Fallback for older browsers */
+    height: 100dvh; /* Dynamic viewport height for mobile - supported in modern browsers */
+  }
+
+  /* Support for browsers that don't support dvh */
+  @supports not (height: 100dvh) {
+    .hero-height {
+      height: 100vh;
+      height: calc(var(--vh, 1vh) * 100); /* Custom property fallback */
+    }
+  }
+
   /* Custom background utilities */
   .bg-primary-background {
     background-color: var(--color-primary-background);

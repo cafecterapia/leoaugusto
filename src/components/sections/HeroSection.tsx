@@ -2,13 +2,17 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useViewportHeight } from "@/hooks/useViewportHeight";
 
 export default function HeroSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // Handle viewport height for older browsers
+  useViewportHeight();
+
   return (
     <section
-      className="relative h-screen w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]"
+      className="relative hero-height w-full overflow-hidden rounded-b-[1rem] sm:rounded-b-[2rem] lg:rounded-b-[3rem]"
       style={{
         backgroundColor: "#ffffff",
         backgroundImage: imageLoaded ? "none" : "url(/images/header-photo.png)",
