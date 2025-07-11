@@ -14,13 +14,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const photos = [
   {
-    src: "/images/Palestras-Grid.jpeg",
+    src: "/images/Palestras-Grid.avif",
     alt: "Grid photo 1",
     text: "PALESTRAS",
     position: "left",
   },
   {
-    src: "/images/Aulas-Grid.jpeg",
+    src: "/images/Aulas-Grid.avif",
     alt: "Grid photo 2",
     text: "AULAS & MENTORIAS",
     position: "right",
