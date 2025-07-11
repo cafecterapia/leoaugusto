@@ -93,8 +93,8 @@ export default function ContactForm({
     []
   );
 
-  // Close dropdown when focusing on other inputs
-  const handleInputFocus = useCallback(() => {
+  // Close dropdown when focusing on other inputs (except the dropdown trigger)
+  const handleNonDropdownFocus = useCallback(() => {
     setIsDropdownOpen(false);
   }, []);
 
@@ -339,7 +339,7 @@ export default function ContactForm({
           name="name"
           value={nameValue}
           onChange={handleNameChange}
-          onFocus={handleInputFocus}
+          onFocus={handleNonDropdownFocus}
           required
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Seu nome completo"
@@ -359,7 +359,7 @@ export default function ContactForm({
           name="email"
           value={emailValue}
           onChange={handleEmailChange}
-          onFocus={handleInputFocus}
+          onFocus={handleNonDropdownFocus}
           required
           className={`w-full px-3 py-2 border focus:ring-2 focus:border-transparent outline-none transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 ${
             emailValue && !emailValidation.isValid
@@ -397,7 +397,7 @@ export default function ContactForm({
           type="tel"
           id="phone"
           name="phone"
-          onFocus={handleInputFocus}
+          onFocus={handleNonDropdownFocus}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="(11) 99999-9999"
         />
@@ -544,7 +544,7 @@ export default function ContactForm({
           rows={4}
           value={messageValue}
           onChange={(e) => setMessageValue(e.target.value)}
-          onFocus={handleInputFocus}
+          onFocus={handleNonDropdownFocus}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors resize-vertical placeholder:text-gray-500 dark:placeholder:text-gray-400"
           placeholder="Descreva sua necessidade ou dúvida..."
         />

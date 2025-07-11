@@ -41,6 +41,7 @@ export default function LenisProvider({
 }: LenisProviderProps) {
   const lenisRef = useRef<Lenis | null>(null);
   const rafRef = useRef<number | null>(null);
+  const scrollPositionRef = useRef<number>(0);
 
   useEffect(() => {
     // Check if user prefers reduced motion
@@ -102,7 +103,7 @@ export default function LenisProvider({
       );
     }
 
-    // Event delegation for form input focus/blur
+    // Modern native approach for form input focus/blur handling
     const handleFocusIn = (event: FocusEvent) => {
       const target = event.target as HTMLElement;
 
@@ -113,7 +114,21 @@ export default function LenisProvider({
         target.tagName === "SELECT" ||
         target.contentEditable === "true"
       ) {
+        // Store current scroll position before stopping Lenis
+        scrollPositionRef.current = window.scrollY;
+
+        // Immediately stop Lenis to prevent conflicts
         lenisRef.current?.stop();
+
+        // Use native browser API for smooth, reliable scrolling
+        // This handles virtual keyboards and viewport changes automatically
+        requestAnimationFrame(() => {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "nearest",
+          });
+        });
       }
     };
 
@@ -127,8 +142,9 @@ export default function LenisProvider({
         target.tagName === "SELECT" ||
         target.contentEditable === "true"
       ) {
-        // Small delay to allow for tab navigation between form fields
-        setTimeout(() => {
+        // Use requestAnimationFrame to ensure DOM updates are complete
+        // and handle any pending layout changes from virtual keyboards
+        requestAnimationFrame(() => {
           const activeElement = document.activeElement as HTMLElement;
           const isStillInFormInput =
             activeElement &&
@@ -137,10 +153,16 @@ export default function LenisProvider({
               activeElement.tagName === "SELECT" ||
               activeElement.contentEditable === "true");
 
+          // Only restart Lenis when completely outside form inputs
           if (!isStillInFormInput) {
-            lenisRef.current?.start();
+            // Additional frame delay for mobile virtual keyboard animations
+            requestAnimationFrame(() => {
+              lenisRef.current?.start();
+              // Force Lenis to recalculate after virtual keyboard changes
+              lenisRef.current?.resize();
+            });
           }
-        }, 50);
+        });
       }
     };
 

@@ -47,6 +47,40 @@ export default function VerticalPhotoGrid() {
     imageAlt: "",
   });
 
+  // DEBUG TOOL 1: Scroll Position Tracker
+  const logScrollState = (
+    photoIndex: number,
+    event: string,
+    scrollY: number
+  ) => {
+    console.log(
+      `[SCROLL] Photo ${photoIndex} | Event: ${event} | ScrollY: ${scrollY}px`
+    );
+  };
+
+  // DEBUG TOOL 2: Animation State Monitor
+  const logAnimationState = (
+    photoIndex: number,
+    overlayY: string | number,
+    textY: number
+  ) => {
+    console.log(
+      `[ANIMATION] Photo ${photoIndex} | Overlay Y: ${overlayY} | Text Y: ${textY}px`
+    );
+  };
+
+  // DEBUG TOOL 3: ScrollTrigger Debug
+  const logTriggerEvent = (
+    photoIndex: number,
+    event: string,
+    triggerStart: string,
+    triggerEnd: string
+  ) => {
+    console.log(
+      `[TRIGGER] Photo ${photoIndex} | ${event} | Start: ${triggerStart} | End: ${triggerEnd}`
+    );
+  };
+
   const handlePhotoClick = (
     type: "palestras" | "aulas" | "empreendimentos",
     imageSrc: string,
@@ -111,6 +145,9 @@ export default function VerticalPhotoGrid() {
             duration: 0.8,
             ease: "power2.out",
           });
+
+          logAnimationState(photoIndex, 0, 0);
+          console.log(`[RESET] Photo ${photoIndex} reset to initial state`);
         }
       };
 
@@ -138,16 +175,31 @@ export default function VerticalPhotoGrid() {
           y: 0,
         });
 
+        // Debug: Log trigger setup
+        console.log(`[SETUP] Photo ${index} trigger setup:`, {
+          start: "bottom bottom",
+          end: nextPhoto
+            ? `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
+            : "bottom top",
+          photoHeight: (photo as HTMLElement).offsetHeight,
+          photoTop: (photo as HTMLElement).offsetTop,
+        });
+
         // Create ScrollTrigger for revealing the image
         ScrollTrigger.create({
           trigger: photo,
           start: "bottom bottom", // When bottom of photo hits bottom of viewport
-          end: nextPhoto
-            ? () =>
-                `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
-            : "bottom top",
+          end: nextPhoto ? () => `${nextPhoto.offsetTop}px top` : "bottom top",
+          scrub: false,
           onEnter: () => {
-            console.log(`onEnter photo ${index}`);
+            logScrollState(index, "onEnter", window.scrollY);
+            logTriggerEvent(
+              index,
+              "onEnter",
+              "bottom bottom",
+              nextPhoto ? "next photo top" : "bottom top"
+            );
+
             // Reset all previous photos when entering a new one
             for (let i = 0; i < index; i++) {
               resetPhoto(i);
@@ -167,21 +219,23 @@ export default function VerticalPhotoGrid() {
               duration: 0.8,
               ease: "power2.out",
             });
+
+            logAnimationState(index, "80%", textPosition);
           },
           onLeave: () => {
-            // Reset overlay and text when moving to next section
-            gsap.to(overlay, {
-              y: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            });
-            gsap.to(text, {
-              y: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            });
+            logScrollState(index, "onLeave", window.scrollY);
+            logTriggerEvent(index, "onLeave", "bottom bottom", "next trigger");
+            // Don't reset here - let the next photo's onEnter handle it
           },
           onEnterBack: () => {
+            logScrollState(index, "onEnterBack", window.scrollY);
+            logTriggerEvent(
+              index,
+              "onEnterBack",
+              "scrolling up",
+              "re-entering"
+            );
+
             // Calculate responsive text positioning first
             const textPosition = calculateTextPosition(overlay);
 
@@ -197,14 +251,22 @@ export default function VerticalPhotoGrid() {
               ease: "power2.out",
             });
 
-            // Reset all following photos after a small delay to avoid conflicts
-            setTimeout(() => {
-              for (let i = index + 1; i < photos.length; i++) {
-                resetPhoto(i);
-              }
-            }, 50);
+            logAnimationState(index, "80%", textPosition);
+
+            // Reset all following photos (those that come after current one)
+            for (let i = index + 1; i < photos.length; i++) {
+              resetPhoto(i);
+            }
           },
           onLeaveBack: () => {
+            logScrollState(index, "onLeaveBack", window.scrollY);
+            logTriggerEvent(
+              index,
+              "onLeaveBack",
+              "scrolling back up",
+              "past trigger"
+            );
+
             // Reset when scrolling back up past trigger
             gsap.to(overlay, {
               y: 0,
@@ -216,27 +278,10 @@ export default function VerticalPhotoGrid() {
               duration: 0.8,
               ease: "power2.out",
             });
+
+            logAnimationState(index, 0, 0);
           },
         });
-      });
-
-      // Create a ScrollTrigger for the entire grid section to reset all photos when leaving
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onLeave: () => {
-          // Reset all photos when leaving the grid section (scrolling down)
-          for (let i = 0; i < photos.length; i++) {
-            resetPhoto(i);
-          }
-        },
-        onLeaveBack: () => {
-          // Reset all photos when leaving the grid section (scrolling up)
-          for (let i = 0; i < photos.length; i++) {
-            resetPhoto(i);
-          }
-        },
       });
     }, 100);
 
