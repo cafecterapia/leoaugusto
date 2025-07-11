@@ -7,29 +7,55 @@ export const ogImageConfig = {
   contentType: "image/png" as const,
 };
 
-interface OGImageOptions {
-  title?: string;
-  subtitle?: string | undefined;
-}
-
 export function generateOGImageJSX({
   title = "Leonardo Augusto",
   subtitle,
-}: OGImageOptions) {
+}: {
+  title?: string;
+  subtitle?: string;
+} = {}) {
   return (
     <div
       style={{
         height: "100%",
         width: "100%",
         display: "flex",
-        alignItems: "center",
+        position: "relative",
+        flexDirection: "column",
         justifyContent: "center",
-        fontFamily:
-          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        backgroundColor: "#000000",
+        alignItems: "center",
       }}
     >
-      {/* Zig-zag text container */}
+      {/* Hero photo as background */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/hero-photo.png"
+        alt="Leonardo Augusto"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: 1,
+        }}
+      />
+
+      {/* Overlay for text readability */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+          zIndex: 2,
+        }}
+      />
+
+      {/* Content */}
       <div
         style={{
           display: "flex",
@@ -37,104 +63,64 @@ export function generateOGImageJSX({
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
+          zIndex: 3,
+          color: "white",
+          padding: "2rem",
         }}
       >
-        {/* Check if it's the default Leonardo Augusto for zig-zag effect */}
-        {title === "Leonardo Augusto" ? (
-          <>
-            {/* First word "Leonardo" - positioned higher */}
-            <div
-              style={{
-                fontSize: "80px",
-                fontWeight: "bold",
-                color: "#ffffff",
-                lineHeight: 0.8,
-                transform: "translateX(-50px) translateY(-20px)",
-                marginBottom: "10px",
-              }}
-            >
-              Leonardo
-            </div>
-
-            {/* Second word "Augusto" - positioned lower and to the right */}
-            <div
-              style={{
-                fontSize: "80px",
-                fontWeight: "bold",
-                color: "#ffffff",
-                lineHeight: 0.8,
-                transform: "translateX(50px) translateY(20px)",
-                marginTop: "10px",
-              }}
-            >
-              Augusto
-            </div>
-          </>
-        ) : (
-          /* Fallback for custom titles */
-          <div
-            style={{
-              fontSize: title.length > 20 ? "56px" : "72px",
-              fontWeight: "bold",
-              color: "#ffffff",
-              lineHeight: 1.1,
-              textAlign: "center",
-              maxWidth: "1000px",
-            }}
-          >
-            {title}
-          </div>
-        )}
-
-        {/* Subtitle if provided */}
+        <h1
+          style={{
+            fontSize: "3.5rem",
+            fontWeight: 900,
+            margin: 0,
+            marginBottom: subtitle ? "1rem" : 0,
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+          }}
+        >
+          {title}
+        </h1>
         {subtitle && (
-          <div
+          <p
             style={{
-              fontSize: "32px",
-              color: "#ffffff",
-              marginTop: "24px",
-              opacity: 0.8,
+              fontSize: "1.5rem",
+              margin: 0,
+              opacity: 0.9,
+              textShadow: "1px 1px 2px rgba(0, 0, 0, 0.8)",
             }}
           >
             {subtitle}
-          </div>
+          </p>
         )}
       </div>
     </div>
   );
 }
 
-export function createOGImageResponse(options: OGImageOptions = {}) {
-  return new ImageResponse(generateOGImageJSX(options), {
-    width: ogImageConfig.width,
-    height: ogImageConfig.height,
-    headers: {
-      "cache-control": "public, max-age=31536000, immutable",
-    },
-  });
+export function createOGImageResponse(title?: string, subtitle?: string) {
+  return new ImageResponse(
+    generateOGImageJSX({
+      ...(title && { title }),
+      ...(subtitle && { subtitle }),
+    }),
+    {
+      width: ogImageConfig.width,
+      height: ogImageConfig.height,
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    }
+  );
 }
 
-export function createFallbackOGImageResponse() {
+export function createFallbackOGImageResponse(
+  title?: string,
+  subtitle?: string
+) {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#000000",
-          color: "#ffffff",
-          fontSize: "48px",
-          fontWeight: "bold",
-          fontFamily:
-            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-        }}
-      >
-        Leonardo Augusto
-      </div>
-    ),
+    generateOGImageJSX({
+      ...(title && { title }),
+      ...(subtitle && { subtitle }),
+    }),
     {
       width: ogImageConfig.width,
       height: ogImageConfig.height,
