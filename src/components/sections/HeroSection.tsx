@@ -13,7 +13,7 @@ export default function HeroSection() {
         paddingTop: "23rem",
         paddingBottom: "4rem",
         backgroundColor: "#1e293b", // Fallback color
-        backgroundImage: "url('/images/hero-photo.png')",
+        backgroundImage: "url('/images/hero-photo.avif')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

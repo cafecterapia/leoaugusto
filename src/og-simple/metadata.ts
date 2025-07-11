@@ -16,7 +16,7 @@ export const defaultMetadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/hero-photo.png",
+        url: "/images/hero-photo.avif",
         alt: "Leonardo Augusto - Advogado especializado em Direito Militar",
         width: 1200,
         height: 630,
