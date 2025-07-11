@@ -17,7 +17,7 @@ export default function HeroSection() {
         minHeight: "47rem",
         paddingTop: "23rem",
         paddingBottom: "4rem",
-        backgroundColor: "#1e293b", // Fallback color
+        backgroundColor: "#353537", // Matches hero image main color
         overflow: "hidden",
       }}
     >
