@@ -2,14 +2,8 @@
 
 import Image from "next/image";
 import heroPhoto from "/public/images/hero-photo.png";
-import { heroBlurDataURL } from "@/lib/blurDataURL";
 
-interface HeroSectionProps {
-  blurDataURL?: string;
-}
-
-export default function HeroSection({ blurDataURL }: HeroSectionProps) {
-  const finalBlurDataURL = blurDataURL || heroBlurDataURL;
+export default function HeroSection() {
   return (
     <section
       style={{
@@ -24,11 +18,8 @@ export default function HeroSection({ blurDataURL }: HeroSectionProps) {
         paddingTop: "23rem",
         paddingBottom: "4rem",
         isolation: "isolate", // Creates new stacking context for proper z-index layering
-        // Multi-layer CSS background: final image first, then base64 blur fallback
-        backgroundImage: `url('/images/hero-photo.png'), url('${finalBlurDataURL}')`,
-        backgroundSize: "cover, cover",
-        backgroundPosition: "center, center",
-        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundColor: "#1e293b", // Immediate background color to prevent white flash
+        overflow: "hidden", // Prevent any overflow issues during loading
       }}
     >
       <Image
@@ -36,12 +27,13 @@ export default function HeroSection({ blurDataURL }: HeroSectionProps) {
         alt="Professional lawyer background - Leonardo Augusto, Master of Law and Military Law Specialist"
         fill
         priority
-        placeholder="blur"
-        blurDataURL={finalBlurDataURL}
+        sizes="100vw"
+        quality={90}
+        loading="eager"
         style={{
           objectFit: "cover",
           zIndex: -1,
-          backgroundColor: "#1e293b", // Atomic rendering with placeholder for seamless transition
+          backgroundColor: "#1e293b", // Fallback color
         }}
       />
       <div
