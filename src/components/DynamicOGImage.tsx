@@ -1,27 +1,19 @@
-import { ogImageConfig, getHeroImageBase64 } from "@/lib/ogImageGenerator";
-
 export const runtime = "edge";
 
-export const alt = ogImageConfig.alt;
+export const alt = "Leo Augusto - Advogado especialista em Direito Militar";
 export const size = {
-  width: ogImageConfig.width,
-  height: ogImageConfig.height,
+  width: 1200,
+  height: 630,
 };
-export const contentType = ogImageConfig.contentType;
+export const contentType = "image/png";
 
-// This component serves the actual hero image for OpenGraph sharing
+// This component serves a simple OpenGraph image
 export default function DynamicImage() {
-  // Return the base64 hero image data directly
-  const heroImageData = getHeroImageBase64();
-  const base64Data = heroImageData.split(",")[1];
-
-  if (!base64Data) {
-    throw new Error("Invalid base64 image data");
-  }
-
-  return new Response(Buffer.from(base64Data, "base64"), {
+  // Return a simple static image or redirect to the hero image
+  return new Response(null, {
+    status: 302,
     headers: {
-      "Content-Type": "image/png",
+      Location: "/images/hero-photo.png",
       "Cache-Control": "public, max-age=31536000, immutable",
     },
   });
