@@ -17,7 +17,7 @@ export default function HeroSection() {
         minHeight: "47rem",
         paddingTop: "23rem",
         paddingBottom: "4rem",
-        backgroundColor: "#1e293b", // Fallback color
+        backgroundColor: "#353537", // Fixed background color - always this color regardless of theme
         overflow: "hidden",
         backgroundImage: `url('/images/hero-photo.avif'), url('${HERO_LQIP}')`,
         backgroundSize: "cover, cover",
