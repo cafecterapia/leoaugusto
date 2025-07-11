@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import LenisProvider from "@/components/LenisProvider";
+import { defaultMetadata } from "@/og-simple/metadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,38 +21,7 @@ const geistMono = Geist_Mono({
   preload: false, // Only preload the main font
 });
 
-export const metadata: Metadata = {
-  title: "Leonardo Augusto - Direito Militar",
-  description: "Advogado e Mestre em Direito Especializado em Direito Militar",
-  metadataBase: new URL("https://leonardoaugusto.com"),
-  openGraph: {
-    title: "Leonardo Augusto - Direito Militar",
-    description:
-      "Advogado e Mestre em Direito Especializado em Direito Militar",
-    url: "https://leonardoaugusto.com",
-    siteName: "Leonardo Augusto",
-    locale: "pt_BR",
-    type: "website",
-    images: [
-      {
-        url: "/api/og",
-        alt: "Leonardo Augusto - Advogado e Mestre em Direito especializado em Direito Militar",
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Leonardo Augusto - Direito Militar",
-    description: "Advogado especializado em Direito Militar",
-    images: ["/api/og"],
-  },
-  other: {
-    "mobile-web-app-capable": "yes",
-    "apple-mobile-web-app-status-bar-style": "default",
-  },
-};
+export const metadata: Metadata = defaultMetadata;
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -70,7 +40,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/header-photo.png"
+          href="/images/hero-photo.png"
           fetchPriority="high"
         />
       </head>
