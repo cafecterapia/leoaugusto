@@ -17,39 +17,22 @@ export default function HeroSection() {
         minHeight: "47rem",
         paddingTop: "23rem",
         paddingBottom: "4rem",
-        backgroundColor: "#353537", // Matches hero image main color
+        backgroundColor: "#1e293b", // Fallback color
         overflow: "hidden",
+        backgroundImage: `url('/images/hero-photo.avif'), url('${HERO_LQIP}')`,
+        backgroundSize: "cover, cover",
+        backgroundPosition: "center, center",
+        backgroundRepeat: "no-repeat, no-repeat",
       }}
     >
-      {/* LQIP Background Layer - Bottom layer, fallback */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: `url('${HERO_LQIP}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          filter: "blur(1px)",
-        }}
-      />
-
-      {/* High Quality Background Layer - Top layer, loads immediately */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundImage: "url('/images/hero-photo.avif')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
+      {/* Hidden img for eager loading with high priority */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/hero-photo.avif"
+        alt=""
+        loading="eager"
+        fetchPriority="high"
+        style={{ display: "none" }}
       />
 
       {/* Content Layer */}
