@@ -1,8 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import heroPhoto from "/public/images/hero-photo.png";
-
 export default function HeroSection() {
   return (
     <section
@@ -11,31 +8,17 @@ export default function HeroSection() {
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
-        padding: "2rem 1rem", // More generous padding
-        position: "relative",
-        minHeight: "47rem", // Use rem-based min-height (roughly 800px on most devices)
-        // Add some defensive spacing
+        padding: "2rem 1rem",
+        minHeight: "47rem",
         paddingTop: "23rem",
         paddingBottom: "4rem",
-        isolation: "isolate", // Creates new stacking context for proper z-index layering
-        backgroundColor: "#1e293b", // Immediate background color to prevent white flash
-        overflow: "hidden", // Prevent any overflow issues during loading
+        backgroundColor: "#1e293b", // Fallback color
+        backgroundImage: "url('/images/hero-photo.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
-      <Image
-        src={heroPhoto}
-        alt="Professional lawyer background - Leonardo Augusto, Master of Law and Military Law Specialist"
-        fill
-        priority
-        sizes="100vw"
-        quality={90}
-        loading="eager"
-        style={{
-          objectFit: "cover",
-          zIndex: -1,
-          backgroundColor: "#1e293b", // Fallback color
-        }}
-      />
       <div
         style={{
           width: "100%",
