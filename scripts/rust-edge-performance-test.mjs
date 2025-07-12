@@ -24,7 +24,8 @@ export class RustEdgePerformanceMonitor {
         results.push(result);
 
         console.log(
-          `Test ${i + 1}/${iterations}: ${result.responseTime.toFixed(2)}ms ${result.cached ? "(cached)" : "(miss)"
+          `Test ${i + 1}/${iterations}: ${result.responseTime.toFixed(2)}ms ${
+            result.cached ? "(cached)" : "(miss)"
           } - Edge: ${result.edgeLocation || "unknown"}`
         );
 
