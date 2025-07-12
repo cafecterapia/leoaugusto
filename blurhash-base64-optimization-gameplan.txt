@@ -1,0 +1,143 @@
+BLURHASH + BASE64 HERO OPTIMIZATION GAME PLAN
+========================================================
+
+## USER REQUIREMENTS
+- Move beyond base64 to combination of BlurHash with base64 that works
+- Base64 preloads and BlurHash does its job of being little
+- Convert BlurHash to base64 format
+- Final image loads below 800ms without running servers
+- Focus on static analysis and file-based testing only
+
+## SUCCESS CRITERIA
+1. Hero image loads in <800ms (measured via static analysis)
+2. BlurHash converted to optimized base64 LQIP
+3. Payload size smaller than current 342-byte LQIP
+4. Visual consistency maintained
+5. No server dependencies for testing
+6. All tests pass with performance improvements documented
+
+## CURRENT STATE ANALYSIS
+- HeroSection.tsx uses static 342-byte base64 LQIP
+- BlurhashComponent.tsx exists but not used in hero
+- BlurhashToBase64.ts utility exists with conversion functions
+- Tests expect <1ms BlurHash decode time
+- Current approach: CSS background-image with static LQIP
+
+## TECHNICAL APPROACH
+
+### Phase 1: Baseline Measurement (Static Analysis)
+1. Analyze current HeroSection.tsx payload size
+2. Measure current base64 LQIP size (342 bytes)
+3. Document current loading strategy
+4. Create baseline performance measurement tests
+
+### Phase 2: BlurHash Integration Strategy
+1. Extract BlurHash from hero-photo.avif (or use optimized hash)
+2. Use BlurhashToBase64 utility to generate base64 LQIP
+3. Compare payload sizes: BlurHash string vs generated base64
+4. Optimize hash parameters for smallest payload while maintaining quality
+
+### Phase 3: Implementation
+1. Modify HeroSection.tsx to use BlurhashToBase64 conversion
+2. Replace static LQIP with dynamically generated one
+3. Maintain SSR compatibility (SVG fallback for server-side)
+4. Ensure eager loading strategy remains intact
+
+### Phase 4: Optimization Validation
+1. Test payload size reduction
+2. Validate visual consistency
+3. Measure perceived loading performance
+4. Ensure <800ms target is met
+5. Test error handling and fallbacks
+
+### Phase 5: Cleanup
+1. Remove temporary test files
+2. Document performance improvements
+3. Update comments with new payload sizes
+
+## FILES TO MODIFY
+1. /src/components/sections/HeroSection.tsx
+   - Replace static LQIP with BlurhashToBase64 conversion
+   - Maintain CSS background-image approach
+   - Add BlurHash string constant
+
+2. Create test files:
+   - /tests/blurhash-base64-baseline.test.ts
+   - /tests/blurhash-base64-optimized.test.ts
+   - /tests/hero-800ms-target.test.ts
+
+## IMPLEMENTATION STEPS
+
+### Step 1: Create Baseline Tests
+- Measure current performance metrics
+- Document current payload sizes
+- Test visual consistency requirements
+
+### Step 2: Generate Optimized BlurHash
+- Find optimal BlurHash for hero-photo.avif
+- Test different resolution parameters
+- Minimize payload while maintaining visual quality
+
+### Step 3: Implement BlurHash-to-Base64 Integration
+- Modify HeroSection to use BlurhashToBase64
+- Maintain SSR compatibility
+- Preserve eager loading strategy
+
+### Step 4: Performance Validation
+- Compare old vs new payload sizes
+- Test loading performance (static analysis)
+- Validate <800ms target achievement
+- Ensure visual consistency
+
+### Step 5: Cleanup and Documentation
+- Remove temporary files
+- Update code comments
+- Document performance gains
+
+## VALIDATION METHODS
+1. Static payload size analysis
+2. File-based performance testing
+3. Visual consistency validation
+4. Error handling verification
+5. SSR compatibility testing
+
+## EXPECTED OUTCOMES
+- Payload reduction: >50% smaller than current 342-byte LQIP
+- Loading time: <800ms target achieved
+- Visual quality: Maintained or improved
+- Code cleanliness: No temporary file clutter
+- Performance: Measurable improvements documented
+
+## LIBRARY USAGE
+- Existing BlurhashToBase64.ts utility
+- No additional dependencies required
+- Leverage existing blurhash library functionality
+
+## NO SERVER REQUIREMENTS
+- All testing via static analysis
+- No npm run dev or server starts
+- Focus on file-based validation
+- Performance measurements via code analysis
+
+## VISUAL CONSISTENCY VALIDATION FRAMEWORK
+- MANDATORY: No changes to visual appearance - optimization must be invisible to users
+- Use existing Canvas/ImageData static validation systems already in tests
+- Leverage proven battle-tested validation patterns from existing test files
+- Focus on pixel-perfect visual consistency validation without creating temporary files
+- Use Canvas.getImageData() for pixel comparison validation
+- Static analysis only - no file generation or server dependencies
+
+## BATTLE-TESTED VALIDATION APPROACH
+Based on existing test framework patterns found in project:
+- Canvas element validation (hero-1ms-target.spec.ts)
+- ImageData pixel validation (BlurhashToBase64.ts utilities)
+- Visual consistency checks (hero-performance.spec.ts)
+- Static timing analysis without servers (hero-static-analysis.test.ts)
+- Payload size validation without network requests
+
+## CRITICAL DIRECTIVE: VISUAL CONSISTENCY ENFORCEMENT
+- The AI must deliver FASTER and BETTER files only
+- ZERO tolerance for visual changes - optimization must be invisible
+- Use existing robust validation frameworks already proven in codebase
+- No temporary file creation - leverage in-memory validation only
+- Battle-tested approach using Canvas/ImageData for validation

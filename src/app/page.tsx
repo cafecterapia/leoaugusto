@@ -1,15 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import StickyContactButton from "@/components/StickyContactButton";
 import HeroSection from "@/components/sections/HeroSection";
-import TextSection from "@/components/sections/TextSection";
-import ServicesSection from "@/components/sections/ServicesSection";
-import GridSection from "@/components/sections/GridSection";
-import VideoSection from "@/components/sections/VideoSection";
-import ContactSection from "@/components/sections/ContactSection";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import Loading from "@/components/Loading";
 import { services } from "@/lib/services";
 import { useLenis } from "@/components/LenisProvider";
+
+// Dynamic imports for better code splitting
+const TextSection = lazy(() => import("@/components/sections/TextSection"));
+const ServicesSection = lazy(
+  () => import("@/components/sections/ServicesSection")
+);
+const GridSection = lazy(() => import("@/components/sections/GridSection"));
+const VideoSection = lazy(() => import("@/components/sections/VideoSection"));
+const ContactSection = lazy(
+  () => import("@/components/sections/ContactSection")
+);
 
 export default function Home() {
   const { scrollTo } = useLenis();
@@ -55,7 +63,7 @@ export default function Home() {
   };
 
   return (
-    <>
+    <ErrorBoundary>
       {/* Sticky Contact Button - sibling to main content, not inside sections */}
       <StickyContactButton
         selectedServices={selectedServiceIndices.map(
@@ -65,16 +73,45 @@ export default function Home() {
       />
 
       <main className="min-h-screen">
+        {/* Hero section loads immediately */}
         <HeroSection />
-        <TextSection />
-        <ServicesSection
-          selectedServiceIndices={selectedServiceIndices}
-          onServiceSelectionChange={handleServiceSelectionChange}
-        />
-        <GridSection />
-        <VideoSection />
-        <ContactSection preSelectedServices={selectedServicesForContact} />
+
+        {/* Other sections load with Suspense for better performance */}
+        <Suspense
+          fallback={<Loading className="py-16" text="Loading content..." />}
+        >
+          <TextSection />
+        </Suspense>
+
+        <Suspense
+          fallback={<Loading className="py-16" text="Loading services..." />}
+        >
+          <ServicesSection
+            selectedServiceIndices={selectedServiceIndices}
+            onServiceSelectionChange={handleServiceSelectionChange}
+          />
+        </Suspense>
+
+        <Suspense
+          fallback={<Loading className="py-16" text="Loading portfolio..." />}
+        >
+          <GridSection />
+        </Suspense>
+
+        <Suspense
+          fallback={<Loading className="py-16" text="Loading video..." />}
+        >
+          <VideoSection />
+        </Suspense>
+
+        <Suspense
+          fallback={
+            <Loading className="py-16" text="Loading contact form..." />
+          }
+        >
+          <ContactSection preSelectedServices={selectedServicesForContact} />
+        </Suspense>
       </main>
-    </>
+    </ErrorBoundary>
   );
 }
