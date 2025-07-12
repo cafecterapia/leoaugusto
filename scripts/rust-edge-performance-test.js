@@ -1,7 +1,8 @@
-// Rust Edge Function Performance Test
-// Simple performance testing for hero image delivery
+import https from "https";
+import { performance } from "perf_hooks";
 
-export class RustEdgePerformanceMonitor {
+// Performance monitoring for Rust Edge Function hero image delivery
+class RustEdgePerformanceMonitor {
   constructor() {
     this.metrics = {
       totalRequests: 0,
@@ -23,11 +24,12 @@ export class RustEdgePerformanceMonitor {
         const result = await this.singleTest(url);
         results.push(result);
 
+        // Log real-time results
         console.log(
-          `Test ${i + 1}/${iterations}: ${result.responseTime.toFixed(2)}ms ${result.cached ? "(cached)" : "(miss)"
-          } - Edge: ${result.edgeLocation || "unknown"}`
+          `Test ${i + 1}/${iterations}: ${result.responseTime.toFixed(2)}ms ${result.cached ? "(cached)" : "(miss)"} - Edge: ${result.edgeLocation || "unknown"}`
         );
 
+        // Small delay to avoid overwhelming
         await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (error) {
         console.error(`❌ Test ${i + 1} failed:`, error.message);
@@ -39,35 +41,49 @@ export class RustEdgePerformanceMonitor {
   }
 
   async singleTest(url) {
-    const startTime = performance.now();
+    return new Promise((resolve, reject) => {
+      const startTime = performance.now();
 
-    try {
-      const response = await fetch(url);
-      const endTime = performance.now();
-      const responseTime = endTime - startTime;
+      const req = https.get(url, (res) => {
+        const endTime = performance.now();
+        const responseTime = endTime - startTime;
 
-      const cached =
-        response.headers.get("x-vercel-cache") === "HIT" ||
-        response.headers.get("cf-cache-status") === "HIT" ||
-        response.headers.get("cache-control")?.includes("max-age");
+        // Extract performance headers
+        const cached =
+          res.headers["x-vercel-cache"] === "HIT" ||
+          res.headers["cf-cache-status"] === "HIT" ||
+          res.headers["cache-control"]?.includes("max-age");
 
-      const edgeLocation =
-        response.headers.get("x-vercel-edge") ||
-        response.headers.get("cf-ray") ||
-        response.headers.get("x-served-by");
+        const edgeLocation =
+          res.headers["x-vercel-edge"] ||
+          res.headers["cf-ray"] ||
+          res.headers["x-served-by"];
 
-      return {
-        responseTime,
-        statusCode: response.status,
-        cached,
-        edgeLocation,
-        contentLength: parseInt(response.headers.get("content-length") || "0"),
-        contentType: response.headers.get("content-type"),
-        headers: Object.fromEntries(response.headers.entries()),
-      };
-    } catch (error) {
-      throw new Error(`Network error: ${error.message}`);
-    }
+        // Consume response data
+        let data = Buffer.alloc(0);
+        res.on("data", (chunk) => {
+          data = Buffer.concat([data, chunk]);
+        });
+
+        res.on("end", () => {
+          resolve({
+            responseTime,
+            statusCode: res.statusCode,
+            cached,
+            edgeLocation,
+            contentLength: parseInt(res.headers["content-length"] || "0"),
+            contentType: res.headers["content-type"],
+            headers: res.headers,
+          });
+        });
+      });
+
+      req.on("error", reject);
+      req.setTimeout(5000, () => {
+        req.destroy();
+        reject(new Error("Request timeout"));
+      });
+    });
   }
 
   analyzeResults(results) {
@@ -85,9 +101,7 @@ export class RustEdgePerformanceMonitor {
     console.log("\n📈 RUST EDGE FUNCTION PERFORMANCE ANALYSIS");
     console.log("=====================================");
     console.log(
-      `🎯 Average Response Time: ${(
-        responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length
-      ).toFixed(2)}ms`
+      `🎯 Average Response Time: ${(responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length).toFixed(2)}ms`
     );
     console.log(
       `⚡ Fastest Response: ${Math.min(...responseTimes).toFixed(2)}ms`
@@ -100,10 +114,7 @@ export class RustEdgePerformanceMonitor {
     );
     console.log(`🌍 Edge Locations: ${edgeLocations.size} unique`);
     console.log(
-      `📊 Success Rate: ${(
-        (results.length / (results.length + this.metrics.errors)) *
-        100
-      ).toFixed(1)}%`
+      `📊 Success Rate: ${((results.length / (results.length + this.metrics.errors)) * 100).toFixed(1)}%`
     );
 
     // Performance goals validation
@@ -141,8 +152,8 @@ export class RustEdgePerformanceMonitor {
   }
 }
 
-// Test runner function
-export async function runRustEdgePerformanceTests() {
+// Test different scenarios
+async function runPerformanceTests() {
   const monitor = new RustEdgePerformanceMonitor();
 
   console.log("🦀 RUST EDGE FUNCTION HERO IMAGE PERFORMANCE TEST");
@@ -167,4 +178,12 @@ export async function runRustEdgePerformanceTests() {
     "https://your-domain.vercel.app/api/hero-image?format=avif&q=75",
     5
   );
+}
+
+// Export for use in other scripts
+module.exports = { RustEdgePerformanceMonitor };
+
+// Run if called directly
+if (require.main === module) {
+  runPerformanceTests().catch(console.error);
 }
