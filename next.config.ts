@@ -1,6 +1,4 @@
 import type { NextConfig } from "next";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import type { Configuration } from "webpack";
 
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
@@ -30,19 +28,6 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   poweredByHeader: false,
   reactStrictMode: true,
-
-  // Bundle analyzer (optional)
-  ...(process.env.ANALYZE === "true" && {
-    webpack: (config: Configuration) => {
-      config.plugins?.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: "static",
-          openAnalyzer: false,
-        })
-      );
-      return config;
-    },
-  }),
 };
 
 export default nextConfig;

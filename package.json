@@ -4,8 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:turbo": "next dev --turbo",
-    "dev:webpack": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,15 +12,11 @@
     "format:check": "prettier --check .",
     "format:lint": "npm run format && npm run lint:fix",
     "type-check": "tsc --noEmit",
-    "analyze": "ANALYZE=true npm run build",
     "build:production": "npm run type-check && npm run lint && npm run build",
-    "dev:profile": "next dev --turbo --profile",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
-    "test:performance": "playwright test tests/hero-performance.spec.ts --reporter=line",
-    "test:performance:headed": "playwright test tests/hero-performance.spec.ts --headed",
     "prepare": "husky"
   },
   "dependencies": {
@@ -50,7 +44,6 @@
     "@types/node": "^20",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19",
-    "@types/webpack-bundle-analyzer": "^4.7.0",
     "@typescript-eslint/eslint-plugin": "^8.35.1",
     "@typescript-eslint/parser": "^8.35.1",
     "base64-img": "^1.0.4",
@@ -62,17 +55,13 @@
     "husky": "^9.1.7",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4",
-    "lighthouse": "^12.8.0",
     "lint-staged": "^16.1.2",
     "playwright": "^1.54.1",
     "prettier": "^3.6.2",
-    "puppeteer": "^24.12.1",
     "sharp": "^0.34.3",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "web-vitals": "^5.0.3",
-    "webpack": "^5.99.9",
-    "webpack-bundle-analyzer": "^4.10.2"
+    "web-vitals": "^5.0.3"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
