@@ -12,15 +12,23 @@ export function useScrollHeader(): ScrollState {
   const [showShortName, setShowShortName] = useState(false);
 
   useEffect(() => {
+    // Ensure we're on the client side
+    if (typeof window === "undefined") return;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrollY(currentScrollY);
 
-      // Header becomes sticky immediately when scrolling
-      setIsScrolled(currentScrollY > 0);
+      // Check if modal is closing to prevent jarring transitions
+      const isModalClosing = document.body.classList.contains("modal-closing");
 
-      // Show short name after scrolling a bit into hero section
-      setShowShortName(currentScrollY > 50);
+      if (!isModalClosing) {
+        // Header becomes sticky immediately when scrolling
+        setIsScrolled(currentScrollY > 0);
+
+        // Show short name after scrolling a bit into hero section
+        setShowShortName(currentScrollY > 50);
+      }
     };
 
     // Initial call to set state

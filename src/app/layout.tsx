@@ -40,8 +40,28 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/images/hero-photo.avif"
+          href="/api/hero-image?name=lfam.avif"
           fetchPriority="high"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme') || 'system';
+                  var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                  document.documentElement.classList.add('theme-loading');
+                  if (isDark) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.add('light');
+                  }
+                  // Remove theme-loading class immediately to prevent flashing
+                  document.documentElement.classList.remove('theme-loading');
+                } catch (e) {}
+              })();
+            `,
+          }}
         />
       </head>
       <body

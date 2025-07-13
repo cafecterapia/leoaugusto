@@ -13,7 +13,7 @@ export default function DynamicImage() {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/images/hero-photo.avif",
+      Location: "/api/hero-image?name=lfam.avif",
       "Cache-Control": "public, max-age=31536000, immutable",
     },
   });

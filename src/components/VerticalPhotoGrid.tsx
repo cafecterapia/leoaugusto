@@ -14,19 +14,19 @@ gsap.registerPlugin(ScrollTrigger);
 
 const photos = [
   {
-    src: "/images/Palestras-Grid.avif",
+    src: "/images/AngeloMiranda.avif",
     alt: "Grid photo 1",
     text: "PALESTRAS",
     position: "left",
   },
   {
-    src: "/images/Aulas-Grid.avif",
+    src: "/images/LuizFelipe.avif",
     alt: "Grid photo 2",
     text: "AULAS & MENTORIAS",
     position: "right",
   },
   {
-    src: "/images/hero-photo.avif",
+    src: "/api/hero-image?name=lfam.avif",
     alt: "Header photo",
     text: "EMPREENDIMENTOS",
     position: "left",

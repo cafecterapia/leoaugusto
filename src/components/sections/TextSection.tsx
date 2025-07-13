@@ -20,8 +20,8 @@ export default function AboutSection() {
         {/* Description text */}
         <div className="max-w-4xl">
           <p className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-light leading-relaxed">
-            Une 25 anos de experiência como Fuzileiro Naval da Marinha do Brasil
-            ao expertise jurídico de mestre e especialista em direito militar.
+            Une 25 anos de experiência como Fuzileiro Naval na Marinha do Brasil
+            a expertise jurídica de Mestre e especialista em Direito Militar.
             Por ter vivido a vida castrense, ele compreende suas complexidades
             como ninguém. Por isso, sua defesa vai além da teoria legal — ela
             nasce da compreensão visceral de quem conhece cada desafio de quem

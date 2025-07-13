@@ -33,10 +33,7 @@ export default function ContactSection({
         </p>
 
         <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg p-8 shadow-lg">
-          <ContactForm
-            email="seuemail@gmail.com"
-            preSelectedServices={selectedServices}
-          />
+          <ContactForm preSelectedServices={selectedServices} />
         </div>
       </div>
     </section>

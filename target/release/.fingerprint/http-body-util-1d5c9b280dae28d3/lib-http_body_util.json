@@ -1,0 +1,26 @@
+{
+  "rustc": 11410426090777951712,
+  "features": "[\"default\"]",
+  "declared_features": "[\"channel\", \"default\", \"full\"]",
+  "target": 7120517503662506348,
+  "profile": 17010839075175821494,
+  "path": 2681536574994726617,
+  "deps": [
+    [1906322745568073236, "pin_project_lite", false, 12180217833640874949],
+    [7620660491849607393, "futures_core", false, 12808724230656102405],
+    [9010263965687315507, "http", false, 3858619833324918260],
+    [14084095096285906100, "http_body", false, 10778388434371466554],
+    [16066129441945555748, "bytes", false, 12722668681316663097]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "release/.fingerprint/http-body-util-1d5c9b280dae28d3/dep-lib-http_body_util",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 0
+}

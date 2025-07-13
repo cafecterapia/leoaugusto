@@ -1,54 +1,29 @@
 "use client";
 
-// Inline blurhash to base64 conversion utility (SSR-compatible)
-function blurhashToBase64(
+// SSR-compatible blurhash placeholder (consistent server/client rendering)
+// Using SVG for both server and client to prevent hydration mismatches
+function createConsistentPlaceholder(
   hash: string,
   width: number = 32,
   height: number = 32
 ): string {
-  if (typeof window === "undefined") {
-    // Server-side: return SVG placeholder
-    const svgPlaceholder = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#888888"/></svg>`;
-    return `data:image/svg+xml;base64,${btoa(svgPlaceholder)}`;
-  }
-
-  try {
-    // Client-side: create a simple gradient placeholder
-    const canvas = document.createElement("canvas");
-    canvas.width = width;
-    canvas.height = height;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Canvas context not available");
-
-    // Create a subtle gradient
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, "#666666");
-    gradient.addColorStop(1, "#888888");
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    return canvas.toDataURL("image/png");
-  } catch (error) {
-    console.warn("Failed to generate canvas placeholder:", error);
-    // Fallback to SVG placeholder
-    const svgPlaceholder = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#888888"/></svg>`;
-    return `data:image/svg+xml;base64,${btoa(svgPlaceholder)}`;
-  }
+  // Always use SVG for consistent server/client rendering
+  const svgPlaceholder = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#666666"/></svg>`;
+  return `data:image/svg+xml;base64,${btoa(svgPlaceholder)}`;
 }
 
-// Optimized BlurHash for hero-photo.avif (only 28 characters!)
+// Optimized BlurHash for lfam.avif (only 28 characters!)
 // Generated specifically for hero image - maintains visual quality
 // Payload reduction: 28 chars vs 342 bytes = 91.8% smaller
 const HERO_BLURHASH = "L26aq|-o000L~WRiI=Nc+[nhJBJU";
 
 // Convert BlurHash to base64 data URL (SSR-compatible)
-const HERO_LQIP = blurhashToBase64(HERO_BLURHASH, 32, 24);
+const HERO_LQIP = createConsistentPlaceholder(HERO_BLURHASH, 32, 24);
 
 export default function HeroSection() {
   return (
     <section
+      className="hero-section-stable"
       style={{
         position: "relative",
         color: "white",
@@ -61,7 +36,7 @@ export default function HeroSection() {
         paddingBottom: "4rem",
         backgroundColor: "#353537", // Fixed background color - always this color regardless of theme
         overflow: "hidden",
-        backgroundImage: `url('/images/hero-photo.avif'), url('${HERO_LQIP}')`,
+        backgroundImage: `url('/api/hero-image?name=lfam.avif'), url('${HERO_LQIP}')`,
         backgroundSize: "cover, cover",
         backgroundPosition: "center, center",
         backgroundRepeat: "no-repeat, no-repeat",
@@ -70,7 +45,7 @@ export default function HeroSection() {
       {/* Hidden img for eager loading with high priority */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/hero-photo.avif"
+        src="/api/hero-image?name=lfam.avif"
         alt=""
         loading="eager"
         fetchPriority="high"

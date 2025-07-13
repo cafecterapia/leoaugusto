@@ -1,0 +1,10 @@
+/workspaces/leoaugusto/target/release/deps/query_map-a001b16b34c7be4f.d: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/mod.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v1.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v2.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/standard.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/url_query.rs
+
+/workspaces/leoaugusto/target/release/deps/libquery_map-a001b16b34c7be4f.rmeta: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/mod.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v1.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v2.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/standard.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/url_query.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/lib.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/mod.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v1.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/aws_api_gateway_v2.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/serde/standard.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/query_map-0.7.0/src/url_query.rs:

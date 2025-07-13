@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import VimeoVideo from "./VimeoVideo";
 import { useLenis } from "./LenisProvider";
+import { useVideoModalState } from "../hooks/useVideoModalState";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -17,6 +18,12 @@ export default function VideoModal({
 }: VideoModalProps) {
   const savedScrollY = useRef(0);
   const { stop, start } = useLenis();
+  const { setVideoModalOpen } = useVideoModalState();
+
+  // Sync with global video modal state
+  useEffect(() => {
+    setVideoModalOpen(isOpen);
+  }, [isOpen, setVideoModalOpen]);
 
   // Handle escape key press to close modal
   useEffect(() => {
@@ -46,9 +53,18 @@ export default function VideoModal({
 
       // Lock body scroll
       document.body.style.overflow = "hidden";
+
+      // Create proper isolation from underlying content
+      // This prevents mix-blend-mode effects from bleeding through
+      document.body.style.isolation = "isolate";
+
+      // Add a class to body to help with any global CSS adjustments
+      document.body.classList.add("video-modal-open");
     } else {
       // Restore body scroll
       document.body.style.overflow = "";
+      document.body.style.isolation = "";
+      document.body.classList.remove("video-modal-open");
 
       // Restore scroll position instantly without smooth scrolling
       if (savedScrollY.current !== 0) {
@@ -68,6 +84,8 @@ export default function VideoModal({
     // Cleanup function to restore scroll when component unmounts
     return () => {
       document.body.style.overflow = "";
+      document.body.style.isolation = "";
+      document.body.classList.remove("video-modal-open");
       start(); // Ensure Lenis is always restarted on cleanup
     };
   }, [isOpen, stop, start]);
@@ -75,10 +93,14 @@ export default function VideoModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Dark overlay background */}
+    <div className="fixed inset-0 z-[60] flex items-center justify-center">
+      {/* Enhanced dark overlay background with proper isolation */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-80 backdrop-blur-sm"
+        className="absolute inset-0 bg-black backdrop-blur-sm"
+        style={{
+          backgroundColor: "rgba(0, 0, 0, 0.95)", // More opaque for better isolation
+          isolation: "isolate", // Create new stacking context
+        }}
         onClick={onClose}
       />
 

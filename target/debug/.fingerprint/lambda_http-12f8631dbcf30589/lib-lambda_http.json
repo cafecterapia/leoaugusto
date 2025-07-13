@@ -1,0 +1,40 @@
+{
+  "rustc": 11410426090777951712,
+  "features": "[\"apigw_http\"]",
+  "declared_features": "[\"alb\", \"anyhow\", \"apigw_http\", \"apigw_rest\", \"apigw_websockets\", \"default\", \"eyre\", \"miette\", \"opentelemetry\", \"pass_through\", \"tracing\"]",
+  "target": 10851494858348749839,
+  "profile": 2241668132362809309,
+  "path": 10178196484509966390,
+  "deps": [
+    [40386456601120721, "percent_encoding", false, 9943424665445420371],
+    [1906322745568073236, "pin_project_lite", false, 14884963539065647077],
+    [2706460456408817945, "futures", false, 6747496419856176077],
+    [3150220818285335163, "url", false, 9034250757110322775],
+    [9010263965687315507, "http", false, 15282601880087851303],
+    [9689903380558560274, "serde", false, 10825094520775334777],
+    [10229185211513642314, "mime", false, 4649278335260842767],
+    [10629569228670356391, "futures_util", false, 1602341229957694981],
+    [11957360342995674422, "hyper", false, 15216422754433085017],
+    [13077212702700853852, "base64", false, 1603888286474986325],
+    [14084095096285906100, "http_body", false, 3973850149350936048],
+    [14564311161534545801, "encoding_rs", false, 3248895686325832022],
+    [15005345399464119944, "lambda_runtime", false, 8104247171079251187],
+    [15367738274754116744, "serde_json", false, 1078370936571596439],
+    [16066129441945555748, "bytes", false, 9195711151032672634],
+    [16542808166767769916, "serde_urlencoded", false, 14700975806452577658],
+    [16900715236047033623, "http_body_util", false, 5877040539255766805],
+    [16973251432615581304, "tokio_stream", false, 11277296336266938051],
+    [17581721620989304757, "aws_lambda_events", false, 3146966589967844254]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "debug/.fingerprint/lambda_http-12f8631dbcf30589/dep-lib-lambda_http",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 0
+}

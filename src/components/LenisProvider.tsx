@@ -44,6 +44,9 @@ export default function LenisProvider({
   const scrollPositionRef = useRef<number>(0);
 
   useEffect(() => {
+    // Ensure we're on the client side
+    if (typeof window === "undefined") return;
+
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -52,6 +55,9 @@ export default function LenisProvider({
     if (prefersReducedMotion) {
       return;
     }
+
+    // Add loading class to prevent layout shifts during initialization
+    document.documentElement.classList.add("lenis-loading");
 
     // Default Lenis configuration
     const lenisOptions = {
@@ -79,6 +85,11 @@ export default function LenisProvider({
       rafRef.current = requestAnimationFrame(raf);
     };
     rafRef.current = requestAnimationFrame(raf);
+
+    // Remove loading class after a brief delay to ensure stable initialization
+    setTimeout(() => {
+      document.documentElement.classList.remove("lenis-loading");
+    }, 100);
 
     // Handle window load event to fix initial layout race condition
     const handleWindowLoad = () => {
@@ -183,6 +194,9 @@ export default function LenisProvider({
           handleVisualViewportResize
         );
       }
+
+      // Remove loading class if still present
+      document.documentElement.classList.remove("lenis-loading");
 
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);

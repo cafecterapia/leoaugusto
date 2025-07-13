@@ -14,6 +14,22 @@ export default function FullscreenMenu({
 }: FullscreenMenuProps) {
   const savedScrollY = useRef(0);
 
+  const handleNavigation = (targetId: string) => {
+    // Close menu first
+    onClose();
+
+    // Wait for menu close animation to complete, then navigate
+    setTimeout(() => {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 300); // Match the menu exit animation duration
+  };
+
   // Lock/unlock body scroll when menu opens/closes
   useEffect(() => {
     if (isOpen) {
@@ -47,6 +63,9 @@ export default function FullscreenMenu({
           behavior: "auto",
         });
 
+        // Reset the saved scroll position
+        savedScrollY.current = 0;
+
         // Restore original scroll behavior after a short delay
         setTimeout(() => {
           htmlElement.style.scrollBehavior = originalScrollBehavior;
@@ -74,7 +93,7 @@ export default function FullscreenMenu({
           className="fixed inset-0 z-50 bg-black"
         >
           {/* Header matching the original header layout */}
-          <div className="absolute top-0 left-0 w-full @container px-4 @sm:px-6 @lg:px-8 py-3 @sm:py-4 @lg:py-5 flex justify-between items-center">
+          <div className="absolute top-2 left-0 w-full @container px-4 @sm:px-6 @lg:px-8 py-3 @sm:py-4 @lg:py-5 flex justify-between items-center">
             {/* Logo/Name - perfectly matching header position */}
             <div className="text-xl @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl font-bold text-white tracking-wide">
               LEONARDO AUGUSTO
@@ -124,13 +143,12 @@ export default function FullscreenMenu({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                 >
-                  <a
-                    href="#sobre"
+                  <button
+                    onClick={() => handleNavigation("sobre")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                    onClick={onClose}
                   >
                     Sobre
-                  </a>
+                  </button>
                 </motion.li>
 
                 <motion.li
@@ -138,13 +156,12 @@ export default function FullscreenMenu({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.3 }}
                 >
-                  <a
-                    href="#servicos"
+                  <button
+                    onClick={() => handleNavigation("servicos")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                    onClick={onClose}
                   >
                     Serviços
-                  </a>
+                  </button>
                 </motion.li>
 
                 <motion.li
@@ -152,13 +169,12 @@ export default function FullscreenMenu({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
                 >
-                  <a
-                    href="#palestras"
+                  <button
+                    onClick={() => handleNavigation("palestras")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                    onClick={onClose}
                   >
                     Palestras
-                  </a>
+                  </button>
                 </motion.li>
 
                 <motion.li
@@ -166,13 +182,12 @@ export default function FullscreenMenu({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.5 }}
                 >
-                  <a
-                    href="#mentorias"
+                  <button
+                    onClick={() => handleNavigation("mentorias")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                    onClick={onClose}
                   >
                     Mentorias
-                  </a>
+                  </button>
                 </motion.li>
 
                 <motion.li
@@ -180,13 +195,12 @@ export default function FullscreenMenu({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.6 }}
                 >
-                  <a
-                    href="#contact-section"
+                  <button
+                    onClick={() => handleNavigation("contact-section")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                    onClick={onClose}
                   >
                     Contato
-                  </a>
+                  </button>
                 </motion.li>
               </ul>
             </motion.nav>
@@ -201,13 +215,26 @@ export default function FullscreenMenu({
               <div className="flex justify-between items-center text-sm text-gray-400">
                 <span>© 2025 Leonardo Augusto</span>
                 <div className="space-x-6">
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="https://linkedin.com/in/leoaugusto"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
                     LinkedIn
                   </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="https://instagram.com/augustoleonardo.prof"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
                     Instagram
                   </a>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a
+                    href="mailto:Imf.advocaciamilitar@gmail.com"
+                    className="hover:text-white transition-colors"
+                  >
                     Email
                   </a>
                 </div>

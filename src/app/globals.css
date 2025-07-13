@@ -134,6 +134,36 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent flash of unstyled content */
+    transition: none !important;
+  }
+
+  /* Prevent theme transition flash on initial load */
+  .theme-loading *,
+  .theme-loading *::before,
+  .theme-loading *::after {
+    transition: none !important;
+  }
+
+  /* Video modal open state - create proper isolation */
+  body.video-modal-open {
+    isolation: isolate;
+  }
+
+  /* Hide elements with mix-blend-mode when video modal is open */
+  body.video-modal-open [class*="mix-blend"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Ensure sections with isolate don't interfere with video modal */
+  body.video-modal-open .isolate {
+    isolation: auto;
+  }
+
+  /* Force all fixed positioned elements (except video modal) to lower z-index */
+  body.video-modal-open [class*="fixed"]:not([class*="z-[60]"]) {
+    z-index: 40 !important;
   }
 
   a {
@@ -177,5 +207,27 @@
   /* Font weight utilities */
   .font-blck {
     font-weight: 900;
+  }
+
+  /* Hero section stability - prevent layout shifts during initialization */
+  .hero-section-stable {
+    /* Ensure stable positioning during hydration */
+    contain: layout style;
+    /* Prevent background image from causing layout shifts */
+    background-attachment: scroll;
+    /* Force hardware acceleration for smoother rendering */
+    transform: translateZ(0);
+    /* Prevent content jumping during font loading */
+    font-display: swap;
+  }
+
+  /* Prevent theme switching flashes */
+  .theme-loading {
+    transition: none !important;
+  }
+
+  /* Ensure stable layout during Lenis initialization */
+  html.lenis-loading {
+    overflow: hidden;
   }
 }

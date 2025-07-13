@@ -1,14 +1,74 @@
 "use client";
 
-import { useState } from "react";
-import VimeoVideo from "@/components/VimeoVideo";
+import { useState, useRef, useEffect } from "react";
 import VideoModal from "@/components/VideoModal";
+import { useLenis } from "@/components/LenisProvider";
 
 export default function VideoSection() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { scrollTo } = useLenis();
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleOpenVideo = () => {
-    setIsVideoModalOpen(true);
+    if (!sectionRef.current) {
+      setIsVideoModalOpen(true);
+      return;
+    }
+
+    setIsNavigating(true);
+
+    // Get current scroll position and section bounds
+    const currentScrollY = window.scrollY;
+    const sectionRect = sectionRef.current.getBoundingClientRect();
+    const sectionTop = currentScrollY + sectionRect.top;
+    const sectionHeight = sectionRect.height;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate the ideal scroll position to center the section
+    const idealScrollY = sectionTop + sectionHeight / 2 - viewportHeight / 2;
+
+    // Check if we're already close to the center (within 100px tolerance)
+    const tolerance = 100;
+    const isAlreadyCentered =
+      Math.abs(currentScrollY - idealScrollY) < tolerance;
+
+    if (isAlreadyCentered) {
+      // Already centered, open modal immediately
+      setIsNavigating(false);
+      setIsVideoModalOpen(true);
+    } else {
+      // Use Lenis for smooth scrolling to avoid conflicts
+      const targetScrollY = Math.max(0, idealScrollY);
+
+      // Ensure we have a valid scroll target
+      if (targetScrollY !== currentScrollY) {
+        scrollTo(targetScrollY, {
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+
+        // Wait for scroll to complete before opening modal
+        timeoutRef.current = setTimeout(() => {
+          setIsNavigating(false);
+          setIsVideoModalOpen(true);
+        }, 1200); // Match Lenis duration
+      } else {
+        // No need to scroll, open immediately
+        setIsNavigating(false);
+        setIsVideoModalOpen(true);
+      }
+    }
   };
 
   const handleCloseVideo = () => {
@@ -16,23 +76,21 @@ export default function VideoSection() {
   };
   return (
     <section
+      ref={sectionRef}
       id="mentorias"
       className="relative h-screen overflow-hidden isolate bg-black"
     >
-      {/* Background Video */}
+      {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
-        <VimeoVideo
-          videoId="76979871" // Sample Vimeo video ID - replace with your actual video
-          autoplay={true}
-          muted={true}
-          loop={true}
-          background={true}
+        <img
+          src="images/videosection.avif"
+          alt="Background"
           className="w-full h-full object-cover"
         />
       </div>
 
       {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Content overlay */}
       <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -46,9 +104,10 @@ export default function VideoSection() {
           </p>
           <button
             onClick={handleOpenVideo}
-            className="mt-8 bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            disabled={isNavigating}
+            className="mt-8 bg-white text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Conheça Meu Trabalho
+            {isNavigating ? "Preparando..." : "Conheça Meu Trabalho"}
           </button>
         </div>
       </div>
@@ -57,7 +116,7 @@ export default function VideoSection() {
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={handleCloseVideo}
-        videoId="76979871" // Replace with your actual video ID
+        videoId="1094815419" // Replace with your actual video ID
       />
     </section>
   );

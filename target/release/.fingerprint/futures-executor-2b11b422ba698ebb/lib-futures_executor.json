@@ -1,0 +1,24 @@
+{
+  "rustc": 11410426090777951712,
+  "features": "[\"std\"]",
+  "declared_features": "[\"default\", \"num_cpus\", \"std\", \"thread-pool\"]",
+  "target": 11409328241454404632,
+  "profile": 6633418720899675052,
+  "path": 16726425028684992726,
+  "deps": [
+    [7620660491849607393, "futures_core", false, 12808724230656102405],
+    [10629569228670356391, "futures_util", false, 12516825823328151195],
+    [16240732885093539806, "futures_task", false, 17147523536164682730]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "release/.fingerprint/futures-executor-2b11b422ba698ebb/dep-lib-futures_executor",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 0
+}

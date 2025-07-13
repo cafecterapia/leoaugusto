@@ -20,6 +20,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
     "blurhash": "^2.0.5",
     "framer-motion": "^12.23.0",
     "gsap": "^3.13.0",

@@ -1,0 +1,26 @@
+{
+  "rustc": 11410426090777951712,
+  "features": "[]",
+  "declared_features": "[]",
+  "target": 13156520472536347915,
+  "profile": 17984201634715228204,
+  "path": 3690543180873323280,
+  "deps": [
+    [4974441333307933176, "syn", false, 14385489722188472334],
+    [9451456094439810778, "regex", false, 1035997706395454809],
+    [17155886227862585100, "glob", false, 7096550378915994115],
+    [17917672826516349275, "lazy_static", false, 6971393215706945424],
+    [17990358020177143287, "quote", false, 18096568659038955261]
+  ],
+  "local": [
+    {
+      "CheckDepInfo": {
+        "dep_info": "release/.fingerprint/vercel_runtime_router-aebf587f0994a9bd/dep-lib-vercel_runtime_router",
+        "checksum": false
+      }
+    }
+  ],
+  "rustflags": [],
+  "config": 2069994364910194474,
+  "compile_kind": 0
+}

@@ -4,16 +4,32 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { services } from "@/lib/services";
 
-// Shuffle array function
-const shuffleArray = (array: string[]) => {
+// Seeded shuffle array function for consistent SSR/client results
+const shuffleArraySeeded = (array: string[], seed: number) => {
   const newArray = [...array];
+  // Simple seeded random number generator
+  let rng = seed;
+  const random = () => {
+    rng = (rng * 1103515245 + 12345) & 0x7fffffff;
+    return rng / 0x7fffffff;
+  };
+
   for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(random() * (i + 1));
     const temp = newArray[i]!;
     newArray[i] = newArray[j]!;
     newArray[j] = temp;
   }
   return newArray;
+};
+
+// Simple seeded random number generator for client-side consistency
+const createSeededRandom = (seed: number) => {
+  let rng = seed;
+  return () => {
+    rng = (rng * 1103515245 + 12345) & 0x7fffffff;
+    return rng / 0x7fffffff;
+  };
 };
 
 interface ServiceBoxesProps {
@@ -29,16 +45,20 @@ export default function ServiceBoxes({
     services.slice(0, 6)
   );
   const [isClient, setIsClient] = useState(false);
+  const [randomSeed] = useState(12345); // Fixed seed for consistency
 
   useEffect(() => {
     setIsClient(true);
-    // Initialize with unique shuffled services only on client
-    const uniqueServices = shuffleArray(services).slice(0, 6);
+    // Initialize with seeded shuffled services for consistent results
+    const uniqueServices = shuffleArraySeeded(services, randomSeed).slice(0, 6);
     setDisplayedServices(uniqueServices);
-  }, []);
+  }, [randomSeed]);
 
   useEffect(() => {
     if (!isClient) return;
+
+    let intervalSeed = randomSeed + 1000; // Start with different seed for intervals
+    const getRandom = createSeededRandom(intervalSeed);
 
     const interval = setInterval(() => {
       // Get indices that are not currently selected
@@ -51,9 +71,12 @@ export default function ServiceBoxes({
 
       // Randomly select up to 2 boxes from available (non-selected) boxes
       const numToChange = Math.min(2, availableIndices.length);
-      const selectedForChange = availableIndices
-        .sort(() => 0.5 - Math.random())
+      const selectedForChange = [...availableIndices]
+        .sort(() => 0.5 - getRandom())
         .slice(0, numToChange);
+
+      // Update the interval seed for next iteration
+      intervalSeed += 1;
 
       // Directly update the services without intermediate state
       setDisplayedServices((prevServices) => {
@@ -76,10 +99,10 @@ export default function ServiceBoxes({
             });
 
             if (servicesToSwap.length > 0) {
-              newServices[index] =
-                servicesToSwap[
-                  Math.floor(Math.random() * servicesToSwap.length)
-                ]!;
+              const randomIndex = Math.floor(
+                getRandom() * servicesToSwap.length
+              );
+              newServices[index] = servicesToSwap[randomIndex]!;
             }
           }
         });
@@ -104,7 +127,7 @@ export default function ServiceBoxes({
     }, 8000); // Change every 8 seconds (slower)
 
     return () => clearInterval(interval);
-  }, [isClient, selectedIndices]);
+  }, [isClient, selectedIndices, randomSeed]);
 
   const handleBoxClick = (index: number) => {
     const newSelectedIndices = selectedIndices.includes(index)

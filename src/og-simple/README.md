@@ -4,7 +4,7 @@ This folder contains a simple, reliable Open Graph implementation for Facebook a
 
 ## What it does
 
-- Uses the existing `hero-photo.avif` directly (no complex generation)
+- Uses the existing `lfam.avif` directly (no complex generation)
 - Provides proper metadata for social media sharing
 - Works reliably with Facebook and WhatsApp link previews
 
@@ -16,7 +16,7 @@ This folder contains a simple, reliable Open Graph implementation for Facebook a
 
 Instead of complex base64 encoding and dynamic image generation, this approach:
 
-1. Uses the static `hero-photo.avif` from `/public/images/`
+1. Uses the static `lfam.avif` from `/public/images/`
 2. Sets proper OpenGraph metadata
 3. Lets Next.js handle the rest
 

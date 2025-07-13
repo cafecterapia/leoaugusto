@@ -39,11 +39,11 @@ export default function ServicesSection({
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl @lg:text-base @xl:text-lg @2xl:text-xl">
               <span className="font-semibold">(21) 97126 2427</span> |{" "}
               <span className="mx-2">
-                Rua Tecno Otoni, 52 Sala 201, Centro RJ
+                Rua Teófilo Otoni, 52 Sala 201, Centro RJ
               </span>{" "}
               |{" "}
               <span className="font-semibold">
-                Imf.advocacia militar@gmail.com
+                Imf.advocaciamilitar@gmail.com
               </span>
             </p>
           </div>

@@ -4,8 +4,15 @@ export default function Footer() {
   return (
     <footer className="w-full py-16 bg-black text-white isolate">
       <div className="max-w-6xl mx-auto px-6">
+        {/* Professional Information */}
+        <div className="text-center mb-12">
+          <h2 className="text-lg font-medium mb-1">Dr. Leonardo Augusto</h2>
+          <p className="text-sm text-gray-300 mb-1">OAB RJ 266.250</p>
+          <p className="text-sm text-gray-300">Advocacia militar</p>
+        </div>
+
         {/* Navigation and Social Links */}
-        <div className="flex justify-start mb-8 gap-16 md:gap-24">
+        <div className="flex justify-start mb-8 gap-4 md:gap-12 lg:gap-16">
           {/* Navigation Column */}
           <div className="flex flex-col space-y-3">
             <h3 className="text-sm font-medium mb-2">Navegação</h3>
@@ -72,11 +79,21 @@ export default function Footer() {
                 Instagram
               </a>
               <a
-                href="mailto:contact@leoaugusto.com"
+                href="mailto:Imf.advocaciamilitar@gmail.com"
                 className="text-sm hover:opacity-70 transition-opacity"
               >
                 Email
               </a>
+            </div>
+          </div>
+
+          {/* Address Column */}
+          <div className="flex flex-col md:space-y-3">
+            <h3 className="text-sm font-medium mb-2">Endereço</h3>
+            <div className="flex flex-col space-y-2">
+              <p className="text-sm text-gray-300">Rio de Janeiro, RJ</p>
+              <p className="text-sm text-gray-300">Rua Teófilo Otoni</p>
+              <p className="text-sm text-gray-300">52 Sala 201, Centro RJ</p>
             </div>
           </div>
         </div>
