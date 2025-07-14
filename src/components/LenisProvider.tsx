@@ -177,14 +177,48 @@ export default function LenisProvider({
       }
     };
 
+    // Multi-touch detection to prevent conflicts with pinch-to-zoom
+    const handleTouchStart = (event: TouchEvent) => {
+      if (event.touches.length > 1) {
+        // Multi-touch detected, temporarily stop Lenis to allow native gestures
+        lenisRef.current?.stop();
+      }
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      if (event.touches.length <= 1) {
+        // Back to single touch or no touch, restart Lenis
+        lenisRef.current?.start();
+      }
+    };
+
+    const handleTouchCancel = () => {
+      // Touch was cancelled, restart Lenis to ensure it's not left stopped
+      lenisRef.current?.start();
+    };
+
     // Use event delegation on document for better performance
     document.addEventListener("focusin", handleFocusIn);
     document.addEventListener("focusout", handleFocusOut);
+
+    // Add multi-touch detection with passive listeners to preserve native gestures
+    document.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    document.addEventListener("touchend", handleTouchEnd, {
+      passive: true,
+    });
+    document.addEventListener("touchcancel", handleTouchCancel, {
+      passive: true,
+    });
 
     // Cleanup function
     return () => {
       document.removeEventListener("focusin", handleFocusIn);
       document.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchend", handleTouchEnd);
+      document.removeEventListener("touchcancel", handleTouchCancel);
       window.removeEventListener("load", handleWindowLoad);
 
       // Clean up Visual Viewport API listener

@@ -4,10 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
-import PalestrasFullscreen from "./fullscreen/PalestrasFullscreen";
-import AulasMentoriasFullscreen from "./fullscreen/AulasMentoriasFullscreen";
-import EmpreendimentosFullscreen from "./fullscreen/EmpreendimentosFullscreen";
+import { useEffect, useRef } from "react";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -35,73 +32,40 @@ const photos = [
 
 export default function VerticalPhotoGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [fullscreenState, setFullscreenState] = useState<{
-    isOpen: boolean;
-    type: "palestras" | "aulas" | "empreendimentos" | null;
-    imageSrc: string;
-    imageAlt: string;
-  }>({
-    isOpen: false,
-    type: null,
-    imageSrc: "",
-    imageAlt: "",
-  });
 
   // DEBUG TOOL 1: Scroll Position Tracker
-  const logScrollState = (
-    photoIndex: number,
-    event: string,
-    scrollY: number
-  ) => {
-    console.log(
-      `[SCROLL] Photo ${photoIndex} | Event: ${event} | ScrollY: ${scrollY}px`
-    );
-  };
+  // const logScrollState = (
+  //   photoIndex: number,
+  //   event: string,
+  //   scrollY: number
+  // ) => {
+  //   console.log(
+  //     `[SCROLL] Photo ${photoIndex} | Event: ${event} | ScrollY: ${scrollY}px`
+  //   );
+  // };
 
   // DEBUG TOOL 2: Animation State Monitor
-  const logAnimationState = (
-    photoIndex: number,
-    overlayY: string | number,
-    textY: number
-  ) => {
-    console.log(
-      `[ANIMATION] Photo ${photoIndex} | Overlay Y: ${overlayY} | Text Y: ${textY}px`
-    );
-  };
+  // const logAnimationState = (
+  //   photoIndex: number,
+  //   overlayY: string | number,
+  //   textY: number
+  // ) => {
+  //   console.log(
+  //     `[ANIMATION] Photo ${photoIndex} | Overlay Y: ${overlayY} | Text Y: ${textY}px`
+  //   );
+  // };
 
   // DEBUG TOOL 3: ScrollTrigger Debug
-  const logTriggerEvent = (
-    photoIndex: number,
-    event: string,
-    triggerStart: string,
-    triggerEnd: string
-  ) => {
-    console.log(
-      `[TRIGGER] Photo ${photoIndex} | ${event} | Start: ${triggerStart} | End: ${triggerEnd}`
-    );
-  };
-
-  const handlePhotoClick = (
-    type: "palestras" | "aulas" | "empreendimentos",
-    imageSrc: string,
-    imageAlt: string
-  ) => {
-    setFullscreenState({
-      isOpen: true,
-      type,
-      imageSrc,
-      imageAlt,
-    });
-  };
-
-  const handleCloseFullscreen = () => {
-    setFullscreenState({
-      isOpen: false,
-      type: null,
-      imageSrc: "",
-      imageAlt: "",
-    });
-  };
+  // const logTriggerEvent = (
+  //   photoIndex: number,
+  //   event: string,
+  //   triggerStart: string,
+  //   triggerEnd: string
+  // ) => {
+  //   console.log(
+  //     `[TRIGGER] Photo ${photoIndex} | ${event} | Start: ${triggerStart} | End: ${triggerEnd}`
+  //   );
+  // };
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -146,8 +110,8 @@ export default function VerticalPhotoGrid() {
             ease: "power2.out",
           });
 
-          logAnimationState(photoIndex, 0, 0);
-          console.log(`[RESET] Photo ${photoIndex} reset to initial state`);
+          // logAnimationState(photoIndex, 0, 0);
+          // console.log(`[RESET] Photo ${photoIndex} reset to initial state`);
         }
       };
 
@@ -158,7 +122,7 @@ export default function VerticalPhotoGrid() {
         const text = photo.querySelector(
           `[data-text="text-${index}"]`
         ) as HTMLElement;
-        const nextPhoto = photos[index + 1] as HTMLElement;
+        // const nextPhoto = photos[index + 1] as HTMLElement;
 
         if (!overlay || !text) {
           return;
@@ -176,29 +140,30 @@ export default function VerticalPhotoGrid() {
         });
 
         // Debug: Log trigger setup
-        console.log(`[SETUP] Photo ${index} trigger setup:`, {
-          start: "bottom bottom",
-          end: nextPhoto
-            ? `${nextPhoto.offsetTop + nextPhoto.offsetHeight / 2}px center`
-            : "bottom top",
-          photoHeight: (photo as HTMLElement).offsetHeight,
-          photoTop: (photo as HTMLElement).offsetTop,
-        });
+        // console.log(`[SETUP] Photo ${index} trigger setup:`, {
+        //   start: "bottom bottom",
+        //   end: `+=${(photo as HTMLElement).offsetHeight * (index === 0 ? 1.2 : index === 1 ? 0.8 : 0.5)}`,
+        //   photoHeight: (photo as HTMLElement).offsetHeight,
+        //   photoTop: (photo as HTMLElement).offsetTop,
+        // });
 
         // Create ScrollTrigger for revealing the image
         ScrollTrigger.create({
           trigger: photo,
           start: "bottom bottom", // When bottom of photo hits bottom of viewport
-          end: nextPhoto ? () => `${nextPhoto.offsetTop}px top` : "bottom top",
+          end: () =>
+            `+=${(photo as HTMLElement).offsetHeight * (index === 0 ? 1.2 : index === 1 ? 1.19 : 1.2)}`, // Photo 0 & 1 get longer triggers (120%), Photo 2 gets 50%
           scrub: false,
+          markers: false, // Disabled markers for clean mobile experience
+          id: `photo-${index}`, // Give each trigger a unique ID
           onEnter: () => {
-            logScrollState(index, "onEnter", window.scrollY);
-            logTriggerEvent(
-              index,
-              "onEnter",
-              "bottom bottom",
-              nextPhoto ? "next photo top" : "bottom top"
-            );
+            // logScrollState(index, "onEnter", window.scrollY);
+            // logTriggerEvent(
+            //   index,
+            //   "onEnter",
+            //   "bottom bottom",
+            //   nextPhoto ? "next photo top" : "bottom bottom"
+            // );
 
             // Reset all previous photos when entering a new one
             for (let i = 0; i < index; i++) {
@@ -220,21 +185,37 @@ export default function VerticalPhotoGrid() {
               ease: "power2.out",
             });
 
-            logAnimationState(index, "80%", textPosition);
+            // logAnimationState(index, "80%", textPosition);
           },
           onLeave: () => {
-            logScrollState(index, "onLeave", window.scrollY);
-            logTriggerEvent(index, "onLeave", "bottom bottom", "next trigger");
-            // Don't reset here - let the next photo's onEnter handle it
+            // logScrollState(index, "onLeave", window.scrollY);
+            // logTriggerEvent(index, "onLeave", "bottom bottom", "next trigger");
+
+            // For the last photo (photo 2), reset it when leaving the trigger
+            if (index === photos.length - 1) {
+              gsap.to(overlay, {
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+              });
+              gsap.to(text, {
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+              });
+              // logAnimationState(index, 0, 0);
+              // console.log(`[RESET] Last photo ${index} reset on leave`);
+            }
+            // For other photos, don't reset here - let the next photo's onEnter handle it
           },
           onEnterBack: () => {
-            logScrollState(index, "onEnterBack", window.scrollY);
-            logTriggerEvent(
-              index,
-              "onEnterBack",
-              "scrolling up",
-              "re-entering"
-            );
+            // logScrollState(index, "onEnterBack", window.scrollY);
+            // logTriggerEvent(
+            //   index,
+            //   "onEnterBack",
+            //   "scrolling up",
+            //   "re-entering"
+            // );
 
             // Calculate responsive text positioning first
             const textPosition = calculateTextPosition(overlay);
@@ -251,7 +232,7 @@ export default function VerticalPhotoGrid() {
               ease: "power2.out",
             });
 
-            logAnimationState(index, "80%", textPosition);
+            // logAnimationState(index, "80%", textPosition);
 
             // Reset all following photos (those that come after current one)
             for (let i = index + 1; i < photos.length; i++) {
@@ -259,13 +240,13 @@ export default function VerticalPhotoGrid() {
             }
           },
           onLeaveBack: () => {
-            logScrollState(index, "onLeaveBack", window.scrollY);
-            logTriggerEvent(
-              index,
-              "onLeaveBack",
-              "scrolling back up",
-              "past trigger"
-            );
+            // logScrollState(index, "onLeaveBack", window.scrollY);
+            // logTriggerEvent(
+            //   index,
+            //   "onLeaveBack",
+            //   "scrolling back up",
+            //   "past trigger"
+            // );
 
             // Reset when scrolling back up past trigger
             gsap.to(overlay, {
@@ -279,7 +260,7 @@ export default function VerticalPhotoGrid() {
               ease: "power2.out",
             });
 
-            logAnimationState(index, 0, 0);
+            // logAnimationState(index, 0, 0);
           },
         });
       });
@@ -310,7 +291,7 @@ export default function VerticalPhotoGrid() {
           <motion.div
             key={photo.src}
             data-photo={`photo-${index}`}
-            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl cursor-pointer ${
+            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl ${
               photo.position === "left"
                 ? "self-start w-full sm:w-5/6 lg:w-4/5"
                 : "self-end w-full sm:w-5/6 lg:w-4/5"
@@ -319,17 +300,6 @@ export default function VerticalPhotoGrid() {
             whileHover={{ scale: 1.005 }}
             whileTap={{ scale: 0.995 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            onClick={() => {
-              const typeMap: Record<
-                string,
-                "palestras" | "aulas" | "empreendimentos"
-              > = {
-                "Conhecimento Compartilhado": "palestras",
-                "Formação Especializada": "aulas",
-                "Projetos Inovadores": "empreendimentos",
-              };
-              handlePhotoClick(typeMap[photo.text]!, photo.src, photo.alt);
-            }}
           >
             <Image
               src={photo.src}
@@ -359,30 +329,6 @@ export default function VerticalPhotoGrid() {
           </motion.div>
         ))}
       </div>
-
-      {/* Fullscreen Components */}
-      <PalestrasFullscreen
-        isOpen={fullscreenState.isOpen && fullscreenState.type === "palestras"}
-        onClose={handleCloseFullscreen}
-        imageSrc={fullscreenState.imageSrc}
-        imageAlt={fullscreenState.imageAlt}
-      />
-
-      <AulasMentoriasFullscreen
-        isOpen={fullscreenState.isOpen && fullscreenState.type === "aulas"}
-        onClose={handleCloseFullscreen}
-        imageSrc={fullscreenState.imageSrc}
-        imageAlt={fullscreenState.imageAlt}
-      />
-
-      <EmpreendimentosFullscreen
-        isOpen={
-          fullscreenState.isOpen && fullscreenState.type === "empreendimentos"
-        }
-        onClose={handleCloseFullscreen}
-        imageSrc={fullscreenState.imageSrc}
-        imageAlt={fullscreenState.imageAlt}
-      />
     </>
   );
 }

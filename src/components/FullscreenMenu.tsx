@@ -18,14 +18,18 @@ export default function FullscreenMenu({
     // Close menu first
     onClose();
 
-    // Wait for menu close animation to complete, then navigate
+    // Wait for menu close animation to complete, then navigate - DISABLED FOR DEBUGGING
     setTimeout(() => {
       const targetElement = document.getElementById(targetId);
       if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        // targetElement.scrollIntoView({
+        //   behavior: "auto",
+        //   block: "start",
+        // });
+        console.log(
+          "FullscreenMenu scrollIntoView called (disabled):",
+          targetId
+        );
       }
     }, 300); // Match the menu exit animation duration
   };
@@ -48,29 +52,33 @@ export default function FullscreenMenu({
       document.body.style.top = "";
       document.body.style.width = "";
 
-      // Restore scroll position instantly without animation
+      // Restore scroll position instantly without animation - DISABLED FOR DEBUGGING
       // We need to use requestAnimationFrame to ensure the body styles are reset first
-      requestAnimationFrame(() => {
-        // Temporarily disable any CSS smooth scrolling
-        const htmlElement = document.documentElement;
-        const originalScrollBehavior = htmlElement.style.scrollBehavior;
-        htmlElement.style.scrollBehavior = "auto";
+      // requestAnimationFrame(() => {
+      //   // Temporarily disable any CSS smooth scrolling
+      //   const htmlElement = document.documentElement;
+      //   const originalScrollBehavior = htmlElement.style.scrollBehavior;
+      //   htmlElement.style.scrollBehavior = "auto";
 
-        // Use scrollTo with instant behavior to avoid Lenis smooth scrolling
-        window.scrollTo({
-          top: savedScrollY.current,
-          left: 0,
-          behavior: "auto",
-        });
+      //   // Use scrollTo with instant behavior to avoid Lenis smooth scrolling - DISABLED FOR DEBUGGING
+      //   // window.scrollTo({
+      //   //   top: savedScrollY.current,
+      //   //   left: 0,
+      //   //   behavior: "auto",
+      //   // });
+      //   console.log("FullscreenMenu window.scrollTo called (disabled):", savedScrollY.current);
 
-        // Reset the saved scroll position
-        savedScrollY.current = 0;
+      //   // Reset the saved scroll position
+      //   savedScrollY.current = 0;
 
-        // Restore original scroll behavior after a short delay
-        setTimeout(() => {
-          htmlElement.style.scrollBehavior = originalScrollBehavior;
-        }, 50);
-      });
+      //   // Restore original scroll behavior after a short delay
+      //   setTimeout(() => {
+      //     htmlElement.style.scrollBehavior = originalScrollBehavior;
+      //   }, 50);
+      // });
+      console.log(
+        "FullscreenMenu requestAnimationFrame scroll restoration disabled"
+      );
     }
 
     // Cleanup function to restore scroll when component unmounts
@@ -93,7 +101,11 @@ export default function FullscreenMenu({
           className="fixed inset-0 z-50 bg-black"
         >
           {/* Header matching the original header layout */}
-          <div className="absolute top-2 left-0 w-full @container px-4 @sm:px-6 @lg:px-8 py-3 @sm:py-4 @lg:py-5 flex justify-between items-center">
+          <div
+            className="absolute top-2 left-0 w-full 
+          /* @container DISABLED FOR DEBUGGING */ 
+          px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 flex justify-between items-center"
+          >
             {/* Logo/Name - perfectly matching header position */}
             <div className="text-xl @sm:text-2xl @md:text-3xl @lg:text-4xl @xl:text-5xl font-bold text-white tracking-wide">
               LEONARDO AUGUSTO

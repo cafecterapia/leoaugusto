@@ -54,9 +54,9 @@ export default function ContactForm({
       });
     } else {
       // No reCAPTCHA configured - form will work without it
-      console.log(
-        "reCAPTCHA v3 not configured - forms will work without verification"
-      );
+      // console.log(
+      //   "reCAPTCHA v3 not configured - forms will work without verification"
+      // );
       setRecaptchaReady(true);
     }
   }, [recaptchaSiteKey]);
@@ -121,29 +121,30 @@ export default function ContactForm({
     }
   }, []);
 
-  // Prevent page scroll when scrolling inside dropdown
+  // Prevent page scroll when scrolling inside dropdown - DISABLED FOR DEBUGGING
   const handleDropdownWheel = useCallback((e: React.WheelEvent) => {
-    const target = e.currentTarget as HTMLElement;
-    const { scrollTop, scrollHeight, clientHeight } = target;
-    const isScrollableContent = scrollHeight > clientHeight;
+    // const target = e.currentTarget as HTMLElement;
+    // const { scrollTop, scrollHeight, clientHeight } = target;
+    // const isScrollableContent = scrollHeight > clientHeight;
 
-    // Only prevent default scrolling if we're actually scrolling within the dropdown content
-    if (isScrollableContent) {
-      const deltaY = e.deltaY;
-      const isScrollingUp = deltaY < 0;
-      const isScrollingDown = deltaY > 0;
+    // // Only prevent default scrolling if we're actually scrolling within the dropdown content
+    // if (isScrollableContent) {
+    //   const deltaY = e.deltaY;
+    //   const isScrollingUp = deltaY < 0;
+    //   const isScrollingDown = deltaY > 0;
 
-      // Allow page scroll if we're at the boundaries of the dropdown
-      const isAtTop = scrollTop === 0;
-      const isAtBottom = scrollTop >= scrollHeight - clientHeight;
+    //   // Allow page scroll if we're at the boundaries of the dropdown
+    //   const isAtTop = scrollTop === 0;
+    //   const isAtBottom = scrollTop >= scrollHeight - clientHeight;
 
-      if ((isScrollingUp && !isAtTop) || (isScrollingDown && !isAtBottom)) {
-        // Only prevent page scroll if we're scrolling within the dropdown bounds
-        e.preventDefault();
-        e.stopPropagation();
-        target.scrollTop += deltaY;
-      }
-    }
+    //   if ((isScrollingUp && !isAtTop) || (isScrollingDown && !isAtBottom)) {
+    //     // Only prevent page scroll if we're scrolling within the dropdown bounds
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     target.scrollTop += deltaY;
+    //   }
+    // }
+    console.log("ContactForm handleDropdownWheel called (disabled)");
   }, []);
 
   useEffect(() => {
@@ -169,17 +170,17 @@ export default function ContactForm({
       });
 
       if (!response.ok) {
-        console.error("Form submission failed:", response.status);
+        // console.error("Form submission failed:", response.status);
         return {
           success: false,
           error: `Erro no envio: ${response.status}. Tente novamente.`,
         };
       } else {
-        console.log("Form submitted successfully");
+        // console.log("Form submitted successfully");
         return { success: true };
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch {
+      // console.error("Form submission error:", error);
       return {
         success: false,
         error: "Erro de conexão. Verifique sua internet e tente novamente.",

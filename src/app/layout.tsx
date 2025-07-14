@@ -48,6 +48,11 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
+                  // Disable browser scroll restoration to prevent conflicts with intro animation
+                  if ('scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                  }
+                  
                   var theme = localStorage.getItem('theme') || 'system';
                   var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
                   document.documentElement.classList.add('theme-loading');

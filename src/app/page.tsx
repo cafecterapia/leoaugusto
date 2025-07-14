@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useEffect } from "react";
 import StickyContactButton from "@/components/StickyContactButton";
 import HeroSection from "@/components/sections/HeroSection";
+
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Loading from "@/components/Loading";
 import { services } from "@/lib/services";
@@ -21,6 +22,12 @@ const ContactSection = lazy(
 
 export default function Home() {
   const { scrollTo } = useLenis();
+
+  // Always start at the top on page load/reload
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [selectedServicesForContact, setSelectedServicesForContact] = useState<
     string[]
   >([]);
@@ -72,8 +79,8 @@ export default function Home() {
         onContactClick={handleContactClick}
       />
 
-      <main className="min-h-screen">
-        {/* Hero section loads immediately */}
+      <main className="min-h-screen relative">
+        {/* Hero section */}
         <HeroSection />
 
         {/* Other sections load with Suspense for better performance */}
