@@ -1,16 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import FullscreenMenu from "./FullscreenMenu";
-import { useScrollHeader } from "../hooks/useScrollHeader";
+import { useLenis } from "lenis/react";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const { isScrolled, showShortName } = useScrollHeader();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showShortName, setShowShortName] = useState(false);
+
+  // Lenis scroll listener
+  useLenis((lenis) => {
+    if (!lenis) return;
+    const scrollY = lenis.scroll;
+    setIsScrolled(scrollY > 0);
+    setShowShortName(scrollY > 60);
+  });
 
   // Handle client-side mounting
   useEffect(() => {

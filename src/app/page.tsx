@@ -1,27 +1,18 @@
 "use client";
 
-import { useState, lazy, Suspense } from "react";
+import { useState } from "react";
 import StickyContactButton from "@/components/StickyContactButton";
 import HeroSection from "@/components/sections/HeroSection";
-
-import ErrorBoundary from "@/components/ErrorBoundary";
-import Loading from "@/components/Loading";
+import TextSection from "@/components/sections/TextSection";
+import VideoSection from "@/components/sections/VideoSection";
+import ContactSection from "@/components/sections/ContactSection";
+import ServicesSection from "@/components/sections/ServicesSection";
+import GridSection from "@/components/sections/GridSection";
 import { services } from "@/lib/services";
-import { useLenis } from "@/components/LenisProvider";
-
-// Dynamic imports for better code splitting
-const TextSection = lazy(() => import("@/components/sections/TextSection"));
-const ServicesSection = lazy(
-  () => import("@/components/sections/ServicesSection")
-);
-const GridSection = lazy(() => import("@/components/sections/GridSection"));
-const VideoSection = lazy(() => import("@/components/sections/VideoSection"));
-const ContactSection = lazy(
-  () => import("@/components/sections/ContactSection")
-);
+import { useLenis } from "lenis/react";
 
 export default function Home() {
-  const { scrollTo } = useLenis();
+  const lenis = useLenis();
 
   const [selectedServicesForContact, setSelectedServicesForContact] = useState<
     string[]
@@ -58,14 +49,17 @@ export default function Home() {
         document.querySelector('[id*="contact"]') ||
         document.querySelector("section:last-of-type");
 
-      if (contactSection) {
-        scrollTo(contactSection as HTMLElement, { offset: 0, duration: 1.2 });
+      if (contactSection && lenis) {
+        lenis.scrollTo(contactSection as HTMLElement, {
+          offset: 0,
+          duration: 1.2,
+        });
       }
     }, 100);
   };
 
   return (
-    <ErrorBoundary>
+    <>
       {/* Sticky Contact Button - sibling to main content, not inside sections */}
       <StickyContactButton
         selectedServices={selectedServiceIndices.map(
@@ -78,42 +72,19 @@ export default function Home() {
         {/* Hero section */}
         <HeroSection />
 
-        {/* Other sections load with Suspense for better performance */}
-        <Suspense
-          fallback={<Loading className="py-16" text="Loading content..." />}
-        >
-          <TextSection />
-        </Suspense>
+        <TextSection />
 
-        <Suspense
-          fallback={<Loading className="py-16" text="Loading services..." />}
-        >
-          <ServicesSection
-            selectedServiceIndices={selectedServiceIndices}
-            onServiceSelectionChange={handleServiceSelectionChange}
-          />
-        </Suspense>
+        <ServicesSection
+          selectedServiceIndices={selectedServiceIndices}
+          onServiceSelectionChange={handleServiceSelectionChange}
+        />
 
-        <Suspense
-          fallback={<Loading className="py-16" text="Loading portfolio..." />}
-        >
-          <GridSection />
-        </Suspense>
+        <GridSection />
 
-        <Suspense
-          fallback={<Loading className="py-16" text="Loading video..." />}
-        >
-          <VideoSection />
-        </Suspense>
+        <VideoSection />
 
-        <Suspense
-          fallback={
-            <Loading className="py-16" text="Loading contact form..." />
-          }
-        >
-          <ContactSection preSelectedServices={selectedServicesForContact} />
-        </Suspense>
+        <ContactSection preSelectedServices={selectedServicesForContact} />
       </main>
-    </ErrorBoundary>
+    </>
   );
 }

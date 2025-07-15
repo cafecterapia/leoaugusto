@@ -1,8 +1,57 @@
 "use client";
 
-import VerticalPhotoGrid from "../VerticalPhotoGrid";
+import { lazy, useEffect, useState } from "react";
+
+// Lazy load the heavy VerticalPhotoGrid component
+const VerticalPhotoGrid = lazy(() => import("../VerticalPhotoGrid"));
+
+// Static placeholder component that looks like VerticalPhotoGrid
+const VerticalPhotoGridPlaceholder = () => {
+  const placeholderPhotos = [
+    { text: "PALESTRAS", position: "left" },
+    { text: "AULAS & MENTORIAS", position: "right" },
+    { text: "EMPREENDIMENTOS", position: "left" },
+  ];
+
+  return (
+    <div className="flex flex-col gap-19 w-full max-w-md sm:max-w-xl lg:max-w-4xl xl:max-w-4xl mx-auto px-2 sm:px-3 lg:px-4">
+      {placeholderPhotos.map((photo, index) => (
+        <div
+          key={index}
+          className="group relative overflow-hidden rounded-2xl lg:rounded-3xl xl:rounded-4xl"
+        >
+          <div className="aspect-[3/4] w-full bg-gray-200 dark:bg-gray-800 relative">
+            {/* Placeholder background with gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800" />
+
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60" />
+
+            {/* Text content */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold tracking-wide text-center">
+                {photo.text}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default function GridSection() {
+  const [isInteractive, setIsInteractive] = useState(false);
+
+  useEffect(() => {
+    // Start loading the interactive component after initial render
+    const timer = setTimeout(() => {
+      setIsInteractive(true);
+    }, 200); // Slightly longer delay since this component is more complex
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section
       id="palestras"
@@ -19,7 +68,8 @@ export default function GridSection() {
           </div>
         </div>
       </div>
-      <VerticalPhotoGrid />
+
+      {isInteractive ? <VerticalPhotoGrid /> : <VerticalPhotoGridPlaceholder />}
     </section>
   );
 }

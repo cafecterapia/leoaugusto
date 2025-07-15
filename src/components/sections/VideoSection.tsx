@@ -3,14 +3,14 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import VideoModal from "@/components/VideoModal";
-import { useLenis } from "@/components/LenisProvider";
+import { useLenis } from "lenis/react";
 
 export default function VideoSection() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const { scrollTo } = useLenis();
+  const lenis = useLenis();
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -53,8 +53,8 @@ export default function VideoSection() {
       const targetScrollY = Math.max(0, idealScrollY);
 
       // Ensure we have a valid scroll target
-      if (targetScrollY !== currentScrollY) {
-        scrollTo(targetScrollY, {
+      if (targetScrollY !== currentScrollY && lenis) {
+        lenis.scrollTo(targetScrollY, {
           duration: 1.2,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });

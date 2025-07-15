@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
-import { lenisScrollTo, lenisStop, lenisStart } from "@/lib/lenis";
+import { useLenis } from "lenis/react";
 
 interface FullscreenMenuProps {
   isOpen: boolean;
@@ -13,30 +13,66 @@ export default function FullscreenMenu({
   isOpen,
   onClose,
 }: FullscreenMenuProps) {
+  const lenis = useLenis();
+
   const handleNavigation = (targetId: string) => {
     // Close menu first
     onClose();
 
-    // Navigate immediately using Lenis - no need for delays
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      lenisScrollTo(targetElement, { duration: 1.2 });
-    }
+    // Small delay to allow menu close animation to start
+    setTimeout(() => {
+      const targetElement = document.getElementById(targetId);
+      if (targetElement && lenis) {
+        // Use Lenis for smooth scrolling with optimized easing
+        lenis.scrollTo(targetElement, {
+          offset: 0,
+          duration: 1.2,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else if (targetElement) {
+        // Fallback for browser compatibility
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      } else {
+        // Log error for debugging
+        console.warn(
+          `Navigation target element with ID "${targetId}" not found`
+        );
+      }
+    }, 100);
   };
 
   // Use Lenis stop/start instead of manual body manipulation
   useEffect(() => {
+    if (!lenis) return;
+
     if (isOpen) {
-      lenisStop(); // Stop Lenis scrolling when menu opens
+      lenis.stop(); // Stop Lenis scrolling when menu opens
     } else {
-      lenisStart(); // Resume Lenis scrolling when menu closes
+      lenis.start(); // Resume Lenis scrolling when menu closes
     }
 
     // Cleanup: ensure scrolling is resumed when component unmounts
     return () => {
-      lenisStart();
+      lenis.start();
     };
-  }, [isOpen]);
+  }, [isOpen, lenis]);
+
+  // Handle keyboard navigation for accessibility
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   return (
     <AnimatePresence>
@@ -96,6 +132,8 @@ export default function FullscreenMenu({
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
               className="text-center"
+              role="navigation"
+              aria-label="Main navigation"
             >
               <ul className="space-y-8">
                 <motion.li
@@ -106,6 +144,7 @@ export default function FullscreenMenu({
                   <button
                     onClick={() => handleNavigation("sobre")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
+                    aria-label="Navigate to About section"
                   >
                     Sobre
                   </button>
@@ -119,6 +158,7 @@ export default function FullscreenMenu({
                   <button
                     onClick={() => handleNavigation("servicos")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
+                    aria-label="Navigate to Services section"
                   >
                     Serviços
                   </button>
@@ -132,6 +172,7 @@ export default function FullscreenMenu({
                   <button
                     onClick={() => handleNavigation("palestras")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
+                    aria-label="Navigate to Lectures section"
                   >
                     Palestras
                   </button>
@@ -145,6 +186,7 @@ export default function FullscreenMenu({
                   <button
                     onClick={() => handleNavigation("mentorias")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
+                    aria-label="Navigate to Mentorship section"
                   >
                     Mentorias
                   </button>
@@ -158,6 +200,7 @@ export default function FullscreenMenu({
                   <button
                     onClick={() => handleNavigation("contact-section")}
                     className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
+                    aria-label="Navigate to Contact section"
                   >
                     Contato
                   </button>

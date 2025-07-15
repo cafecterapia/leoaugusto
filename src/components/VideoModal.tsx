@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import VimeoVideo from "./VimeoVideo";
-import { useLenis } from "./LenisProvider";
 import { useVideoModalState } from "../hooks/useVideoModalState";
+import { useLenis } from "lenis/react";
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -16,8 +16,8 @@ export default function VideoModal({
   onClose,
   videoId,
 }: VideoModalProps) {
-  const { stop, start } = useLenis();
   const { setVideoModalOpen } = useVideoModalState();
+  const lenis = useLenis();
 
   // Sync with global video modal state
   useEffect(() => {
@@ -26,19 +26,21 @@ export default function VideoModal({
 
   // Handle Lenis scroll control for modal
   useEffect(() => {
+    if (!lenis) return;
+
     if (isOpen) {
       // Stop Lenis scrolling when modal opens
-      stop();
+      lenis.stop();
     } else {
       // Resume Lenis scrolling when modal closes
-      start();
+      lenis.start();
     }
 
     // Cleanup: ensure scrolling is resumed when component unmounts
     return () => {
-      start();
+      lenis.start();
     };
-  }, [isOpen, stop, start]);
+  }, [isOpen, lenis]);
 
   // Handle escape key press to close modal
   useEffect(() => {

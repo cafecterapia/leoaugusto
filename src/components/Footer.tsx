@@ -1,9 +1,15 @@
 "use client";
 
-import { useLenis } from "./LenisProvider";
+import { useLenis } from "lenis/react";
 
 export default function Footer() {
-  const { scrollTo } = useLenis();
+  const lenis = useLenis();
+
+  const handleScrollToTop = () => {
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2 });
+    }
+  };
   return (
     <footer className="w-full py-16 bg-black text-white isolate">
       <div className="max-w-6xl mx-auto px-6">
@@ -103,9 +109,7 @@ export default function Footer() {
         <div className="flex justify-center mb-8">
           <button
             className="flex items-center gap-2 hover:opacity-70 transition-opacity"
-            onClick={() => {
-              scrollTo(0, { duration: 1.2 });
-            }}
+            onClick={handleScrollToTop}
             aria-label="Scroll to top"
           >
             <span className="text-sm">De volta ao top</span>
