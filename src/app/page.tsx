@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, lazy, Suspense, useEffect } from "react";
+import { useState, lazy, Suspense } from "react";
 import StickyContactButton from "@/components/StickyContactButton";
 import HeroSection from "@/components/sections/HeroSection";
 
@@ -22,11 +22,6 @@ const ContactSection = lazy(
 
 export default function Home() {
   const { scrollTo } = useLenis();
-
-  // Always start at the top on page load/reload
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const [selectedServicesForContact, setSelectedServicesForContact] = useState<
     string[]

@@ -122,7 +122,7 @@ export default function ContactForm({
   }, []);
 
   // Prevent page scroll when scrolling inside dropdown - DISABLED FOR DEBUGGING
-  const handleDropdownWheel = useCallback((e: React.WheelEvent) => {
+  const handleDropdownWheel = useCallback(() => {
     // const target = e.currentTarget as HTMLElement;
     // const { scrollTop, scrollHeight, clientHeight } = target;
     // const isScrollableContent = scrollHeight > clientHeight;

@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import LenisProvider from "@/components/LenisProvider";
+import LenisInitializer from "@/components/LenisInitializer";
 import { defaultMetadata } from "@/og-simple/metadata";
 
 const geistSans = Geist({
@@ -48,11 +48,6 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Disable browser scroll restoration to prevent conflicts with intro animation
-                  if ('scrollRestoration' in history) {
-                    history.scrollRestoration = 'manual';
-                  }
-                  
                   var theme = localStorage.getItem('theme') || 'system';
                   var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
                   document.documentElement.classList.add('theme-loading');
@@ -79,11 +74,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LenisProvider>
+          <LenisInitializer>
             <Header />
             {children}
             <Footer />
-          </LenisProvider>
+          </LenisInitializer>
         </ThemeProvider>
       </body>
     </html>

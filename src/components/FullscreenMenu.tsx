@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { lenisScrollTo, lenisStop, lenisStart } from "@/lib/lenis";
 
 interface FullscreenMenuProps {
   isOpen: boolean;
@@ -12,81 +13,28 @@ export default function FullscreenMenu({
   isOpen,
   onClose,
 }: FullscreenMenuProps) {
-  const savedScrollY = useRef(0);
-
   const handleNavigation = (targetId: string) => {
     // Close menu first
     onClose();
 
-    // Wait for menu close animation to complete, then navigate - DISABLED FOR DEBUGGING
-    setTimeout(() => {
-      const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        // targetElement.scrollIntoView({
-        //   behavior: "auto",
-        //   block: "start",
-        // });
-        console.log(
-          "FullscreenMenu scrollIntoView called (disabled):",
-          targetId
-        );
-      }
-    }, 300); // Match the menu exit animation duration
+    // Navigate immediately using Lenis - no need for delays
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      lenisScrollTo(targetElement, { duration: 1.2 });
+    }
   };
 
-  // Lock/unlock body scroll when menu opens/closes
+  // Use Lenis stop/start instead of manual body manipulation
   useEffect(() => {
     if (isOpen) {
-      // Save current scroll position
-      savedScrollY.current = window.scrollY;
-
-      // Lock the body scroll
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${savedScrollY.current}px`;
-      document.body.style.width = "100%";
-    } else if (savedScrollY.current !== 0) {
-      // Restore body scroll
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
-
-      // Restore scroll position instantly without animation - DISABLED FOR DEBUGGING
-      // We need to use requestAnimationFrame to ensure the body styles are reset first
-      // requestAnimationFrame(() => {
-      //   // Temporarily disable any CSS smooth scrolling
-      //   const htmlElement = document.documentElement;
-      //   const originalScrollBehavior = htmlElement.style.scrollBehavior;
-      //   htmlElement.style.scrollBehavior = "auto";
-
-      //   // Use scrollTo with instant behavior to avoid Lenis smooth scrolling - DISABLED FOR DEBUGGING
-      //   // window.scrollTo({
-      //   //   top: savedScrollY.current,
-      //   //   left: 0,
-      //   //   behavior: "auto",
-      //   // });
-      //   console.log("FullscreenMenu window.scrollTo called (disabled):", savedScrollY.current);
-
-      //   // Reset the saved scroll position
-      //   savedScrollY.current = 0;
-
-      //   // Restore original scroll behavior after a short delay
-      //   setTimeout(() => {
-      //     htmlElement.style.scrollBehavior = originalScrollBehavior;
-      //   }, 50);
-      // });
-      console.log(
-        "FullscreenMenu requestAnimationFrame scroll restoration disabled"
-      );
+      lenisStop(); // Stop Lenis scrolling when menu opens
+    } else {
+      lenisStart(); // Resume Lenis scrolling when menu closes
     }
 
-    // Cleanup function to restore scroll when component unmounts
+    // Cleanup: ensure scrolling is resumed when component unmounts
     return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.width = "";
+      lenisStart();
     };
   }, [isOpen]);
 

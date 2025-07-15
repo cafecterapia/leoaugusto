@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import VideoModal from "@/components/VideoModal";
 import { useLenis } from "@/components/LenisProvider";
 
@@ -82,10 +83,12 @@ export default function VideoSection() {
     >
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full">
-        <img
-          src="images/videosection.avif"
+        <Image
+          src="/images/videosection.avif"
           alt="Background"
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          priority
         />
       </div>
 

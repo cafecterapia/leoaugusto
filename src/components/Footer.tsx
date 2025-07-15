@@ -1,6 +1,9 @@
 "use client";
 
+import { useLenis } from "./LenisProvider";
+
 export default function Footer() {
+  const { scrollTo } = useLenis();
   return (
     <footer className="w-full py-16 bg-black text-white isolate">
       <div className="max-w-6xl mx-auto px-6">
@@ -101,10 +104,7 @@ export default function Footer() {
           <button
             className="flex items-center gap-2 hover:opacity-70 transition-opacity"
             onClick={() => {
-              // window.scrollTo({ top: 0, behavior: "auto" });
-              console.log(
-                "Footer back-to-top window.scrollTo called (disabled)"
-              );
+              scrollTo(0, { duration: 1.2 });
             }}
             aria-label="Scroll to top"
           >
