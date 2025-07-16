@@ -99,9 +99,7 @@
     margin: 0;
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
+  /* Native scroll-behavior removed to avoid conflicts with Lenis smooth scrolling */
 
   /* Respect user's reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
@@ -180,8 +178,10 @@
 }
 
 @layer utilities {
+
   /* Custom autofill utilities for handling browser autofill styling */
   .autofill-light {
+
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {
@@ -191,6 +191,7 @@
   }
 
   .autofill-dark {
+
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {

@@ -64,6 +64,31 @@ export default function RootLayout({
             `,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Handle scroll restoration on page load/reload
+              (function() {
+                // Disable browser's automatic scroll restoration
+                if ('scrollRestoration' in history) {
+                  history.scrollRestoration = 'manual';
+                }
+                
+                // Scroll to top on page load/reload
+                window.addEventListener('beforeunload', function() {
+                  window.scrollTo(0, 0);
+                });
+                
+                // Also ensure we start at top when page loads
+                window.addEventListener('load', function() {
+                  setTimeout(function() {
+                    window.scrollTo(0, 0);
+                  }, 0);
+                });
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -75,7 +100,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ReactLenis root options={{ autoRaf: true }}>
+          <ReactLenis
+            root
+            options={{
+              autoRaf: true,
+              lerp: 0.07,
+              wheelMultiplier: 0.8,
+              touchMultiplier: 0.8,
+              smoothWheel: true,
+              syncTouch: false,
+            }}
+          >
             <Header />
             {children}
             <Footer />

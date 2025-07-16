@@ -7,7 +7,10 @@ export default function Footer() {
 
   const handleScrollToTop = () => {
     if (lenis) {
-      lenis.scrollTo(0, { duration: 1.2 });
+      lenis.scrollTo(0, {
+        duration: 1.5,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
     }
   };
   return (

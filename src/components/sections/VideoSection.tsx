@@ -55,7 +55,7 @@ export default function VideoSection() {
       // Ensure we have a valid scroll target
       if (targetScrollY !== currentScrollY && lenis) {
         lenis.scrollTo(targetScrollY, {
-          duration: 1.2,
+          duration: 1.5,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
 
@@ -63,7 +63,7 @@ export default function VideoSection() {
         timeoutRef.current = setTimeout(() => {
           setIsNavigating(false);
           setIsVideoModalOpen(true);
-        }, 1200); // Match Lenis duration
+        }, 1500); // Match Lenis duration
       } else {
         // No need to scroll, open immediately
         setIsNavigating(false);

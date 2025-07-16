@@ -26,7 +26,7 @@ export default function FullscreenMenu({
         // Use Lenis for smooth scrolling with optimized easing
         lenis.scrollTo(targetElement, {
           offset: 0,
-          duration: 1.2,
+          duration: 1.5,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       } else if (targetElement) {
