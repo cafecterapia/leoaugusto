@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
+import { useLenis } from "lenis/react";
 
 interface FullscreenMenuProps {
   isOpen: boolean;
@@ -14,6 +15,8 @@ export default function FullscreenMenu({
   onClose,
   headerComponent,
 }: FullscreenMenuProps) {
+  const lenis = useLenis();
+
   const handleNavigation = (targetId: string) => {
     // Close menu first
     onClose();
@@ -21,35 +24,37 @@ export default function FullscreenMenu({
     // Small delay to allow menu close animation to start
     setTimeout(() => {
       const targetElement = document.getElementById(targetId);
-      if (targetElement) {
-        // Use native scroll - faster and simpler
-        targetElement.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+      if (targetElement && lenis) {
+        // Use Lenis for smooth scrolling
+        lenis.scrollTo(targetElement, {
+          offset: 0,
+          duration: 1.2,
         });
       } else {
         console.warn(
-          `Navigation target element with ID "${targetId}" not found`
+          `Navigation target element with ID "${targetId}" not found or Lenis not available`
         );
       }
     }, 100);
   };
 
-  // Simplified scroll control without Lenis dependency
+  // Lenis scroll control for fullscreen menu
   useEffect(() => {
+    if (!lenis) return;
+
     if (isOpen) {
-      // Prevent body scroll when menu opens
-      document.body.style.overflow = "hidden";
+      // Stop Lenis scrolling when menu opens
+      lenis.stop();
     } else {
-      // Restore scroll when menu closes
-      document.body.style.overflow = "";
+      // Resume Lenis scrolling when menu closes
+      lenis.start();
     }
 
-    // Cleanup: ensure scroll is restored when component unmounts
+    // Cleanup: ensure scrolling is resumed when component unmounts
     return () => {
-      document.body.style.overflow = "";
+      lenis.start();
     };
-  }, [isOpen]);
+  }, [isOpen, lenis]);
 
   // Handle keyboard navigation for accessibility
   useEffect(() => {
