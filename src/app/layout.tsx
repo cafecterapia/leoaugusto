@@ -44,6 +44,7 @@ export default function RootLayout({
           href="/api/hero-image?name=lfam.avif"
           fetchPriority="high"
         />
+        <link rel="preload" as="image" href="/la.avif" fetchPriority="high" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -64,31 +65,7 @@ export default function RootLayout({
             `,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Handle scroll restoration on page load/reload
-              (function() {
-                // Disable browser's automatic scroll restoration
-                if ('scrollRestoration' in history) {
-                  history.scrollRestoration = 'manual';
-                }
-                
-                // Scroll to top on page load/reload
-                window.addEventListener('beforeunload', function() {
-                  window.scrollTo(0, 0);
-                });
-                
-                // Also ensure we start at top when page loads
-                window.addEventListener('load', function() {
-                  setTimeout(function() {
-                    window.scrollTo(0, 0);
-                  }, 0);
-                });
-              })();
-            `,
-          }}
-        />
+        {/* Scroll restoration scripts temporarily removed for testing */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

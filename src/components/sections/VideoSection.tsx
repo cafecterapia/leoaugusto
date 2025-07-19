@@ -88,8 +88,60 @@ export default function VideoSection() {
           alt="Background"
           fill
           className="object-cover"
+          style={{
+            objectPosition: "center center", // Mobile: centered
+          }}
           priority
         />
+        {/* Desktop-specific image positioning for eye-level viewing */}
+        {/* Following Microsoft FluentUI and Google Material Design best practices */}
+        <style jsx>{`
+          /* Tablet landscape and small desktop - eye level positioning at 25% */
+          @media (min-width: 64rem) {
+            img {
+              object-position: center 25%;
+            }
+          }
+
+          /* Large desktop - optimal eye level positioning at 20% */
+          @media (min-width: 80rem) {
+            img {
+              object-position: center 20%;
+            }
+          }
+
+          /* Extra large desktop - refined eye level positioning at 18% */
+          @media (min-width: 90rem) {
+            img {
+              object-position: center 18%;
+            }
+          }
+
+          /* Desktop typography optimizations for better readability */
+          @media (min-width: 64rem) {
+            .video-section-content h2 {
+              font-size: 4.5rem;
+              line-height: 1.1;
+            }
+
+            .video-section-content p {
+              font-size: 1.25rem;
+              line-height: 1.6;
+            }
+          }
+
+          @media (min-width: 80rem) {
+            .video-section-content h2 {
+              font-size: 5.5rem;
+              line-height: 1;
+            }
+
+            .video-section-content p {
+              font-size: 1.5rem;
+              line-height: 1.7;
+            }
+          }
+        `}</style>
       </div>
 
       {/* Dark overlay for better text readability */}
@@ -97,7 +149,7 @@ export default function VideoSection() {
 
       {/* Content overlay */}
       <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <div className="text-center text-white">
+        <div className="text-center text-white video-section-content">
           <h2 className="text-4xl md:text-6xl font-bold mb-4">
             Transformando Vidas
           </h2>

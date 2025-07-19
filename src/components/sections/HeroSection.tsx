@@ -38,10 +38,28 @@ export default function HeroSection() {
         overflow: "hidden",
         backgroundImage: `url('/api/hero-image?name=lfam.avif'), url('${HERO_LQIP}')`,
         backgroundSize: "cover, cover",
-        backgroundPosition: "center, center",
+        backgroundPosition: "center, center", // Mobile: keep centered
         backgroundRepeat: "no-repeat, no-repeat",
       }}
     >
+      {/* Desktop-specific background positioning for eye-level viewing */}
+      <style jsx>{`
+        @media (min-width: 64rem) {
+          .hero-section-stable {
+            background-position:
+              center 33%,
+              center center !important;
+          }
+        }
+
+        @media (min-width: 80rem) {
+          .hero-section-stable {
+            background-position:
+              center 30%,
+              center center !important;
+          }
+        }
+      `}</style>
       {/* Hidden img for eager loading with high priority */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
