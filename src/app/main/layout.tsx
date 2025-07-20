@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -11,13 +11,6 @@ const geistSans = Geist({
   subsets: ["latin"],
   display: "swap",
   preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-  preload: false, // Only preload the main font
 });
 
 export const metadata: Metadata = defaultMetadata;
@@ -54,7 +47,7 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/la.avif" fetchPriority="high" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider
