@@ -3,8 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
-    optimizePackageImports: ["framer-motion", "gsap"],
+    optimizePackageImports: ["framer-motion", "gsap", "lenis"],
     optimizeCss: true, // Enable CSS optimization
+    optimizeServerReact: true, // Optimize React for server builds (Vercel Edge)
+    serverMinification: true, // Enable server code minification
+    serverSourceMaps: false, // Disable in production for smaller bundles
   },
 
   // Image optimization
@@ -29,6 +32,9 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   poweredByHeader: false,
   reactStrictMode: true,
+
+  // Output configuration for Vercel Edge Runtime compatibility
+  output: "standalone", // Optimize for serverless/edge deployment
 };
 
 export default nextConfig;

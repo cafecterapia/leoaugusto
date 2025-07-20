@@ -337,15 +337,7 @@ export default function ContactForm({
         name="_subject"
         value="Nova mensagem do site Leonardo Augusto"
       />
-      <input
-        type="hidden"
-        name="_next"
-        value={
-          typeof window !== "undefined"
-            ? `${window.location.origin}/contato?success=true`
-            : "/contato?success=true"
-        }
-      />
+      <input type="hidden" name="_next" value="/contato?success=true" />
 
       <div>
         <label

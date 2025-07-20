@@ -41,22 +41,19 @@ export default function ServiceBoxes({
   selectedIndices,
   onSelectionChange,
 }: ServiceBoxesProps) {
-  const [displayedServices, setDisplayedServices] = useState<string[]>(
-    services.slice(0, 6)
-  );
-  const [isClient, setIsClient] = useState(false);
+  const [displayedServices, setDisplayedServices] = useState<string[]>(() => {
+    // Use seeded shuffle for consistent SSR/client initial state
+    return shuffleArraySeeded(services, 12345).slice(0, 6);
+  });
   const [randomSeed] = useState(12345); // Fixed seed for consistency
 
   useEffect(() => {
-    setIsClient(true);
     // Initialize with seeded shuffled services for consistent results
     const uniqueServices = shuffleArraySeeded(services, randomSeed).slice(0, 6);
     setDisplayedServices(uniqueServices);
   }, [randomSeed]);
 
   useEffect(() => {
-    if (!isClient) return;
-
     let intervalSeed = randomSeed + 1000; // Start with different seed for intervals
     const getRandom = createSeededRandom(intervalSeed);
 
@@ -127,7 +124,7 @@ export default function ServiceBoxes({
     }, 8000); // Change every 8 seconds (slower)
 
     return () => clearInterval(interval);
-  }, [isClient, selectedIndices, randomSeed]);
+  }, [selectedIndices, randomSeed]);
 
   const handleBoxClick = (index: number) => {
     const newSelectedIndices = selectedIndices.includes(index)

@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import "lenis/dist/lenis.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -54,19 +52,6 @@ export default function RootLayout({
           fetchPriority="high"
         />
         <link rel="preload" as="image" href="/la.avif" fetchPriority="high" />
-
-        {/* Simple font loading optimization */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('fonts' in document) {
-                document.fonts.ready.then(function() {
-                  document.documentElement.classList.add('fonts-loaded');
-                });
-              }
-            `,
-          }}
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

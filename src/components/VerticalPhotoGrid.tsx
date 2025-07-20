@@ -2,12 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
-
-// Register GSAP plugins
-gsap.registerPlugin(ScrollTrigger);
 
 const photos = [
   {
@@ -71,11 +66,20 @@ export default function VerticalPhotoGrid() {
     if (!containerRef.current) return;
 
     // Add a small delay to ensure DOM elements are fully rendered
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
       const photos = containerRef.current?.querySelectorAll("[data-photo]");
       if (!photos || photos.length === 0) {
         return;
       }
+
+      // Dynamically import GSAP to reduce initial bundle size
+      const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
+      // Register GSAP plugins after dynamic import
+      gsap.registerPlugin(ScrollTrigger);
 
       // Function to calculate responsive text position
       const calculateTextPosition = (overlay: HTMLElement) => {
@@ -267,8 +271,13 @@ export default function VerticalPhotoGrid() {
     }, 100);
 
     // Handle window resize to recalculate text positions
-    const handleResize = () => {
-      ScrollTrigger.refresh();
+    const handleResize = async () => {
+      try {
+        const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        ScrollTrigger.refresh();
+      } catch {
+        // GSAP might not be loaded yet, ignore resize error
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -277,7 +286,16 @@ export default function VerticalPhotoGrid() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+      // Clean up ScrollTrigger instances - use dynamic import in cleanup too
+      Promise.resolve().then(async () => {
+        try {
+          const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+          ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        } catch {
+          // GSAP might not be loaded yet, ignore cleanup error
+        }
+      });
     };
   }, []);
 
