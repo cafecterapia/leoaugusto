@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ["framer-motion", "gsap"],
+    optimizeCss: true, // Enable CSS optimization
   },
 
   // Image optimization

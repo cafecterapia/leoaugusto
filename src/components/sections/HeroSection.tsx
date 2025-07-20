@@ -14,7 +14,7 @@ export default function HeroSection() {
         quality={95}
         sizes="100vw"
         placeholder="blur"
-        blurDataURL={`data:image/svg+xml;base64,${btoa(`<svg width="32" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#666666"/></svg>`)}`}
+        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2NjY2NiIvPjwvc3ZnPg=="
         className="absolute inset-0 object-cover object-center lg:object-[center_20%] xl:object-[center_15%] -z-10"
       />
 
