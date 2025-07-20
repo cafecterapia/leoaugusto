@@ -3,11 +3,17 @@
 import Image from "next/image";
 
 export default function HeroSection() {
+  // Use fallback image for development, API route for production
+  const heroImageSrc =
+    process.env.NODE_ENV === "development"
+      ? "/images/lfam.avif"
+      : "/api/hero-image?name=lfam.avif";
+
   return (
     <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[23rem] pb-16 md:grid md:place-items-center md:grid-cols-1 lg:place-items-start xl:place-items-start">
       {/* Next.js Image - Flagship Performance with Artistic Control */}
       <Image
-        src="/api/hero-image?name=lfam.avif"
+        src={heroImageSrc}
         alt="Leonardo Augusto - Advogado especialista em Direito Militar"
         fill
         priority

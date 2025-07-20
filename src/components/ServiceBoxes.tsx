@@ -66,62 +66,29 @@ export default function ServiceBoxes({
       // Only proceed if we have boxes available to change
       if (availableIndices.length === 0) return;
 
-      // Randomly select up to 2 boxes from available (non-selected) boxes
-      const numToChange = Math.min(2, availableIndices.length);
-      const selectedForChange = [...availableIndices]
-        .sort(() => 0.5 - getRandom())
-        .slice(0, numToChange);
+      // Reduce frequency and complexity - only change 1 box at a time
+      const selectedForChange = [
+        availableIndices[Math.floor(getRandom() * availableIndices.length)]!,
+      ];
 
       // Update the interval seed for next iteration
       intervalSeed += 1;
 
-      // Directly update the services without intermediate state
+      // Simplified service update without intermediate state
       setDisplayedServices((prevServices) => {
         const newServices = [...prevServices];
         const availableServices = services.filter(
           (service) => !newServices.includes(service)
         );
 
-        selectedForChange.forEach((index, i) => {
-          // If we have available services that aren't currently displayed, use them
-          if (availableServices.length > i) {
-            newServices[index] = availableServices[i]!;
-          } else {
-            // If all services are being used, find a service from a non-changing box to swap
-            const servicesToSwap = services.filter((service) => {
-              const currentIndex = newServices.indexOf(service);
-              return (
-                currentIndex !== -1 && !selectedForChange.includes(currentIndex)
-              );
-            });
-
-            if (servicesToSwap.length > 0) {
-              const randomIndex = Math.floor(
-                getRandom() * servicesToSwap.length
-              );
-              newServices[index] = servicesToSwap[randomIndex]!;
-            }
-          }
-        });
-
-        // Final check to ensure no duplicates
-        const seen = new Set<string>();
-        for (let i = 0; i < newServices.length; i++) {
-          if (seen.has(newServices[i]!)) {
-            // Find a service not in the current array
-            const unusedService = services.find(
-              (service) => !newServices.includes(service)
-            );
-            if (unusedService) {
-              newServices[i] = unusedService;
-            }
-          }
-          seen.add(newServices[i]!);
+        const index = selectedForChange[0]!;
+        if (availableServices.length > 0) {
+          newServices[index] = availableServices[0]!;
         }
 
         return newServices;
       });
-    }, 8000); // Change every 8 seconds (slower)
+    }, 12000); // Increased interval to reduce frequency (12 seconds)
 
     return () => clearInterval(interval);
   }, [selectedIndices, randomSeed]);
@@ -189,12 +156,6 @@ export default function ServiceBoxes({
                 </div>
               </div>
             </div>
-
-            {/* Subtle glow effect on hover */}
-            <motion.div
-              className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 transition-opacity duration-300 pointer-events-none -z-10 blur-sm"
-              whileHover={{ opacity: 1 }}
-            ></motion.div>
 
             {/* Enhanced selection indicator */}
             {selectedIndices.includes(index) && (

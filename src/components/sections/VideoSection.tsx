@@ -29,18 +29,20 @@ export default function VideoSection() {
 
     setIsNavigating(true);
 
-    // Get current scroll position and section bounds
+    // Batch DOM reads to minimize reflows
     const currentScrollY = window.scrollY;
-    const sectionRect = sectionRef.current.getBoundingClientRect();
-    const sectionTop = currentScrollY + sectionRect.top;
-    const sectionHeight = sectionRect.height;
     const viewportHeight = window.innerHeight;
+    const { top: sectionTop, height: sectionHeight } =
+      sectionRef.current.getBoundingClientRect();
 
-    // Calculate the ideal scroll position to center the section
-    const idealScrollY = sectionTop + sectionHeight / 2 - viewportHeight / 2;
+    // Calculate scroll target once
+    const absoluteSectionTop = currentScrollY + sectionTop;
+    const idealScrollY =
+      absoluteSectionTop + sectionHeight / 2 - viewportHeight / 2;
+    const targetScrollY = Math.max(0, idealScrollY);
 
-    // Check if we're already close to the center (within 100px tolerance)
-    const tolerance = 100;
+    // Check if we're already centered (increased tolerance for less sensitive triggering)
+    const tolerance = 150;
     const isAlreadyCentered =
       Math.abs(currentScrollY - idealScrollY) < tolerance;
 
@@ -48,27 +50,22 @@ export default function VideoSection() {
       // Already centered, open modal immediately
       setIsNavigating(false);
       setIsVideoModalOpen(true);
-    } else {
-      // Use Lenis for smooth scrolling to avoid conflicts
-      const targetScrollY = Math.max(0, idealScrollY);
+    } else if (lenis && targetScrollY !== currentScrollY) {
+      // Use Lenis for smooth scrolling with optimized settings
+      lenis.scrollTo(targetScrollY, {
+        duration: 1.2, // Reduced duration
+        easing: (t: number) => 1 - Math.pow(1 - t, 3), // Simpler easing function
+      });
 
-      // Ensure we have a valid scroll target
-      if (targetScrollY !== currentScrollY && lenis) {
-        lenis.scrollTo(targetScrollY, {
-          duration: 1.5,
-          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        });
-
-        // Wait for scroll to complete before opening modal
-        timeoutRef.current = setTimeout(() => {
-          setIsNavigating(false);
-          setIsVideoModalOpen(true);
-        }, 1500); // Match Lenis duration
-      } else {
-        // No need to scroll, open immediately
+      // Wait for scroll to complete with reduced timing
+      timeoutRef.current = setTimeout(() => {
         setIsNavigating(false);
         setIsVideoModalOpen(true);
-      }
+      }, 1200); // Match Lenis duration
+    } else {
+      // No need to scroll, open immediately
+      setIsNavigating(false);
+      setIsVideoModalOpen(true);
     }
   };
 
