@@ -1,36 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { services } from "@/lib/services";
-
-// Seeded shuffle array function for consistent SSR/client results
-const shuffleArraySeeded = (array: string[], seed: number) => {
-  const newArray = [...array];
-  // Simple seeded random number generator
-  let rng = seed;
-  const random = () => {
-    rng = (rng * 1103515245 + 12345) & 0x7fffffff;
-    return rng / 0x7fffffff;
-  };
-
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    const temp = newArray[i]!;
-    newArray[i] = newArray[j]!;
-    newArray[j] = temp;
-  }
-  return newArray;
-};
-
-// Simple seeded random number generator for client-side consistency
-const createSeededRandom = (seed: number) => {
-  let rng = seed;
-  return () => {
-    rng = (rng * 1103515245 + 12345) & 0x7fffffff;
-    return rng / 0x7fffffff;
-  };
-};
 
 interface ServiceBoxesProps {
   selectedIndices: number[];
@@ -41,58 +12,6 @@ export default function ServiceBoxes({
   selectedIndices,
   onSelectionChange,
 }: ServiceBoxesProps) {
-  const [displayedServices, setDisplayedServices] = useState<string[]>(() => {
-    // Use seeded shuffle for consistent SSR/client initial state
-    return shuffleArraySeeded(services, 12345).slice(0, 6);
-  });
-  const [randomSeed] = useState(12345); // Fixed seed for consistency
-
-  useEffect(() => {
-    // Initialize with seeded shuffled services for consistent results
-    const uniqueServices = shuffleArraySeeded(services, randomSeed).slice(0, 6);
-    setDisplayedServices(uniqueServices);
-  }, [randomSeed]);
-
-  useEffect(() => {
-    let intervalSeed = randomSeed + 1000; // Start with different seed for intervals
-    const getRandom = createSeededRandom(intervalSeed);
-
-    const interval = setInterval(() => {
-      // Get indices that are not currently selected
-      const availableIndices = [0, 1, 2, 3, 4, 5].filter(
-        (index) => !selectedIndices.includes(index)
-      );
-
-      // Only proceed if we have boxes available to change
-      if (availableIndices.length === 0) return;
-
-      // Reduce frequency and complexity - only change 1 box at a time
-      const selectedForChange = [
-        availableIndices[Math.floor(getRandom() * availableIndices.length)]!,
-      ];
-
-      // Update the interval seed for next iteration
-      intervalSeed += 1;
-
-      // Simplified service update without intermediate state
-      setDisplayedServices((prevServices) => {
-        const newServices = [...prevServices];
-        const availableServices = services.filter(
-          (service) => !newServices.includes(service)
-        );
-
-        const index = selectedForChange[0]!;
-        if (availableServices.length > 0) {
-          newServices[index] = availableServices[0]!;
-        }
-
-        return newServices;
-      });
-    }, 12000); // Increased interval to reduce frequency (12 seconds)
-
-    return () => clearInterval(interval);
-  }, [selectedIndices, randomSeed]);
-
   const handleBoxClick = (index: number) => {
     const newSelectedIndices = selectedIndices.includes(index)
       ? selectedIndices.filter((i) => i !== index)
@@ -115,19 +34,20 @@ export default function ServiceBoxes({
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
-        {displayedServices.map((service, index) => (
+      {/* Display all services in a grid layout */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 xl:gap-10 2xl:gap-12">
+        {services.map((service, index) => (
           <motion.div
             key={index}
             className="group relative cursor-pointer"
             onClick={() => handleBoxClick(index)}
             initial={{ scale: 1 }}
             animate={{ scale: 1 }}
-            whileHover={{ scale: 1.0 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.995 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
-            {/* Square shaped box with aspect ratio - container stays stable */}
+            {/* Square shaped box with aspect ratio */}
             <div className="aspect-square w-full">
               <div
                 className={`h-full p-3 sm:p-6 lg:p-8 xl:p-10 border-2 lg:border-4 rounded-xl lg:rounded-2xl xl:rounded-3xl bg-transparent transition-all duration-500 transform hover:shadow-lg hover:shadow-primary/20 ${
@@ -137,22 +57,9 @@ export default function ServiceBoxes({
                 }`}
               >
                 <div className="flex items-center justify-center h-full relative">
-                  {/* Only animate the text content, not the container */}
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={`${index}-${service}`}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.3,
-                        ease: "easeInOut",
-                      }}
-                      className="text-secondary-foreground text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium leading-relaxed absolute inset-0 flex items-center justify-center"
-                    >
-                      {service}
-                    </motion.p>
-                  </AnimatePresence>
+                  <p className="text-secondary-foreground text-center text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-medium leading-relaxed">
+                    {service}
+                  </p>
                 </div>
               </div>
             </div>

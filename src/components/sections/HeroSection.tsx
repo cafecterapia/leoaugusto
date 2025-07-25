@@ -26,12 +26,12 @@ export default function HeroSection() {
 
       {/* Content Layer */}
       <div className="relative z-10 w-full max-w-[80rem] mx-auto text-left">
-        <h1 className="font-black leading-none text-[2.70rem] opacity-[0.88]">
-          ADVOGADO
+        <h1 className="font-black leading-none text-[1.8rem] sm:text-[2.1rem] md:text-[2.4rem] lg:text-[2.7rem] opacity-[0.75]">
+          ADVOGADO,
           <br />
           MESTRE EM DIREITO
           <br />
-          E ESPECIALISTA EM
+          COM ESPECIALIZAÇÃO EM
           <br />
           DIREITO MILITAR
         </h1>
