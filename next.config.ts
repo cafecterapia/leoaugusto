@@ -10,6 +10,20 @@ const nextConfig: NextConfig = {
     serverSourceMaps: false, // Disable in production for smaller bundles
   },
 
+  // Turbopack configuration (stable)
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+    resolveAlias: {
+      "@": "./src",
+    },
+    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
+  },
+
   // Image optimization
   images: {
     formats: ["image/webp", "image/avif"],
