@@ -11,16 +11,17 @@ export default function HeroSection() {
 
   return (
     <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[27rem] pb-20 md:pt-[18rem] md:pb-24 lg:pt-[16rem] lg:pb-28 xl:pt-[14rem] xl:pb-32 md:grid md:place-items-center md:grid-cols-1 lg:place-items-start xl:place-items-start">
-      {/* Next.js Image - Flagship Performance with Artistic Control */}
+      {/* Next.js Image - Optimized for LCP */}
       <Image
         src={heroImageSrc}
         alt="Leonardo Augusto - Advogado especialista em Direito Militar"
         fill
         priority
+        fetchPriority="high"
         quality={95}
         sizes="100vw"
         placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2NjY2NiIvPjwvc3ZnPg=="
+        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3NvZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2NjY2NiIvPjwvc3ZnPg=="
         className="absolute inset-0 object-cover object-center lg:object-[center_20%] xl:object-[center_15%] -z-10"
       />
 
