@@ -1,0 +1,9 @@
+{
+  "ignore_dirs": [
+    ".git",
+    ".next",
+    "node_modules",
+    "target",
+    ".husky"
+  ]
+}

@@ -10,7 +10,7 @@ export default function HeroSection() {
       : "/api/hero-image?name=lfam.avif";
 
   return (
-    <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[23rem] pb-16 md:grid md:place-items-center md:grid-cols-1 lg:place-items-start xl:place-items-start">
+    <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[27rem] pb-20 md:pt-[18rem] md:pb-24 lg:pt-[16rem] lg:pb-28 xl:pt-[14rem] xl:pb-32 md:grid md:place-items-center md:grid-cols-1 lg:place-items-start xl:place-items-start">
       {/* Next.js Image - Flagship Performance with Artistic Control */}
       <Image
         src={heroImageSrc}
@@ -26,14 +26,14 @@ export default function HeroSection() {
 
       {/* Content Layer */}
       <div className="relative z-10 w-full max-w-[80rem] mx-auto text-left">
-        <h1 className="font-black leading-none text-[1.8rem] sm:text-[2.1rem] md:text-[2.4rem] lg:text-[2.7rem] opacity-[0.75]">
+        <h1 className="font-black leading-none text-[2rem] sm:text-[2.1rem] md:text-[3rem] lg:text-[2.7rem] opacity-[0.75]">
           ADVOGADO,
           <br />
           MESTRE EM DIREITO
           <br />
-          COM ESPECIALIZAÇÃO EM
+          <span className="italic whitespace-nowrap">COM ESPECIALIZAÇÃO</span>
           <br />
-          DIREITO MILITAR
+          EM DIREITO MILITAR
         </h1>
         <div className="mt-1 flex flex-col items-start">
           <div className="cursor-pointer text-white text-[2.5rem] opacity-[0.88]">
