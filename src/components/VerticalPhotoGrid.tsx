@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 
 const photos = [
   {
-    src: "/images/AngeloMiranda.avif",
+    src: "/images/palestras4.avif",
     alt: "Grid photo 1",
     text: "PALESTRAS",
     position: "left",

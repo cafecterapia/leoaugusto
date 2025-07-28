@@ -6,6 +6,41 @@ import { ReactLenis } from "lenis/react";
 import { defaultMetadata } from "@/og-simple/metadata";
 import "./globals.css";
 
+// Script to disable scroll restoration and ensure top position on reload
+const scrollRestorationScript = `
+  if (typeof window !== 'undefined') {
+    // Disable browser's automatic scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    
+    // Force scroll to top immediately on page load
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Prevent any scroll restoration during page load
+    const preventScroll = (e) => {
+      window.scrollTo(0, 0);
+    };
+    
+    // Listen for scroll events during initial load and force to top
+    window.addEventListener('scroll', preventScroll, { passive: false });
+    
+    // Remove the scroll prevention after DOM is ready
+    const removeScrollPrevention = () => {
+      window.removeEventListener('scroll', preventScroll);
+    };
+    
+    // Use both DOMContentLoaded and a short timeout as fallback
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', removeScrollPrevention);
+    } else {
+      setTimeout(removeScrollPrevention, 100);
+    }
+  }
+`;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,6 +64,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Scroll restoration script - must run before any other scripts */}
+        <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         {/* Resource hints for external resources */}
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         <link
@@ -56,6 +93,8 @@ export default function RootLayout({
               touchMultiplier: 0.8,
               smoothWheel: true,
               syncTouch: false,
+              // Ensure smooth scrolling doesn't interfere with manual scroll restoration
+              infinite: false,
             }}
           >
             <ConditionalLayout>{children}</ConditionalLayout>

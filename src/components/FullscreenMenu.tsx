@@ -127,20 +127,6 @@ export default function FullscreenMenu({
                   <motion.li
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
-                  >
-                    <button
-                      onClick={() => handleNavigation("palestras")}
-                      className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
-                      aria-label="Navigate to Lectures section"
-                    >
-                      Palestras
-                    </button>
-                  </motion.li>
-
-                  <motion.li
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: 0.5 }}
                   >
                     <button
@@ -148,7 +134,7 @@ export default function FullscreenMenu({
                       className="text-4xl md:text-6xl font-light text-white hover:text-gray-300 transition-colors duration-300"
                       aria-label="Navigate to Mentorship section"
                     >
-                      Mentorias
+                      Sociais
                     </button>
                   </motion.li>
 

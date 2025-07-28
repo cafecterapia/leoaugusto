@@ -1,6 +1,6 @@
 export const services = [
-  "Ressarcimento de Preterição",
   "Acompanhamento de procedimento administrativos (Sindicância e IPM) e judiciais",
+  "Ressarcimento de Preterição",
   "Conselho de Disciplina e Conselho de Justificação",
   "Remoção/Movimentação com ou sem ônus",
   "Reintegração/Reinclusão ao SAM, EB e FAB",

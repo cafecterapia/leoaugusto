@@ -17,7 +17,6 @@ export default function HeroSection() {
         alt="Leonardo Augusto - Advogado especialista em Direito Militar"
         fill
         priority
-        fetchPriority="high"
         quality={95}
         sizes="100vw"
         placeholder="blur"

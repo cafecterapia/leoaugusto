@@ -88,7 +88,7 @@ export default function VideoSection() {
             Advogado especializado em soluções jurídicas estratégicas.
           </p>
           <a
-            href="https://wa.me/5511999999999"
+            href="https://wa.me/5521971262427"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-white text-gray-900 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-200"
