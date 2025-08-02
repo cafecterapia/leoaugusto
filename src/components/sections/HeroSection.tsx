@@ -10,7 +10,7 @@ export default function HeroSection() {
       : "/api/hero-image?name=lfam.avif";
 
   return (
-    <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[27rem] pb-20 md:pt-[18rem] md:pb-24 lg:pt-[16rem] lg:pb-28 xl:pt-[14rem] xl:pb-32 md:grid md:place-items-center md:grid-cols-1 lg:place-items-start xl:place-items-start">
+    <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[27rem] pb-20 md:pl-24 lg:pb-28 xl:pb-2 md:grid md:place-items-center md:grid-cols-1 lg:place-items-end xl:place-items-end">
       {/* Next.js Image - Optimized for LCP */}
       <Image
         src={heroImageSrc}
@@ -21,17 +21,19 @@ export default function HeroSection() {
         sizes="100vw"
         placeholder="blur"
         blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3NvZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2NjY2NiIvPjwvc3ZnPg=="
-        className="absolute inset-0 object-cover object-center lg:object-[center_20%] xl:object-[center_15%] -z-10"
+        className="absolute inset-0 object-cover object-center lg:object-[center_90%] xl:object-[center_15%] -z-10"
       />
 
       {/* Content Layer */}
       <div className="relative z-10 w-full max-w-[80rem] mx-auto text-left">
-        <h1 className="font-black leading-none text-[2rem] sm:text-[2.1rem] md:text-[3rem] lg:text-[2.7rem] opacity-[0.75]">
+        <h1 className="font-black leading-none text-[2rem] sm:text-[2.1rem] md:text-[3rem] lg:text-[4rem] opacity-[0.85]">
           ADVOGADO,
           <br />
           MESTRE EM DIREITO
           <br />
-          <span className="italic whitespace-nowrap">COM ESPECIALIZAÇÃO</span>
+          <span className="font-light italic whitespace-nnowrap">
+            COM ESPECIALIZAÇÃO
+          </span>
           <br />
           EM DIREITO MILITAR
         </h1>

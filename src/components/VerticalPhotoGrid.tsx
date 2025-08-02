@@ -7,21 +7,18 @@ import { useEffect, useRef } from "react";
 const photos = [
   {
     src: "/images/palestras4.avif",
-    alt: "Grid photo 1",
+    alt: "Luiz",
     text: "PALESTRAS",
-    position: "left",
   },
   {
     src: "/images/LuizFelipe.avif",
-    alt: "Grid photo 2",
+    alt: "Felipe",
     text: "AULAS & MENTORIAS",
-    position: "right",
   },
   {
     src: "/api/hero-image?name=lfam.avif",
-    alt: "Header photo",
+    alt: "Angelo Miranda",
     text: "EMPREENDIMENTOS",
-    position: "left",
   },
 ];
 
@@ -65,9 +62,15 @@ export default function VerticalPhotoGrid() {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    // Store container ref to avoid React warning
+    const container = containerRef.current;
+
+    // Check if device is desktop (lg breakpoint and above)
+    const isDesktop = () => window.innerWidth >= 1024;
+
     // Increased delay to ensure proper DOM rendering and reduce early calculations
     const timer = setTimeout(async () => {
-      const photos = containerRef.current?.querySelectorAll("[data-photo]");
+      const photos = container?.querySelectorAll("[data-photo]");
       if (!photos || photos.length === 0) {
         return;
       }
@@ -127,6 +130,24 @@ export default function VerticalPhotoGrid() {
         });
       };
 
+      // Helper function to show photo content
+      const showPhoto = (data: {
+        overlay: HTMLElement;
+        text: HTMLElement;
+        textPosition: number;
+      }) => {
+        gsap.to(data.overlay, {
+          y: "80%",
+          duration: 0.8,
+          ease: "power2.out",
+        });
+        gsap.to(data.text, {
+          y: data.textPosition,
+          duration: 0.8,
+          ease: "power2.out",
+        });
+      };
+
       photoData.forEach((data) => {
         if (!data) return;
 
@@ -141,79 +162,55 @@ export default function VerticalPhotoGrid() {
           y: 0,
         });
 
-        // Create ScrollTrigger with optimized settings
-        ScrollTrigger.create({
-          trigger: data.photo,
-          start: "bottom bottom",
-          end: `+=${data.photoHeight * (data.index === 0 ? 1.2 : data.index === 1 ? 1.19 : 1.2)}`,
-          scrub: false,
-          markers: false,
-          id: `photo-${data.index}`,
-          onEnter: () => {
-            // Reset all previous photos when entering a new one
-            for (let i = 0; i < data.index; i++) {
-              resetPhoto(i);
-            }
+        // Desktop hover behavior
+        if (isDesktop()) {
+          const handleMouseEnter = () => showPhoto(data);
+          const handleMouseLeave = () => resetPhoto(data.index);
 
-            // Use pre-calculated text position - no DOM reads during scroll
-            gsap.to(data.overlay, {
-              y: "80%",
-              duration: 0.8,
-              ease: "power2.out",
-            });
-            gsap.to(data.text, {
-              y: data.textPosition,
-              duration: 0.8,
-              ease: "power2.out",
-            });
-          },
-          onLeave: () => {
-            // For the last photo, reset it when leaving the trigger
-            if (data.index === photos.length - 1) {
-              gsap.to(data.overlay, {
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-              });
-              gsap.to(data.text, {
-                y: 0,
-                duration: 0.8,
-                ease: "power2.out",
-              });
-            }
-          },
-          onEnterBack: () => {
-            // Use pre-calculated text position
-            gsap.to(data.overlay, {
-              y: "80%",
-              duration: 0.8,
-              ease: "power2.out",
-            });
-            gsap.to(data.text, {
-              y: data.textPosition,
-              duration: 0.8,
-              ease: "power2.out",
-            });
+          data.photo.addEventListener("mouseenter", handleMouseEnter);
+          data.photo.addEventListener("mouseleave", handleMouseLeave);
 
-            // Reset all following photos
-            for (let i = data.index + 1; i < photos.length; i++) {
-              resetPhoto(i);
-            }
-          },
-          onLeaveBack: () => {
-            // Reset when scrolling back up past trigger
-            gsap.to(data.overlay, {
-              y: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            });
-            gsap.to(data.text, {
-              y: 0,
-              duration: 0.8,
-              ease: "power2.out",
-            });
-          },
-        });
+          // Store cleanup functions
+          (
+            data.photo as HTMLElement & { _hoverCleanup?: () => void }
+          )._hoverCleanup = () => {
+            data.photo.removeEventListener("mouseenter", handleMouseEnter);
+            data.photo.removeEventListener("mouseleave", handleMouseLeave);
+          };
+        } else {
+          // Mobile scroll behavior (existing logic)
+          ScrollTrigger.create({
+            trigger: data.photo,
+            start: "bottom bottom",
+            end: `+=${data.photoHeight * (data.index === 0 ? 1.2 : data.index === 1 ? 1.19 : 1.2)}`,
+            scrub: false,
+            markers: false,
+            id: `photo-${data.index}`,
+            onEnter: () => {
+              // Reset all previous photos when entering a new one
+              for (let i = 0; i < data.index; i++) {
+                resetPhoto(i);
+              }
+              showPhoto(data);
+            },
+            onLeave: () => {
+              // For the last photo, reset it when leaving the trigger
+              if (data.index === photos.length - 1) {
+                resetPhoto(data.index);
+              }
+            },
+            onEnterBack: () => {
+              showPhoto(data);
+              // Reset all following photos
+              for (let i = data.index + 1; i < photos.length; i++) {
+                resetPhoto(i);
+              }
+            },
+            onLeaveBack: () => {
+              resetPhoto(data.index);
+            },
+          });
+        }
       });
     }, 150); // Slightly increased delay for better stability
 
@@ -234,6 +231,17 @@ export default function VerticalPhotoGrid() {
       clearTimeout(timer);
       window.removeEventListener("resize", handleResize);
 
+      // Clean up hover listeners for desktop
+      const photos = container?.querySelectorAll("[data-photo]");
+      if (photos) {
+        photos.forEach((photo) => {
+          const cleanup = (
+            photo as HTMLElement & { _hoverCleanup?: () => void }
+          )._hoverCleanup;
+          if (cleanup) cleanup();
+        });
+      }
+
       // Clean up ScrollTrigger instances - use dynamic import in cleanup too
       Promise.resolve().then(async () => {
         try {
@@ -250,18 +258,14 @@ export default function VerticalPhotoGrid() {
     <>
       <div
         ref={containerRef}
-        className="flex flex-col gap-19 w-full max-w-md sm:max-w-xl lg:max-w-4xl xl:max-w-4xl mx-auto px-2 sm:px-3 lg:px-4 @container"
+        // MODIFIED: Increased max-width on lg/xl screens and adjusted the gap for desktop
+        className="flex flex-col lg:flex-row gap-16 lg:gap-8 w-full max-w-md sm:max-w-xl lg:max-w-6xl xl:max-w-7xl mx-auto px-2 sm:px-3 lg:px-4 @container"
       >
         {photos.map((photo, index) => (
           <motion.div
             key={photo.src}
             data-photo={`photo-${index}`}
-            className={`relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl ${
-              photo.position === "left"
-                ? "self-start w-full sm:w-5/6 lg:w-4/5"
-                : "self-end w-full sm:w-5/6 lg:w-4/5"
-            }`}
-            // Framer Motion animations for hover/tap
+            className="relative aspect-[3/4] sm:aspect-[4/5] lg:aspect-[5/6] xl:aspect-[3/4] overflow-hidden rounded-xl shadow-2xl w-full sm:w-5/6 lg:w-1/3"
             whileHover={{ scale: 1.005 }}
             whileTap={{ scale: 0.995 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
@@ -271,20 +275,17 @@ export default function VerticalPhotoGrid() {
               alt={photo.alt}
               fill
               className="object-cover"
-              sizes="(max-width: 640px) 95vw, (max-width: 768px) 80vw, (max-width: 1024px) 70vw, 60vw"
+              // MODIFIED: Updated sizes to reflect the larger desktop dimensions for better performance
+              sizes="(max-width: 768px) 80vw, (max-width: 1280px) 30vw, 33vw"
             />
             {/* Overlay for GSAP control */}
             <div
-              className={`absolute inset-0 bg-primary/90 flex items-center ${
-                photo.position === "left"
-                  ? "justify-start pl-6"
-                  : "justify-end pr-6"
-              }`}
+              className="absolute inset-0 bg-primary/90 flex items-center justify-center"
               data-overlay={`overlay-${index}`}
             >
               <span
-                className="text-primary-foreground text-xl min-[23rem]:text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl
-                         @[25rem]:text-3xl @[35rem]:text-4xl @lg:text-3xl @xl:text-4xl @2xl:text-5xl
+                className="text-primary-foreground text-xl min-[23rem]:text-2xl sm:text-3xl md:text-4xl lg:text-lg xl:text-xl 2xl:text-2xl
+                         @[25rem]:text-3xl @[35rem]:text-4xl @lg:text-lg @xl:text-xl @2xl:text-2xl
                          font-bold text-center z-10 px-4 py-2 max-w-[80%] leading-tight"
                 data-text={`text-${index}`}
               >

@@ -178,10 +178,8 @@
 }
 
 @layer utilities {
-
   /* Custom autofill utilities for handling browser autofill styling */
   .autofill-light {
-
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {
@@ -191,7 +189,6 @@
   }
 
   .autofill-dark {
-
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus {

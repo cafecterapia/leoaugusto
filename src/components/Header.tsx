@@ -1,23 +1,35 @@
 "use client";
 
-import { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import FullscreenMenu from "./FullscreenMenu";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isInHero, setIsInHero] = useState(true);
 
-  // Optimized scroll tracking with reduced frequency
-  const { scrollYProgress } = useScroll({
-    offset: ["start start", "end start"],
-    layoutEffect: false, // Prevent layout blocking
-  });
+  useEffect(() => {
+    const heroSection = document.querySelector(".hero-section-stable");
+    if (!heroSection) return;
 
-  // Simplified transforms - reduce calculation complexity and fewer breakpoints
-  const textOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const logoOpacity = useTransform(scrollYProgress, [0.04, 0.1], [0, 1]);
-  const headerScale = useTransform(scrollYProgress, [0, 0.12], [1, 0.99]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry) {
+          setIsInHero(entry.isIntersecting);
+        }
+      },
+      {
+        rootMargin: "-100px 0px -50% 0px", // Trigger when 100px past top and 50% visible
+        threshold: 0,
+      }
+    );
+
+    observer.observe(heroSection);
+
+    return () => observer.disconnect();
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
@@ -26,10 +38,9 @@ export default function Header() {
   const headerComponent = (
     <motion.header
       className="fixed top-0 left-0 right-0 z-50 mix-blend-difference"
-      style={{
-        scale: headerScale,
-        willChange: "transform", // Optimize for transform animations
-      }}
+      initial={{ scale: 1 }}
+      animate={{ scale: isInHero ? 1 : 0.99 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
     >
       <nav
         className="@container w-full"
@@ -51,10 +62,9 @@ export default function Header() {
             {/* Full name for initial state */}
             <motion.h1
               className="text-white font-medium text-lg @sm:text-xl @md:text-2xl @lg:text-3xl tracking-wide"
-              style={{
-                opacity: textOpacity,
-                willChange: "opacity", // Optimize for opacity animations
-              }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: isInHero ? 1 : 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               LEONARDO AUGUSTO
             </motion.h1>
@@ -62,10 +72,9 @@ export default function Header() {
             {/* Logo image for scrolled state */}
             <motion.div
               className="flex items-center absolute inset-0"
-              style={{
-                opacity: logoOpacity,
-                willChange: "opacity", // Optimize for opacity animations
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isInHero ? 0 : 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <Image
                 src="/la.avif"

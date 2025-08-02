@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="w-full h-px bg-gray-700 mx-auto"></div>
         </div>
 
-        {/* Address and Social Links */}
+        {/* Address, Office Hours and Social Links */}
         <div className="flex justify-between items-start mb-8">
           {/* Address Column - Far Left */}
           <div className="flex flex-col space-y-3">
@@ -35,6 +35,18 @@ export default function Footer() {
               <p className="text-sm text-gray-300">Rio de Janeiro, RJ</p>
               <p className="text-sm text-gray-300">Rua Teófilo Otoni</p>
               <p className="text-sm text-gray-300">52 Sala 201, Centro RJ</p>
+            </div>
+          </div>
+
+          {/* Office Hours Column - Middle (Desktop Only) */}
+          <div className="flex-col space-y-3 max-lg:hidden">
+            <h3 className="text-sm font-medium mb-2">
+              Horário de Funcionamento
+            </h3>
+            <div className="flex flex-col space-y-2">
+              <p className="text-sm text-gray-300">Segunda a Sexta</p>
+              <p className="text-sm text-gray-300">09:00 - 18:00</p>
+              <p className="text-sm text-gray-300">Sábado: Sob agendamento</p>
             </div>
           </div>
 
