@@ -165,12 +165,12 @@ export default function FullscreenMenu({
                   <span>© 2025 Leonardo Augusto</span>
                   <div className="space-x-6">
                     <a
-                      href="https://linkedin.com/in/leoaugusto"
+                      href="https://www.threads.com/@augustoleonardo.prof?hl=en"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:text-white transition-colors"
                     >
-                      LinkedIn
+                      Threads
                     </a>
                     <a
                       href="https://instagram.com/augustoleonardo.prof"
