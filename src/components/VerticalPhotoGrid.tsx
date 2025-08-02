@@ -6,12 +6,12 @@ import { useEffect, useRef } from "react";
 
 const photos = [
   {
-    src: "/images/palestras4.avif",
+    src: "/images/palestras5.avif",
     alt: "Luiz",
     text: "PALESTRAS",
   },
   {
-    src: "/images/LuizFelipe.avif",
+    src: "/images/aulas.avif",
     alt: "Felipe",
     text: "AULAS & MENTORIAS",
   },
