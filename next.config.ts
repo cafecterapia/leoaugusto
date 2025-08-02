@@ -1,27 +1,13 @@
 import type { NextConfig } from "next";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ["framer-motion", "gsap", "lenis"],
     optimizeCss: true, // Enable CSS optimization
-    optimizeServerReact: true, // Optimize React for server builds (Vercel Edge)
     serverMinification: true, // Enable server code minification
     serverSourceMaps: false, // Disable in production for smaller bundles
-  },
-
-  // Turbopack configuration (stable)
-  turbopack: {
-    rules: {
-      "*.svg": {
-        loaders: ["@svgr/webpack"],
-        as: "*.js",
-      },
-    },
-    resolveAlias: {
-      "@": "./src",
-    },
-    resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
   },
 
   // Image optimization
@@ -50,5 +36,3 @@ const nextConfig: NextConfig = {
   // Output configuration for Vercel Edge Runtime compatibility
   output: "standalone", // Optimize for serverless/edge deployment
 };
-
-export default nextConfig;

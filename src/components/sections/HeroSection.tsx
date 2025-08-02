@@ -1,26 +1,18 @@
-"use client";
-
 import Image from "next/image";
+import heroImage from "../../../public/images/lfam.avif";
 
 export default function HeroSection() {
-  // Use fallback image for development, API route for production
-  const heroImageSrc =
-    process.env.NODE_ENV === "development"
-      ? "/images/lfam.avif"
-      : "/api/hero-image?name=lfam.avif";
-
   return (
     <section className="hero-section-stable relative min-h-[47rem] overflow-hidden bg-[#353537] text-white flex items-start justify-center p-8 pt-[27rem] pb-20 md:pl-24 lg:pb-28 xl:pb-2 md:grid md:place-items-center md:grid-cols-1 lg:place-items-end xl:place-items-end">
-      {/* Next.js Image - Optimized for LCP */}
+      {/* 3. Use the imported image object as the src */}
       <Image
-        src={heroImageSrc}
+        src={heroImage}
         alt="Leonardo Augusto - Advogado especialista em Direito Militar"
         fill
         priority
         quality={95}
         sizes="100vw"
-        placeholder="blur"
-        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3NvZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzY2NjY2NiIvPjwvc3ZnPg=="
+        placeholder="blur" // Next.js will handle the blur placeholder
         className="absolute inset-0 object-cover object-center lg:object-[center_90%] xl:object-[center_15%] -z-10"
       />
 

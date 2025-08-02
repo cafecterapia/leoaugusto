@@ -16,7 +16,7 @@ const photos = [
     text: "AULAS & MENTORIAS",
   },
   {
-    src: "/api/hero-image?name=lfam.avif",
+    src: "/images/lfam.avif",
     alt: "Angelo Miranda",
     text: "EMPREENDIMENTOS",
   },

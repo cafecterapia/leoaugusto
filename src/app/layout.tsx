@@ -62,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={geistSans.variable}>
       <head>
         {/* Scroll restoration script - must run before any other scripts */}
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
@@ -74,10 +74,7 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body
-        className={`${geistSans.variable} antialiased`}
-        suppressHydrationWarning
-      >
+      <body className="antialiased" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

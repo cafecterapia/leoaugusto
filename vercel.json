@@ -1,19 +1,4 @@
 {
   "buildCommand": "npm run build",
-  "framework": "nextjs",
-  "functions": {
-    "api/hero-image.rs": {
-      "runtime": "vercel-rust@4.0.9"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/images/lfam.avif",
-      "destination": "/api/hero-image?image=lfam.avif&format=avif&q=90"
-    },
-    {
-      "source": "/images/:image*",
-      "destination": "/api/hero-image?image=:image"
-    }
-  ]
+  "framework": "nextjs"
 }
