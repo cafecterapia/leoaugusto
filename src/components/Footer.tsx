@@ -70,7 +70,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.instagram.com/augustoleonardo.prof" 
+                href="https://www.instagram.com/augustoleonardo.prof"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:opacity-70 transition-opacity"
