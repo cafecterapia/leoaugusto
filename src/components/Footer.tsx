@@ -20,7 +20,7 @@ export default function Footer() {
         <div className="text-center mb-12">
           <h2 className="text-lg font-medium mb-1">Dr. Leonardo Augusto</h2>
           <p className="text-sm text-gray-300 mb-1">OAB RJ 266.250</p>
-          <p className="text-sm text-gray-300 mb-8">Advocacia militar</p>
+          <p className="text-sm text-gray-300 mb-8">Advocacia Militar</p>
 
           {/* Fine separator line */}
           <div className="w-full h-px bg-gray-700 mx-auto"></div>
