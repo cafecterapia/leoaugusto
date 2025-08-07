@@ -9,7 +9,7 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     title: "Leonardo Augusto - Direito Militar",
     description:
-      "Advogado e Mestre em Direito Especializado em Direito Militar",
+      "Advogado, Mestre em Direito e Especializado em Direito Militar",
     url: baseUrl,
     siteName: "Leonardo Augusto",
     locale: "pt_BR",
@@ -30,6 +30,7 @@ export const defaultMetadata: Metadata = {
     images: [`${baseUrl}/images/ternocinza.webp`],
   },
   other: {
+    "og:image": `${baseUrl}/images/ternocinza.webp`,
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
   },
