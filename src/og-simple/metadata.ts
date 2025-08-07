@@ -16,7 +16,7 @@ export const defaultMetadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/images/lfam.avif",
+        url: `${baseUrl}/images/lfam.avif`,
         alt: "Leonardo Augusto - Advogado especializado em Direito Militar",
         width: 1200,
         height: 630,
@@ -27,7 +27,7 @@ export const defaultMetadata: Metadata = {
     card: "summary_large_image",
     title: "Leonardo Augusto - Direito Militar",
     description: "Advogado especializado em Direito Militar",
-    images: ["/images/hero-photo.png"],
+    images: [`${baseUrl}/images/lfam.avif`],
   },
   other: {
     "mobile-web-app-capable": "yes",
