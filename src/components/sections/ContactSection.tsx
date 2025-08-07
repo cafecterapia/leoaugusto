@@ -34,7 +34,10 @@ export default function ContactSection({
 
         <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg p-8 shadow-lg">
           <ContactForm
-            email="Imf.advocaciamilitar@gmail.com"
+            email={
+              process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
+              "Imf.advocaciamilitar@gmail.com"
+            }
             preSelectedServices={selectedServices}
           />
         </div>

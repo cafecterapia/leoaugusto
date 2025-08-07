@@ -54,9 +54,6 @@ export default function ContactForm({
       });
     } else {
       // No reCAPTCHA configured - form will work without it
-      // console.log(
-      //   "reCAPTCHA v3 not configured - forms will work without verification"
-      // );
       setRecaptchaReady(true);
     }
   }, [recaptchaSiteKey]);
@@ -121,31 +118,33 @@ export default function ContactForm({
     }
   }, []);
 
-  // Prevent page scroll when scrolling inside dropdown - DISABLED FOR DEBUGGING
-  const handleDropdownWheel = useCallback(() => {
-    // const target = e.currentTarget as HTMLElement;
-    // const { scrollTop, scrollHeight, clientHeight } = target;
-    // const isScrollableContent = scrollHeight > clientHeight;
+  // Prevent page scroll when scrolling inside dropdown
+  const handleDropdownWheel = useCallback(
+    (e: React.WheelEvent<HTMLElement>) => {
+      const target = e.currentTarget as HTMLElement;
+      const { scrollTop, scrollHeight, clientHeight } = target;
+      const isScrollableContent = scrollHeight > clientHeight;
 
-    // // Only prevent default scrolling if we're actually scrolling within the dropdown content
-    // if (isScrollableContent) {
-    //   const deltaY = e.deltaY;
-    //   const isScrollingUp = deltaY < 0;
-    //   const isScrollingDown = deltaY > 0;
+      // Only prevent default scrolling if we're actually scrolling within the dropdown content
+      if (isScrollableContent) {
+        const deltaY = e.deltaY;
+        const isScrollingUp = deltaY < 0;
+        const isScrollingDown = deltaY > 0;
 
-    //   // Allow page scroll if we're at the boundaries of the dropdown
-    //   const isAtTop = scrollTop === 0;
-    //   const isAtBottom = scrollTop >= scrollHeight - clientHeight;
+        // Allow page scroll if we're at the boundaries of the dropdown
+        const isAtTop = scrollTop === 0;
+        const isAtBottom = scrollTop >= scrollHeight - clientHeight;
 
-    //   if ((isScrollingUp && !isAtTop) || (isScrollingDown && !isAtBottom)) {
-    //     // Only prevent page scroll if we're scrolling within the dropdown bounds
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //     target.scrollTop += deltaY;
-    //   }
-    // }
-    console.log("ContactForm handleDropdownWheel called (disabled)");
-  }, []);
+        if ((isScrollingUp && !isAtTop) || (isScrollingDown && !isAtBottom)) {
+          // Only prevent page scroll if we're scrolling within the dropdown bounds
+          e.preventDefault();
+          e.stopPropagation();
+          target.scrollTop += deltaY;
+        }
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     if (isDropdownOpen) {
@@ -163,6 +162,8 @@ export default function ContactForm({
         formData.set("g-recaptcha-response", recaptchaToken);
       }
 
+      console.log("Submitting form to email:", email);
+
       // Submit directly to formsubmit.co
       const response = await fetch(`https://formsubmit.co/${email}`, {
         method: "POST",
@@ -170,17 +171,21 @@ export default function ContactForm({
       });
 
       if (!response.ok) {
-        // console.error("Form submission failed:", response.status);
+        console.error(
+          "Form submission failed:",
+          response.status,
+          response.statusText
+        );
         return {
           success: false,
           error: `Erro no envio: ${response.status}. Tente novamente.`,
         };
       } else {
-        // console.log("Form submitted successfully");
+        console.log("Form submitted successfully to:", email);
         return { success: true };
       }
-    } catch {
-      // console.error("Form submission error:", error);
+    } catch (error) {
+      console.error("Form submission error:", error);
       return {
         success: false,
         error: "Erro de conexão. Verifique sua internet e tente novamente.",
@@ -306,6 +311,7 @@ export default function ContactForm({
             setIsSubmitted(false);
             setEmailValue("");
             setNameValue("");
+            setMessageValue("");
             setSelectedSubjects([]);
             setEmailValidation({ isValid: false });
           }}
@@ -337,7 +343,6 @@ export default function ContactForm({
         name="_subject"
         value="Nova mensagem do site Leonardo Augusto"
       />
-      <input type="hidden" name="_next" value="/contato?success=true" />
 
       <div>
         <label
