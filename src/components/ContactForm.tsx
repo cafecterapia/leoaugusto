@@ -157,17 +157,29 @@ export default function ContactForm({
     recaptchaToken?: string
   ): Promise<{ success: boolean; error?: string }> => {
     try {
-      // Add reCAPTCHA token to form data if available
+      // Convert FormData to JSON object for AJAX endpoint
+      const formObject: Record<string, string> = {};
+
+      // Extract all form data
+      for (const [key, value] of formData.entries()) {
+        formObject[key] = value.toString();
+      }
+
+      // Add reCAPTCHA token if available
       if (recaptchaToken) {
-        formData.set("g-recaptcha-response", recaptchaToken);
+        formObject["g-recaptcha-response"] = recaptchaToken;
       }
 
       console.log("Submitting form to email:", email);
 
-      // Submit directly to formsubmit.co
-      const response = await fetch(`https://formsubmit.co/${email}`, {
+      // Submit to formsubmit.co AJAX endpoint with proper headers
+      const response = await fetch(`https://formsubmit.co/ajax/${email}`, {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formObject),
       });
 
       if (!response.ok) {

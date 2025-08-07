@@ -36,7 +36,7 @@ export default function ContactSection({
           <ContactForm
             email={
               process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
-              "Imf.advocaciamilitar@gmail.com"
+              "lfangelomiranda@gmail.com"
             }
             preSelectedServices={selectedServices}
           />
