@@ -10,7 +10,7 @@ This folder contains a simple, reliable Open Graph implementation for Facebook a
 
 ## Files
 
-- `metadata.ts` - Simple metadata configuration using Next.js 15 standards
+- `metadata.ts` - Simple metadata configuration using Next.js 15 standard
 
 ## How it works
 
